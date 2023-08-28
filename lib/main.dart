@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
               ],
               supportedLocales: const [
                 Locale('en'), // English
-                Locale('ar'), // Spanish
+                Locale('ar'), // Arabic
               ],
               locale: const Locale('en'),
               debugShowCheckedModeBanner: false,
