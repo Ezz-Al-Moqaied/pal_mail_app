@@ -1,3 +1,8 @@
 {
-"splashTitle" : "Prime Minister's Office"
+"splashTitle" : "Prime Minister's Office",
+"logIn" : "Log In",
+"signUp" : "Sign Up",
+"emailField" :"Enter e-mail",
+"passField" :"Password ",
+"confirmPassField" :"Confirm password"
 }
