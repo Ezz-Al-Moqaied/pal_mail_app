@@ -6,6 +6,7 @@ import 'package:pal_mail_app/services/util/keys.dart';
 import 'app_exception.dart';
 
 class ApiBaseHelper {
+  int? statusCode;
   Future<dynamic> get(String url, Map<String, String> header) async {
     var responseJson;
     try {
@@ -29,6 +30,7 @@ class ApiBaseHelper {
         body: body,
         headers: header,
       );
+      statusCode = response.statusCode;
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');
