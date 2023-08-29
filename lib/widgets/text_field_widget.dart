@@ -11,6 +11,8 @@ Widget textFormFieldWidget(
         Function? onChange,
         bool obscureText = false,
         GestureTapCallback? onTapForm,
+          required BorderSide borderSide,
+          required BorderRadius borderRadius,
         String? hintText,
         floatingLabelBehavior = FloatingLabelBehavior.always,
         int maxLines = 1}) =>
@@ -29,9 +31,10 @@ Widget textFormFieldWidget(
           label: Text(label ?? ''),
           prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
           suffixIcon: suffixIcon,
-          border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              borderSide: BorderSide.none)),
+          border:  OutlineInputBorder(
+              borderRadius: borderRadius,
+              borderSide: borderSide)),
     );
+
 
 

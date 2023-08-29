@@ -25,6 +25,8 @@ class LoginWidget extends StatelessWidget {
       child: Column(
         children: [
           textFormFieldWidget(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide.none,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the email';
@@ -37,6 +39,8 @@ class LoginWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+            borderSide: BorderSide.none,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the password';
