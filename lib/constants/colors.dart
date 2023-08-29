@@ -10,4 +10,4 @@ const Color buttonBackGroundColor1 = Color(0xff003AFC);
 const Color buttonBackGroundColor2 = Colors.white;
 const Color splashColorDegree3 = Color(0xff4F78FF);
 const Color textFieldHintColor = Color(0xffBDBDBD);
-const Color border = Color(0xffEBEBF5);
+const Color border = Color(0xff707070);
