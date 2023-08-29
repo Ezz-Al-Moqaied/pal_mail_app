@@ -28,6 +28,10 @@ class SharedPreferencesHelper {
     return isLogged;
   }
 
+  static void deletUser() async {
+    await sharedPreferences.clear();
+  }
+
   static UserModel get user {
     final map = jsonDecode(sharedPreferences.getString("user")!);
     return UserModel.fromJson(map);

@@ -2,12 +2,12 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pal_mail_app/constants/keys.dart';
+import 'package:pal_mail_app/services/util/keys.dart';
 import 'package:pal_mail_app/providers/auth_provider.dart';
-import 'package:pal_mail_app/screens/auth_screen.dart';
+import 'package:pal_mail_app/screens/auth/auth_screen.dart';
 import 'package:pal_mail_app/screens/home_screen.dart';
 import 'package:pal_mail_app/screens/splash_screen.dart';
-import 'package:pal_mail_app/services/shared_preferences.dart';
+import 'package:pal_mail_app/services/helper/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
