@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pal_mail_app/screens/auth/auth_screen.dart';
+import 'package:pal_mail_app/screens/auth_screen.dart';
 import 'package:pal_mail_app/services/helper/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {

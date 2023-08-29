@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pal_mail_app/services/helper/api_base_helper.dart';
-import 'package:pal_mail_app/services/util/keys.dart';
+import 'package:pal_mail_app/constants/keys.dart';
 import 'package:pal_mail_app/models/user_model.dart';
 import 'package:pal_mail_app/screens/home_screen.dart';
 import 'package:pal_mail_app/services/helper/shared_preferences.dart';

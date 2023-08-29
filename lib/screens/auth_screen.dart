@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pal_mail_app/services/util/colors.dart';
-import 'package:pal_mail_app/services/util/images.dart';
-import 'package:pal_mail_app/services/util/widget.dart';
+import 'package:pal_mail_app/constants/colors.dart';
+import 'package:pal_mail_app/constants/images.dart';
+import 'package:pal_mail_app/constants/widget.dart';
 import 'package:pal_mail_app/providers/auth_provider.dart';
 import 'package:pal_mail_app/services/helper/localizations_extention.dart';
 import 'package:pal_mail_app/widgets/flutterToastWidget.dart';

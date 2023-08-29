@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:pal_mail_app/services/util/keys.dart';
+import 'package:pal_mail_app/constants/keys.dart';
 
 import 'app_exception.dart';
 
