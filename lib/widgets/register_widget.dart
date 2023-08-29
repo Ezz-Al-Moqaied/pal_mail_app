@@ -39,7 +39,6 @@ class RegisterWidget extends StatelessWidget {
               return null;
             },
             type: TextInputType.text,
-
             controller: usernameController,
             hintText: "username",
           ),
