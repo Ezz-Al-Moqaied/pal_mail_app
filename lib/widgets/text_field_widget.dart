@@ -6,6 +6,7 @@ Widget textFormFieldWidget(
         String? label,
         IconData? prefixIcon,
         IconButton? suffixIcon,
+          double? numfontSize,
         required String? Function(String?)? validate,
         Function? onSubmit,
         Function? onChange,
@@ -17,6 +18,9 @@ Widget textFormFieldWidget(
         floatingLabelBehavior = FloatingLabelBehavior.always,
         int maxLines = 1}) =>
     TextFormField(
+      style: TextStyle(
+        fontSize: numfontSize,
+      ),
       controller: controller,
       keyboardType: type,
       validator: validate,
@@ -27,7 +31,7 @@ Widget textFormFieldWidget(
           filled: true,
           hintText: hintText,
           floatingLabelBehavior: floatingLabelBehavior,
-          fillColor: const Color(0xffF7F7FA),
+          fillColor: Colors.white,
           label: Text(label ?? ''),
           prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
           suffixIcon: suffixIcon,

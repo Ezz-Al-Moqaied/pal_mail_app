@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pal_mail_app/constants/keys.dart';
 import 'package:pal_mail_app/models/user_model.dart';
-import 'package:pal_mail_app/screens/home_screen.dart';
+import 'package:pal_mail_app/screens/inbox_screen.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
