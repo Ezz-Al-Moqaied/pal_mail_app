@@ -12,6 +12,7 @@ Widget textFormFieldWidget(
         bool obscureText = false,
         GestureTapCallback? onTapForm,
         String? hintText,
+        Color? colors,
         floatingLabelBehavior = FloatingLabelBehavior.always,
         int maxLines = 1}) =>
     TextFormField(
@@ -25,7 +26,7 @@ Widget textFormFieldWidget(
           filled: true,
           hintText: hintText,
           floatingLabelBehavior: floatingLabelBehavior,
-          fillColor: const Color(0xffF7F7FA),
+          fillColor: colors != null ? Colors.white : const Color(0xffF7F7FA),
           label: Text(label ?? ''),
           prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
           suffixIcon: suffixIcon,
