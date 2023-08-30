@@ -11,15 +11,24 @@ class HomeHelper {
 
   static final HomeHelper instance = HomeHelper._();
 
-  Future<MailsModel> mails() async {
-    try {
-      final response = await http.get(Uri.parse(Keys.mailsUrl), headers: {
-        'Authorization': 'Bearer ${SharedPreferencesHelper.user.token}'
-      });
-      return mailsModelFromJson(response.body);
-    } catch (e) {
-      flutterToastWidget(msg: "error", colors: Colors.redAccent);
-      return MailsModel();
-    }
+  Future<MailsModel> getmails() async {
+    // try {
+    //   final response = await http.get(Uri.parse(Keys.mailsUrl), headers: {
+    //     'Authorization': 'Bearer ${SharedPreferencesHelper.user.token}'
+    //   });
+    //   return mailsModelFromJson(response.body);
+    // } catch (e) {
+    //   flutterToastWidget(msg: "error", colors: Colors.redAccent);
+    //   return MailsModel();
+    // }
+    ApiBaseHelper _helper = ApiBaseHelper();
+    final response = _helper.get(Keys.mailsUrl,
+        {'Authorization': 'Bearer ${SharedPreferencesHelper.user.token}'});
+    Map<String, dynamic>? data;
+    await response.then((value) {
+      data = value;
+    });
+    // print(Mail.fromJson(data!).subject);
+    return MailsModel.fromJson(data!);
   }
 }
