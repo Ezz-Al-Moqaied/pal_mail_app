@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
               },
             ));
           },
-          child: Icon(Icons.logout),
+          child: const Icon(Icons.logout),
         ),
         title: const Text("Home Screen"),
       ),

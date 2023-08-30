@@ -45,6 +45,7 @@ class LoginWidget extends StatelessWidget {
             },
             type: TextInputType.visiblePassword,
             controller: passwordController,
+            obscureText: true,
             hintText: context.localizations!.passField,
           ),
           mediumSpacer,
