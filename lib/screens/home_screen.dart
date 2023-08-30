@@ -30,10 +30,7 @@ class HomeScreen extends StatelessWidget {
                     Icons.notes_sharp,
                     size: 30.sp,
                   ),
-                  onPressed: () async {
-                    print(":");
-                    await homeProvider.getAllMails();
-                  },
+                  onPressed: () async {},
                 ),
                 const Spacer(),
                 Image.asset(
