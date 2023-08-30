@@ -12,11 +12,13 @@ class HomeProvider with ChangeNotifier {
   final HomeHelper _homeHelper = HomeHelper.instance;
 
   Future<void> getAllMails() async {
-    await _homeHelper.mails().then((value) {
-      value.mails?.forEach((element) {
+    final res = await _homeHelper.getmails().then((value) {
+      mailsModelToJson(value);
+      for (var element in value.mails!) {
         mail.add(element);
+
         countStatus(element);
-      });
+      }
     });
   }
 
