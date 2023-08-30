@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:pal_mail_app/services/helper/api_base_helper.dart';
 import 'package:pal_mail_app/constants/keys.dart';
 import 'package:pal_mail_app/models/user_model.dart';
@@ -14,10 +13,6 @@ class AuthHelper {
   static final AuthHelper instance = AuthHelper._();
 
   Future<void> login(Map<String, String> body, BuildContext context) async {
-    // final response = await http.post(
-    //   Uri.parse(Keys.loginUrl),
-    //   body: body,
-    // );
     final ApiBaseHelper _helper = ApiBaseHelper();
     try {
       final response = await _helper.post(Keys.loginUrl, body, {});
@@ -27,16 +22,11 @@ class AuthHelper {
             context: context, nextScreen: const HomeScreen());
       });
     } catch (e) {
-      print(e);
       flutterToastWidget(msg: "LogIn Failed", colors: Colors.redAccent);
     }
   }
 
   Future<bool> register(Map<String, String> body) async {
-    // final response = await http.post(
-    //   Uri.parse(Keys.registerUrl),
-    //   body: body,
-    // );
     final ApiBaseHelper _helper = ApiBaseHelper();
     try {
       final response = _helper.post(Keys.registerUrl, body, {});
