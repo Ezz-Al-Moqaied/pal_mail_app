@@ -28,7 +28,7 @@ class SharedPreferencesHelper {
     return isLogged;
   }
 
-  static void deletUser() async {
+  static void deleteUser() async {
     await sharedPreferences.clear();
   }
 

@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:pal_mail_app/constants/keys.dart';
-
 import 'app_exception.dart';
 
 class ApiBaseHelper {

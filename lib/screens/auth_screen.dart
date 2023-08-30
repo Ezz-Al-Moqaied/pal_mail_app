@@ -4,7 +4,7 @@ import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/images.dart';
 import 'package:pal_mail_app/constants/widget.dart';
 import 'package:pal_mail_app/providers/auth_provider.dart';
-import 'package:pal_mail_app/services/helper/localizations_extention.dart';
+import 'package:pal_mail_app/services/localizations_extention.dart';
 import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:pal_mail_app/widgets/login_widget.dart';
 import 'package:pal_mail_app/widgets/register_widget.dart';
