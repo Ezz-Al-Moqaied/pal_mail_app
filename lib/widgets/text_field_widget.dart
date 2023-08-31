@@ -6,22 +6,16 @@ Widget textFormFieldWidget(
         String? label,
         IconData? prefixIcon,
         IconButton? suffixIcon,
-        double? numfontSize,
         required String? Function(String?)? validate,
         Function? onSubmit,
         Function? onChange,
         bool obscureText = false,
         GestureTapCallback? onTapForm,
-        required BorderSide borderSide,
-        required BorderRadius borderRadius,
         String? hintText,
         Color? colors,
         floatingLabelBehavior = FloatingLabelBehavior.always,
         int maxLines = 1}) =>
     TextFormField(
-      style: TextStyle(
-        fontSize: numfontSize,
-      ),
       controller: controller,
       keyboardType: type,
       validator: validate,
@@ -32,10 +26,11 @@ Widget textFormFieldWidget(
           filled: true,
           hintText: hintText,
           floatingLabelBehavior: floatingLabelBehavior,
-          fillColor: colors != null ? Colors.white : Colors.white,
+          fillColor: colors != null ? Colors.white : const Color(0xffF7F7FA),
           label: Text(label ?? ''),
           prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
           suffixIcon: suffixIcon,
-          border: OutlineInputBorder(
-              borderRadius: borderRadius, borderSide: borderSide)),
+          border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderSide: BorderSide.none)),
     );

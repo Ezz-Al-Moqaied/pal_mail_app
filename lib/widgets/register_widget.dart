@@ -32,8 +32,6 @@ class RegisterWidget extends StatelessWidget {
       child: Column(
         children: [
           textFormFieldWidget(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            borderSide: BorderSide.none,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the username';
@@ -46,8 +44,6 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            borderSide: BorderSide.none,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the email';
@@ -60,8 +56,6 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            borderSide: BorderSide.none,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the password';
@@ -75,8 +69,6 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            borderSide: BorderSide.none,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the confirm password';
