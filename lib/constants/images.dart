@@ -5,4 +5,7 @@ class Images {
   static const String faceBook = 'assets/images/facebook.png';
   static const String twitter = 'assets/images/twitter.png';
   static const String google = 'assets/images/google.png';
+  static const String personIcon = 'assets/images/person_icon.png';
+
+
 }

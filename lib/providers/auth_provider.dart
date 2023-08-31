@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pal_mail_app/screens/inbox_screen.dart';
-import 'package:pal_mail_app/services/auth_helper.dart';
+import 'package:pal_mail_app/controller/auth_controller.dart';
+import 'package:pal_mail_app/screens/home_screen.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 
 class AuthProvider with ChangeNotifier {

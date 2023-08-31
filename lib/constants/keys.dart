@@ -6,4 +6,6 @@ class Keys {
   static const baseUrl = 'https://palmail.gsgtt.tech/api';
   static const loginUrl = '$baseUrl/login';
   static const registerUrl = '$baseUrl/register';
+  static const mailsUrl = '$baseUrl/mails';
+
 }

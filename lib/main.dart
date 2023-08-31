@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/keys.dart';
 import 'package:pal_mail_app/providers/auth_provider.dart';
+import 'package:pal_mail_app/providers/home_provider.dart';
 import 'package:pal_mail_app/screens/auth_screen.dart';
 import 'package:pal_mail_app/screens/inbox_screen.dart';
 import 'package:pal_mail_app/screens/splash_screen.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => AuthProvider()),
+          ChangeNotifierProvider(create: (context) => HomeProvider()),
         ],
         builder: (context, child) {
           return MaterialApp(
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
               locale: const Locale('en'),
               debugShowCheckedModeBanner: false,
               home: AnimatedSplashScreen(
-                  duration: 3000,
+                  duration: 4000,
                   splashIconSize: double.infinity,
                   splash: const SplashScreen(),
                   nextScreen: SharedPreferencesHelper.isLogged
