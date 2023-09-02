@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/widget.dart';
@@ -54,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 context: context,
                 builder: (BuildContext context) {
                   return Container(
+                    height: MediaQuery.of(context).size.height-50,
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
@@ -95,10 +97,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 //part number one
                                 basicContainer(
-                                    180,
+                                    180.h,
                                     Column(
                                       children: [
                                         textFormFieldWidget(
+                                          colors: Colors.white,
                                           hintText: 'name',
                                           prefixIcon: Icons.account_circle,
                                           suffixIcon: IconButton(
@@ -113,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         lineContainer(),
                                         textFormFieldWidget(
+                                          colors: Colors.white,
                                           hintText: 'Mobile',
                                           prefixIcon:
                                               Icons.phone_android_outlined,
@@ -160,10 +164,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 smallSpacer,
                                 //part number two
                                 basicContainer(
-                                  138,
+                                  138.h,
                                   Column(
                                     children: [
                                       textFormFieldWidget(
+                                        colors: Colors.white,
                                         hintText: 'Title of Mail',
                                         controller: titleController,
                                         type: TextInputType.text,
@@ -171,6 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       lineContainer(),
                                       textFormFieldWidget(
+                                        colors: Colors.white,
                                         hintText: 'Describtion',
                                         controller: titleController,
                                         type: TextInputType.text,
@@ -182,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 smallSpacer,
                                 //part number three
                                 basicContainer(
-                                    140,
+                                    140.h,
                                     Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -197,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 size: 25,
                                               ),
                                               SizedBox(
-                                                width: 11,
+                                                width: 11.w,
                                               ),
                                               Column(
                                                 crossAxisAlignment:
@@ -210,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                   ),
                                                   SizedBox(
-                                                    height: 4,
+                                                    height: 4.h,
                                                   ),
                                                   Text(
                                                     '2 mar 10/2/2023',
@@ -240,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 size: 25,
                                               ),
                                               SizedBox(
-                                                width: 11,
+                                                width: 11.w,
                                               ),
                                               Column(
                                                 crossAxisAlignment:
@@ -253,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                   ),
                                                   SizedBox(
-                                                    height: 8,
+                                                    height: 8.h,
                                                   ),
                                                   Text(
                                                     'like: 10/2/2023',
@@ -271,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 smallSpacer,
                                 //part number four
                                 basicContainer(
-                                    55,
+                                    55.h,
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: Row(
@@ -284,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           SizedBox(
-                                            width: 14,
+                                            width: 14.w,
                                           ),
                                           Text(
                                             'Tags',
@@ -302,19 +308,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     )),
                                 smallSpacer,
-                                basicContainer(
-                                    60,
-                                    Padding(
+                                basicContainer(60.h, Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: Row(
                                         children: [
                                           Icon(Icons.arrow_forward),
                                           SizedBox(
-                                            width: 14,
+                                            width: 14.w,
                                           ),
                                           Container(
-                                            width: 70,
-                                            height: 50,
+                                            width: 70.w,
+                                            height: 50.h,
                                             decoration: BoxDecoration(
                                                 color: Colors.red,
                                                 borderRadius:
@@ -338,11 +342,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     )),
                                 smallSpacer,
                                 basicContainer(
-                                  138,
+                                  138.h,
                                   Column(
                                     children: [
-                                      lineContainer(),
                                       textFormFieldWidget(
+                                        colors: Colors.white,
                                         hintText: 'Describtion',
                                         controller: DecisionController,
                                         type: TextInputType.text,
