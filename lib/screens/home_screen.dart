@@ -9,6 +9,7 @@ import 'package:pal_mail_app/widgets/status_mail_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/bottom_sheet_widget.dart';
 import '../widgets/tags_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,7 +24,9 @@ class HomeScreen extends StatelessWidget {
           style: ElevatedButton.styleFrom(
               backgroundColor: colorWhite,
               padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 20.w)),
-          onPressed: () {},
+          onPressed: () {
+            CustomModalBottomSheet(context: context).show();
+          },
           child: Row(
             children: [
               Container(
