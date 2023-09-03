@@ -99,7 +99,7 @@ class CustomModalBottomSheet {
                                   suffixIcon: IconButton(
                                       onPressed: () {},
                                       icon: const Icon(
-                                        Icons.circle_outlined,
+                                        Icons.info_outline,
                                         color: Colors.blue,
                                       )),
                                   controller: senderController,
