@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/controller/new_inbox_controller.dart';
+import 'package:pal_mail_app/providers/new_inbox_provider.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 
 import '../constants/images.dart';
@@ -73,7 +74,17 @@ class CustomModalBottomSheet {
                     ),
                     TextButton(
                       onPressed: () {
-                        NewInboxHelper.instance.addMail({});
+                        NewInboxProvider().addMailProv(
+                            decision: "as",
+                            description: "das",
+                            finalDescision: "sad",
+                            tags: 'a',
+                            subject: 'YazanM',
+                            senderId: '5',
+                            archiveNumber: "123",
+                            archiveDate: "12/10/2022",
+                            statusId: '5',
+                            activities: 'a');
                       },
                       child: Text(
                         'Done',
@@ -198,26 +209,77 @@ class CustomModalBottomSheet {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2025),
-                                    ).then((value) {
-                                      _dateTime = value!;
-                                    }).catchError((error) {
-                                      print(error.toString());
-                                    });
-                                  },
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2025),
+                                      ).then((value) {
+                                        _dateTime = value!;
+                                      }).catchError((error) {
+                                        print(error.toString());
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.date_range,
+                                          color: Colors.red,
+                                          size: 25.sp,
+                                        ),
+                                        SizedBox(
+                                          width: 11.w,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'Date',
+                                                style: TextStyle(
+                                                  fontSize: 15.sp,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 4.h,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                _dateTime.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Colors.grey,
+                                          size: 20.sp,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              lineContainer(),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0.w.h),
                                   child: Row(
                                     children: [
                                       Icon(
-                                        Icons.date_range,
-                                        color: Colors.red,
+                                        Icons.archive_outlined,
+                                        color: textFieldHintColor,
                                         size: 25.sp,
                                       ),
                                       SizedBox(
@@ -228,67 +290,24 @@ class CustomModalBottomSheet {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Date',
+                                            'Archive Number',
                                             style: TextStyle(
                                               fontSize: 15.sp,
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 4.h,
+                                            height: 8.h,
                                           ),
                                           Text(
-                                            _dateTime.toString(),
+                                            'like: 10/2/2023',
                                             style: TextStyle(
                                               fontSize: 12.sp,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      const Spacer(),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.grey,
-                                        size: 20.sp,
-                                      )
                                     ],
                                   ),
-                                ),
-                              ),
-                              lineContainer(),
-                              Padding(
-                                padding: EdgeInsets.all(8.0.w.h),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.archive_outlined,
-                                      color: textFieldHintColor,
-                                      size: 25.sp,
-                                    ),
-                                    SizedBox(
-                                      width: 11.w,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Archive Number',
-                                          style: TextStyle(
-                                            fontSize: 15.sp,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 8.h,
-                                        ),
-                                        Text(
-                                          'like: 10/2/2023',
-                                          style: TextStyle(
-                                            fontSize: 12.sp,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
                                 ),
                               ),
                             ],
@@ -370,17 +389,21 @@ class CustomModalBottomSheet {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Decision',
-                                style: TextStyle(fontSize: 18.sp),
+                              Expanded(
+                                child: Text(
+                                  'Decision',
+                                  style: TextStyle(fontSize: 18.sp),
+                                ),
                               ),
-                              textFormFieldWidget(
-                                outlinedBorder: true,
-                                colors: Colors.white,
-                                hintText: 'Add Decision..',
-                                controller: decisionController,
-                                type: TextInputType.text,
-                                validate: (p0) => '',
+                              Expanded(
+                                child: textFormFieldWidget(
+                                  outlinedBorder: true,
+                                  colors: Colors.white,
+                                  hintText: 'Add Decision..',
+                                  controller: decisionController,
+                                  type: TextInputType.text,
+                                  validate: (p0) => '',
+                                ),
                               )
                             ],
                           ),

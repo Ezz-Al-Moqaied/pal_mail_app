@@ -15,6 +15,7 @@ class NewInboxHelper {
           {'Authorization': 'Bearer ${SharedPreferencesHelper.user.token}'});
     } catch (e) {
       flutterToastWidget(msg: "Add Mail Failed", colors: Colors.redAccent);
+      print(e.toString());
     }
   }
 }
