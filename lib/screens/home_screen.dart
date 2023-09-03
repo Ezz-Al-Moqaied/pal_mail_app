@@ -7,8 +7,6 @@ import 'package:pal_mail_app/providers/home_provider.dart';
 import 'package:pal_mail_app/widgets/status_mail_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
-import '../widgets/newInbox.dart';
-
 import '../widgets/bottom_sheet_widget.dart';
 import '../widgets/tags_widget.dart';
 
@@ -69,7 +67,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             textFormFieldWidget(
-                outlinedBorder: true,
+                outlinedBorder: false,
                 controller: searchController,
                 type: TextInputType.text,
                 validate: (value) {
