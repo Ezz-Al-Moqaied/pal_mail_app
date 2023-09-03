@@ -7,7 +7,6 @@ import 'package:pal_mail_app/providers/auth_provider.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
 import 'package:pal_mail_app/screens/auth_screen.dart';
 import 'package:pal_mail_app/screens/home_screen.dart';
-import 'package:pal_mail_app/screens/inbox_screen.dart';
 import 'package:pal_mail_app/screens/splash_screen.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(Keys.screenWidth, Keys.screenHeight),
+      designSize: const Size(Keys.screenWidth, Keys.screenHeight),
       builder: (context, child) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => AuthProvider()),
