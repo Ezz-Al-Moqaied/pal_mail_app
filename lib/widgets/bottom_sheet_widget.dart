@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
+import 'package:pal_mail_app/controller/new_inbox_controller.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 
 import '../constants/images.dart';
@@ -17,12 +18,12 @@ class CustomModalBottomSheet {
 
   Widget basicContainer(double height, Widget widget) {
     return Container(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.all(5.w.h),
         height: height,
         width: double.infinity,
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(30))),
+            borderRadius: BorderRadius.all(Radius.circular(30.r))),
         child: widget);
   }
 
@@ -71,7 +72,9 @@ class CustomModalBottomSheet {
                           fontSize: 19.sp, fontWeight: FontWeight.bold),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        NewInboxHelper.instance.addMail({});
+                      },
                       child: Text(
                         'Done',
                         style: TextStyle(
@@ -97,6 +100,7 @@ class CustomModalBottomSheet {
                                   hintText: 'name',
                                   prefixIcon: Icons.account_circle,
                                   suffixIcon: IconButton(
+                                      splashColor: Colors.transparent,
                                       onPressed: () {},
                                       icon: const Icon(
                                         Icons.info_outline,
