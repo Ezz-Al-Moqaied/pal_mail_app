@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 
+import '../constants/images.dart';
 import '../constants/widget.dart';
 
 class CustomModalBottomSheet {
@@ -13,7 +14,7 @@ class CustomModalBottomSheet {
   TextEditingController decisionController = TextEditingController();
 
   DateTime _dateTime = DateTime.now();
-  String? mo;
+
 
   Widget basicContainer(double height, Widget widget) {
     return Container(
@@ -406,8 +407,13 @@ class CustomModalBottomSheet {
                         padding: const EdgeInsets.all(10.0),
                         child: InkWell(
                           onTap: (){},
-                          child: const Row(
+                          child:  Row(
                             children: [
+                              Image.asset(
+                                Images.personIcon,width: 25,
+                                height: 25,
+                              ),
+                              SizedBox(width: 4,),
                               Text(
                                 'Add new Activity ..',
                                 style: TextStyle(
