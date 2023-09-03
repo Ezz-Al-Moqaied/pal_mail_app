@@ -32,6 +32,7 @@ class RegisterWidget extends StatelessWidget {
       child: Column(
         children: [
           textFormFieldWidget(
+            colors: colorWhite,
             outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
@@ -45,6 +46,7 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
+            colors: colorWhite,
             outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
@@ -58,6 +60,7 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
+            colors: colorWhite,
             outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
@@ -72,6 +75,7 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
+            colors: colorWhite,
             outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {

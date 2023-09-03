@@ -36,5 +36,5 @@ Widget textFormFieldWidget(
               ? OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.r)),
                   borderSide: BorderSide.none)
-              : const UnderlineInputBorder(),
+              : const UnderlineInputBorder(borderSide: BorderSide()),
         ));

@@ -41,12 +41,12 @@ class CustomModalBottomSheet {
       backgroundColor: Colors.grey[100],
       isScrollControlled: true,
       useSafeArea: true,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15), topLeft: Radius.circular(15))),
+              topRight: Radius.circular(15.r), topLeft: Radius.circular(15.r))),
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: MediaQuery.of(context).size.height - 50,
           child: SingleChildScrollView(
             child: Column(
@@ -61,28 +61,28 @@ class CustomModalBottomSheet {
                       child: Text(
                         'Cancle',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 18.sp,
                         ),
                       ),
                     ),
                     Text(
                       'New inbox',
-                      style:
-                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 19.sp, fontWeight: FontWeight.bold),
                     ),
                     TextButton(
                       onPressed: () {},
                       child: Text(
                         'Done',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18.sp, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
                 ),
                 smallSpacer,
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: EdgeInsets.symmetric(horizontal: 15.0.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -91,60 +91,67 @@ class CustomModalBottomSheet {
                           180.h,
                           Column(
                             children: [
-                              textFormFieldWidget(
-                                colors: Colors.white,
-                                hintText: 'name',
-                                prefixIcon: Icons.account_circle,
-                                suffixIcon: IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.circle_outlined,
-                                      color: Colors.blue,
-                                    )),
-                                controller: senderController,
-                                type: TextInputType.text,
-                                validate: (p0) => '',
-                                outlinedBorder: false,
+                              Expanded(
+                                child: textFormFieldWidget(
+                                  colors: Colors.white,
+                                  hintText: 'name',
+                                  prefixIcon: Icons.account_circle,
+                                  suffixIcon: IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.circle_outlined,
+                                        color: Colors.blue,
+                                      )),
+                                  controller: senderController,
+                                  type: TextInputType.text,
+                                  validate: (p0) => '',
+                                  outlinedBorder: true,
+                                ),
                               ),
                               lineContainer(),
-                              textFormFieldWidget(
-                                outlinedBorder: false,
-                                colors: Colors.white,
-                                hintText: 'Mobile',
-                                prefixIcon: Icons.phone_android_outlined,
-                                controller: mobileController,
-                                type: TextInputType.text,
-                                validate: (p0) => '',
+                              Expanded(
+                                child: textFormFieldWidget(
+                                  outlinedBorder: true,
+                                  colors: Colors.white,
+                                  hintText: 'Mobile',
+                                  prefixIcon: Icons.phone_android_outlined,
+                                  controller: mobileController,
+                                  type: TextInputType.text,
+                                  validate: (p0) => '',
+                                ),
                               ),
                               lineContainer(),
-                              InkWell(
-                                onTap: () {},
-                                child: const Padding(
-                                  padding: EdgeInsets.only(
-                                      right: 11.0, left: 11.0, top: 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Categories',
-                                        style: TextStyle(
-                                          fontSize: 16,
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        right: 11.0.w, left: 11.0.w, top: 10.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Categories',
+                                          style: TextStyle(
+                                            fontSize: 16.sp,
+                                          ),
                                         ),
-                                      ),
-                                      Spacer(),
-                                      Text(
-                                        'Other',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: textFieldHintColor,
+                                        Spacer(),
+                                        Text(
+                                          'Other',
+                                          style: TextStyle(
+                                            fontSize: 16.sp,
+                                            color: textFieldHintColor,
+                                          ),
                                         ),
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.grey,
-                                        size: 15,
-                                      )
-                                    ],
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Colors.grey,
+                                          size: 15.sp,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               )
@@ -156,22 +163,26 @@ class CustomModalBottomSheet {
                         143.h,
                         Column(
                           children: [
-                            textFormFieldWidget(
-                              outlinedBorder: false,
-                              colors: Colors.white,
-                              hintText: 'Title of Mail',
-                              controller: titleController,
-                              type: TextInputType.text,
-                              validate: (p0) => '',
+                            Expanded(
+                              child: textFormFieldWidget(
+                                outlinedBorder: true,
+                                colors: Colors.white,
+                                hintText: 'Title of Mail',
+                                controller: titleController,
+                                type: TextInputType.text,
+                                validate: (p0) => '',
+                              ),
                             ),
                             lineContainer(),
-                            textFormFieldWidget(
-                              outlinedBorder: false,
-                              colors: Colors.white,
-                              hintText: 'Describtion',
-                              controller: titleController,
-                              type: TextInputType.text,
-                              validate: (p0) => '',
+                            Expanded(
+                              child: textFormFieldWidget(
+                                outlinedBorder: true,
+                                colors: Colors.white,
+                                hintText: 'Describtion',
+                                controller: titleController,
+                                type: TextInputType.text,
+                                validate: (p0) => '',
+                              ),
                             )
                           ],
                         ),
@@ -200,10 +211,10 @@ class CustomModalBottomSheet {
                                   },
                                   child: Row(
                                     children: [
-                                      const Icon(
+                                      Icon(
                                         Icons.date_range,
                                         color: Colors.red,
-                                        size: 25,
+                                        size: 25.sp,
                                       ),
                                       SizedBox(
                                         width: 11.w,
@@ -212,10 +223,10 @@ class CustomModalBottomSheet {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          const Text(
+                                          Text(
                                             'Date',
                                             style: TextStyle(
-                                              fontSize: 15,
+                                              fontSize: 15.sp,
                                             ),
                                           ),
                                           SizedBox(
@@ -224,16 +235,16 @@ class CustomModalBottomSheet {
                                           Text(
                                             _dateTime.toString(),
                                             style: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: 12.sp,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      Spacer(),
-                                      const Icon(
+                                      const Spacer(),
+                                      Icon(
                                         Icons.arrow_forward_ios,
                                         color: Colors.grey,
-                                        size: 20,
+                                        size: 20.sp,
                                       )
                                     ],
                                   ),
@@ -241,13 +252,13 @@ class CustomModalBottomSheet {
                               ),
                               lineContainer(),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: EdgeInsets.all(8.0.w.h),
                                 child: Row(
                                   children: [
-                                    const Icon(
+                                    Icon(
                                       Icons.archive_outlined,
                                       color: textFieldHintColor,
-                                      size: 25,
+                                      size: 25.sp,
                                     ),
                                     SizedBox(
                                       width: 11.w,
@@ -256,19 +267,19 @@ class CustomModalBottomSheet {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text(
+                                        Text(
                                           'Archive Number',
                                           style: TextStyle(
-                                            fontSize: 15,
+                                            fontSize: 15.sp,
                                           ),
                                         ),
                                         SizedBox(
                                           height: 8.h,
                                         ),
-                                        const Text(
+                                        Text(
                                           'like: 10/2/2023',
                                           style: TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 12.sp,
                                           ),
                                         ),
                                       ],
@@ -283,30 +294,30 @@ class CustomModalBottomSheet {
                       basicContainer(
                           55.h,
                           Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: EdgeInsets.all(10.0.w.h),
                             child: Row(
                               children: [
-                                const Text(
+                                Text(
                                   '#',
                                   style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 18.sp,
                                     color: border,
                                   ),
                                 ),
                                 SizedBox(
                                   width: 14.w,
                                 ),
-                                const Text(
+                                Text(
                                   'Tags',
                                   style: TextStyle(
-                                    fontSize: 17,
+                                    fontSize: 17.sp,
                                   ),
                                 ),
-                                Spacer(),
-                                const Icon(
+                                const Spacer(),
+                                Icon(
                                   Icons.arrow_forward_ios,
                                   color: Colors.grey,
-                                  size: 20,
+                                  size: 20.sp,
                                 )
                               ],
                             ),
@@ -316,10 +327,10 @@ class CustomModalBottomSheet {
                       basicContainer(
                           60.h,
                           Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: EdgeInsets.all(10.0.w.h),
                             child: Row(
                               children: [
-                                Icon(Icons.local_offer_outlined),
+                                const Icon(Icons.local_offer_outlined),
                                 SizedBox(
                                   width: 14.w,
                                 ),
@@ -328,19 +339,20 @@ class CustomModalBottomSheet {
                                   height: 50.h,
                                   decoration: BoxDecoration(
                                       color: Colors.red,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Center(
+                                      borderRadius:
+                                          BorderRadius.circular(15.r)),
+                                  child: const Center(
                                     child: Text(
                                       'inbox',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Icon(
                                   Icons.arrow_forward_ios,
                                   color: Colors.grey,
-                                  size: 20,
+                                  size: 20.sp,
                                 )
                               ],
                             ),
@@ -350,16 +362,16 @@ class CustomModalBottomSheet {
                       basicContainer(
                         120.h,
                         Padding(
-                          padding: const EdgeInsets.only(left: 12.0, top: 12),
+                          padding: EdgeInsets.only(left: 12.0.w, top: 12.h),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 'Decision',
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 18.sp),
                               ),
                               textFormFieldWidget(
-                                outlinedBorder: false,
+                                outlinedBorder: true,
                                 colors: Colors.white,
                                 hintText: 'Add Decision..',
                                 controller: decisionController,
@@ -373,75 +385,75 @@ class CustomModalBottomSheet {
                       smallSpacer,
                       //part number seven
                       basicContainer(
-                          55,
+                          55.h,
                           Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: EdgeInsets.all(10.0.w.h),
                             child: InkWell(
                               onTap: () {},
                               child: Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.image,
                                     color: tagTextColor,
                                   ),
                                   SizedBox(
                                     width: 14.w,
                                   ),
-                                  const Text(
+                                  Text(
                                     'Add image',
                                     style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: 17.sp,
                                       color: splashColorDegree1,
                                     ),
                                   ),
-                                  Spacer(),
-                                  const Icon(
+                                  const Spacer(),
+                                  Icon(
                                     Icons.arrow_forward_ios,
                                     color: Colors.grey,
-                                    size: 20,
+                                    size: 20.sp,
                                   )
                                 ],
                               ),
                             ),
                           )),
                       smallSpacer,
-                      const Text(
+                      Text(
                         'Activity',
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 22.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
                       smallSpacer,
                       basicContainer(
-                          55,
+                          55.h,
                           Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: EdgeInsets.all(10.0.w.h),
                             child: InkWell(
                               onTap: () {},
                               child: Row(
                                 children: [
                                   Image.asset(
                                     Images.personIcon,
-                                    width: 25,
-                                    height: 25,
+                                    width: 25.w,
+                                    height: 25.h,
                                   ),
                                   SizedBox(
-                                    width: 4,
+                                    width: 4.w,
                                   ),
                                   Text(
                                     'Add new Activity ..',
                                     style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: 17.sp,
                                       color: splashColorDegree1,
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Icon(
                                     Icons.send,
                                     color: Colors.grey,
-                                    size: 20,
+                                    size: 20.sp,
                                   )
                                 ],
                               ),
