@@ -26,7 +26,7 @@ class AuthProvider with ChangeNotifier {
     await _authHelper.register(data).then((value) {
       if (value) {
         navigatePushReplacement(
-            context: context, nextScreen: const HomeScreen());
+            context: context, nextScreen:  HomeScreen());
       }
     });
   }

@@ -21,7 +21,7 @@ class AuthHelper {
       SharedPreferencesHelper.setUser(UserModel.fromJson(response))
           .then((value) async {
         navigatePushReplacement(
-            context: context, nextScreen: const HomeScreen());
+            context: context, nextScreen:  HomeScreen());
       });
     } catch (e) {
       flutterToastWidget(msg: "LogIn Failed", colors: Colors.redAccent);

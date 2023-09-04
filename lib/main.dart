@@ -7,6 +7,7 @@ import 'package:pal_mail_app/providers/auth_provider.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
 import 'package:pal_mail_app/screens/auth_screen.dart';
 import 'package:pal_mail_app/screens/home_screen.dart';
+import 'package:pal_mail_app/screens/main_page.dart';
 import 'package:pal_mail_app/screens/splash_screen.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
                   splashIconSize: double.infinity,
                   splash: const SplashScreen(),
                   nextScreen: SharedPreferencesHelper.isLogged
-                      ? const HomeScreen()
+                      ? const MainPage()
                       : const AuthScreen(),
                   splashTransition: SplashTransition.fadeTransition));
         },

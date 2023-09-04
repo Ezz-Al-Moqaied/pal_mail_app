@@ -9,6 +9,11 @@ class HomeProvider with ChangeNotifier {
   int countStatusPending = 0;
   int countStatusCompleted = 0;
 
+  double xoffset = 0;
+  double yoffset = 0;
+  double scalefactor = 1;
+  bool isdraweropen = false;
+
   final HomeHelper _homeHelper = HomeHelper.instance;
 
   Future<void> getAllMails() async {
@@ -32,5 +37,20 @@ class HomeProvider with ChangeNotifier {
     } else {
       countStatusCompleted++;
     }
+  }
+
+  void drawerOpen() {
+    xoffset = 0;
+    yoffset = 0;
+    scalefactor = 1;
+    isdraweropen = false;
+    notifyListeners();
+  }
+  void drawerClose(){
+    xoffset = 320;
+    yoffset = 90;
+    scalefactor = 0.8;
+    isdraweropen = true;
+    notifyListeners();
   }
 }
