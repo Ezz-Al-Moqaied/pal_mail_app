@@ -20,11 +20,13 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
+
     final authProvider = Provider.of<AuthProvider>(context);
     TextEditingController emailController = TextEditingController();
     TextEditingController usernameController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController confirmPasswordController = TextEditingController();
+
     final _formKey = GlobalKey<FormState>();
 
     return Scaffold(

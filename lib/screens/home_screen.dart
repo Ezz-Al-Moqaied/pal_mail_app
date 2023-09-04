@@ -4,11 +4,10 @@ import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/images.dart';
 import 'package:pal_mail_app/constants/widget.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
-
 import 'package:pal_mail_app/widgets/status_mail_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
-
+import '../widgets/bottom_sheet_widget.dart';
 import '../widgets/tags_widget.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,7 +22,9 @@ class HomeScreen extends StatelessWidget {
           style: ElevatedButton.styleFrom(
               backgroundColor: colorWhite,
               padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 20.w)),
-          onPressed: () {},
+          onPressed: () {
+            CustomModalBottomSheet(context: context).show();
+          },
           child: Row(
             children: [
               Container(
@@ -66,6 +67,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             textFormFieldWidget(
+                outlinedBorder: false,
                 controller: searchController,
                 type: TextInputType.text,
                 validate: (value) {

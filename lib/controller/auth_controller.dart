@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:pal_mail_app/services/helper/api_base_helper.dart';
 import 'package:pal_mail_app/constants/keys.dart';
 import 'package:pal_mail_app/models/user_model.dart';
-import 'package:pal_mail_app/screens/home_screen.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
+import '../screens/home_screen.dart';
+
+import '../screens/home_screen.dart';
 
 class AuthHelper {
   AuthHelper._();

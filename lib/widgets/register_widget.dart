@@ -32,6 +32,8 @@ class RegisterWidget extends StatelessWidget {
       child: Column(
         children: [
           textFormFieldWidget(
+            colors: colorWhite,
+            outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the username';
@@ -44,6 +46,8 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
+            colors: colorWhite,
+            outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the email';
@@ -56,6 +60,8 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
+            colors: colorWhite,
+            outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the password';
@@ -69,6 +75,8 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
+            colors: colorWhite,
+            outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the confirm password';

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget textFormFieldWidget(
-        {required TextEditingController controller,
+        {required bool outlinedBorder,
+        required TextEditingController controller,
         required TextInputType type,
         String? label,
         IconData? prefixIcon,
@@ -16,13 +18,13 @@ Widget textFormFieldWidget(
         floatingLabelBehavior = FloatingLabelBehavior.always,
         int maxLines = 1}) =>
     TextFormField(
-      controller: controller,
-      keyboardType: type,
-      validator: validate,
-      maxLines: maxLines,
-      obscureText: obscureText,
-      onTap: onTapForm,
-      decoration: InputDecoration(
+        controller: controller,
+        keyboardType: type,
+        validator: validate,
+        maxLines: maxLines,
+        obscureText: obscureText,
+        onTap: onTapForm,
+        decoration: InputDecoration(
           filled: true,
           hintText: hintText,
           floatingLabelBehavior: floatingLabelBehavior,
@@ -30,7 +32,9 @@ Widget textFormFieldWidget(
           label: Text(label ?? ''),
           prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
           suffixIcon: suffixIcon,
-          border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)),
-              borderSide: BorderSide.none)),
-    );
+          border: outlinedBorder
+              ? OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15.r)),
+                  borderSide: BorderSide.none)
+              : const UnderlineInputBorder(borderSide: BorderSide()),
+        ));
