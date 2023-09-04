@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(Keys.screenWidth, Keys.screenHeight),
+      designSize: const Size(Keys.screenWidth, Keys.screenHeight),
       builder: (context, child) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => AuthProvider()),

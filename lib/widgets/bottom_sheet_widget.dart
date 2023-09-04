@@ -15,7 +15,6 @@ class CustomModalBottomSheet {
 
   DateTime _dateTime = DateTime.now();
 
-
   Widget basicContainer(double height, Widget widget) {
     return Container(
         padding: EdgeInsets.all(5),
@@ -44,12 +43,11 @@ class CustomModalBottomSheet {
       useSafeArea: true,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15),
-              topLeft: Radius.circular(15))),
+              topRight: Radius.circular(15), topLeft: Radius.circular(15))),
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: MediaQuery.of(context).size.height-50,
+          height: MediaQuery.of(context).size.height - 50,
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -69,28 +67,26 @@ class CustomModalBottomSheet {
                     ),
                     Text(
                       'New inbox',
-                      style: TextStyle(
-                          fontSize: 19, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                     ),
                     TextButton(
                       onPressed: () {},
                       child: Text(
                         'Done',
                         style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
                 ),
                 smallSpacer,
                 Padding(
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                    //part number one
+                      //part number one
                       basicContainer(
                           180.h,
                           Column(
@@ -108,13 +104,14 @@ class CustomModalBottomSheet {
                                 controller: senderController,
                                 type: TextInputType.text,
                                 validate: (p0) => '',
+                                outlinedBorder: false,
                               ),
                               lineContainer(),
                               textFormFieldWidget(
+                                outlinedBorder: false,
                                 colors: Colors.white,
                                 hintText: 'Mobile',
-                                prefixIcon:
-                                Icons.phone_android_outlined,
+                                prefixIcon: Icons.phone_android_outlined,
                                 controller: mobileController,
                                 type: TextInputType.text,
                                 validate: (p0) => '',
@@ -124,12 +121,9 @@ class CustomModalBottomSheet {
                                 onTap: () {},
                                 child: const Padding(
                                   padding: EdgeInsets.only(
-                                      right: 11.0,
-                                      left: 11.0,
-                                      top: 10),
+                                      right: 11.0, left: 11.0, top: 10),
                                   child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         'Categories',
@@ -157,12 +151,13 @@ class CustomModalBottomSheet {
                             ],
                           )),
                       smallSpacer,
-                     //part number two
+                      //part number two
                       basicContainer(
                         143.h,
                         Column(
                           children: [
                             textFormFieldWidget(
+                              outlinedBorder: false,
                               colors: Colors.white,
                               hintText: 'Title of Mail',
                               controller: titleController,
@@ -171,6 +166,7 @@ class CustomModalBottomSheet {
                             ),
                             lineContainer(),
                             textFormFieldWidget(
+                              outlinedBorder: false,
                               colors: Colors.white,
                               hintText: 'Describtion',
                               controller: titleController,
@@ -181,25 +177,24 @@ class CustomModalBottomSheet {
                         ),
                       ),
                       smallSpacer,
-                    //part number three
+                      //part number three
                       basicContainer(
                           140.h,
                           Column(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: InkWell(
-                                  onTap: (){
+                                  onTap: () {
                                     showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(2000),
-                                        lastDate: DateTime(2025),
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000),
+                                      lastDate: DateTime(2025),
                                     ).then((value) {
                                       _dateTime = value!;
-                                    }).catchError((error){
+                                    }).catchError((error) {
                                       print(error.toString());
                                     });
                                   },
@@ -215,7 +210,7 @@ class CustomModalBottomSheet {
                                       ),
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
                                           const Text(
                                             'Date',
@@ -226,7 +221,8 @@ class CustomModalBottomSheet {
                                           SizedBox(
                                             height: 4.h,
                                           ),
-                                           Text(_dateTime.toString(),
+                                          Text(
+                                            _dateTime.toString(),
                                             style: TextStyle(
                                               fontSize: 12,
                                             ),
@@ -258,7 +254,7 @@ class CustomModalBottomSheet {
                                     ),
                                     Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         const Text(
                                           'Archive Number',
@@ -283,7 +279,7 @@ class CustomModalBottomSheet {
                             ],
                           )),
                       smallSpacer,
-                     //part number four
+                      //part number four
                       basicContainer(
                           55.h,
                           Padding(
@@ -317,47 +313,53 @@ class CustomModalBottomSheet {
                           )),
                       smallSpacer,
                       //part number five
-                      basicContainer(60.h, Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.local_offer_outlined),
-                            SizedBox(
-                              width: 14.w,
-                            ),
-                            Container(
-                              width: 70.w,
-                              height: 50.h,
-                              decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius:
-                                  BorderRadius.circular(15)),
-                              child: Center(
-                                child: Text(
-                                  'inbox',
-                                  style: TextStyle(
-                                      color: Colors.white),
+                      basicContainer(
+                          60.h,
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              children: [
+                                Icon(Icons.local_offer_outlined),
+                                SizedBox(
+                                  width: 14.w,
                                 ),
-                              ),
+                                Container(
+                                  width: 70.w,
+                                  height: 50.h,
+                                  decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Center(
+                                    child: Text(
+                                      'inbox',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                                Spacer(),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.grey,
+                                  size: 20,
+                                )
+                              ],
                             ),
-                            Spacer(),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.grey,
-                              size: 20,
-                            )
-                          ],
-                        ),
-                      )),
+                          )),
                       smallSpacer,
                       //part number sex
-                      basicContainer(120.h, Padding(
+                      basicContainer(
+                        120.h,
+                        Padding(
                           padding: const EdgeInsets.only(left: 12.0, top: 12),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Decision',style: TextStyle(fontSize: 18),),
+                              Text(
+                                'Decision',
+                                style: TextStyle(fontSize: 18),
+                              ),
                               textFormFieldWidget(
+                                outlinedBorder: false,
                                 colors: Colors.white,
                                 hintText: 'Add Decision..',
                                 controller: decisionController,
@@ -366,71 +368,85 @@ class CustomModalBottomSheet {
                               )
                             ],
                           ),
-                        ),),
+                        ),
+                      ),
                       smallSpacer,
                       //part number seven
-                      basicContainer(55, Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: InkWell(
-                          onTap: (){},
-                          child: Row(
-                            children: [
-                              Icon(Icons.image,color: tagTextColor,),
-                              SizedBox(
-                                width: 14.w,
+                      basicContainer(
+                          55,
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: InkWell(
+                              onTap: () {},
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.image,
+                                    color: tagTextColor,
+                                  ),
+                                  SizedBox(
+                                    width: 14.w,
+                                  ),
+                                  const Text(
+                                    'Add image',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      color: splashColorDegree1,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.grey,
+                                    size: 20,
+                                  )
+                                ],
                               ),
-                              const Text(
-                                'Add image',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: splashColorDegree1,
-                                ),
-                              ),
-                              Spacer(),
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                color: Colors.grey,
-                                size: 20,
-                              )
-                            ],
-                          ),
-                        ),
-                      )),
+                            ),
+                          )),
                       smallSpacer,
-                      const Text('Activity',style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),),
-                      smallSpacer,
-                      basicContainer(55,Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: InkWell(
-                          onTap: (){},
-                          child:  Row(
-                            children: [
-                              Image.asset(
-                                Images.personIcon,width: 25,
-                                height: 25,
-                              ),
-                              SizedBox(width: 4,),
-                              Text(
-                                'Add new Activity ..',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: splashColorDegree1,
-                                ),
-                              ),
-                              Spacer(),
-                              Icon(
-                                Icons.send,
-                                color: Colors.grey,
-                                size: 20,
-                              )
-                            ],
-                          ),
+                      const Text(
+                        'Activity',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
-                      ))
+                      ),
+                      smallSpacer,
+                      basicContainer(
+                          55,
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: InkWell(
+                              onTap: () {},
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    Images.personIcon,
+                                    width: 25,
+                                    height: 25,
+                                  ),
+                                  SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    'Add new Activity ..',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      color: splashColorDegree1,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Icon(
+                                    Icons.send,
+                                    color: Colors.grey,
+                                    size: 20,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ))
                     ],
                   ),
                 ),

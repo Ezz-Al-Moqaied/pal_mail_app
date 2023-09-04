@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-const smallSpacer = SizedBox(
-  height: 12,
+SizedBox smallSpacer = SizedBox(
+  height: 12.h,
 );
-const mediumSpacer = SizedBox(
-  height: 24,
+SizedBox mediumSpacer = SizedBox(
+  height: 24.h,
 );
-const largeSpacer = SizedBox(
-  height: 48,
+SizedBox largeSpacer = SizedBox(
+  height: 48.h,
 );
