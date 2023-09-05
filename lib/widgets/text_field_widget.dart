@@ -8,7 +8,7 @@ Widget textFormFieldWidget(
         String? label,
         IconData? prefixIcon,
         IconButton? suffixIcon,
-        required String? Function(String?)? validate,
+        String? Function(String?)? validate,
         Function? onSubmit,
         Function? onChange,
         bool obscureText = false,

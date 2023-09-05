@@ -21,18 +21,17 @@ class HomeProvider with ChangeNotifier {
       mailsModelToJson(value);
       for (var element in value.mails!) {
         mail.add(element);
-
         countStatus(element);
       }
     });
   }
 
-  countStatus(Mail element) {
-    if (element.status!.name == "Inbox") {
+  countStatus(Mail element) async {
+    if (element.status?.name == "Inbox") {
       countStatusInbox++;
-    } else if (element.status!.name == "In Progress") {
+    } else if (element.status?.name == "In Progress") {
       countStatusInProgress++;
-    } else if (element.status!.name == "Pending") {
+    } else if (element.status?.name == "Pending") {
       countStatusPending++;
     } else {
       countStatusCompleted++;
@@ -46,7 +45,8 @@ class HomeProvider with ChangeNotifier {
     isdraweropen = false;
     notifyListeners();
   }
-  void drawerClose(){
+
+  void drawerClose() {
     xoffset = 320;
     yoffset = 90;
     scalefactor = 0.8;

@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/controller/new_inbox_controller.dart';
 import 'package:pal_mail_app/providers/new_inbox_provider.dart';
+import 'package:pal_mail_app/screens/home_screen.dart';
+import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
+import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 
 import '../constants/images.dart';
@@ -13,7 +18,9 @@ class CustomModalBottomSheet {
   TextEditingController senderController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   TextEditingController decisionController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   DateTime _dateTime = DateTime.now();
 
@@ -73,18 +80,32 @@ class CustomModalBottomSheet {
                           fontSize: 19.sp, fontWeight: FontWeight.bold),
                     ),
                     TextButton(
-                      onPressed: () {
-                        NewInboxProvider().addMailProv(
-                            decision: "as",
-                            description: "das",
-                            finalDescision: "sad",
-                            tags: 'a',
-                            subject: 'YazanM',
-                            senderId: '5',
-                            archiveNumber: "123",
-                            archiveDate: "12/10/2022",
-                            statusId: '5',
-                            activities: 'a');
+                      onPressed: () async {
+                        if (titleController.text.isNotEmpty) {
+                          NewInboxProvider prov = NewInboxProvider();
+                          await prov.addMailProv(
+                              decision: decisionController.text,
+                              description: descriptionController.text,
+                              subject: titleController.text,
+                              senderId: '16',
+                              archiveNumber: "2000",
+                              archiveDate: "2023-10-20",
+                              statusId: '40',
+                              finalDescision: '',
+                              activities: [
+                                {"body": "any text", "user_id": 6},
+                                {"body": "any text2", "user_id": 5}
+                              ],
+                              tags: [
+                                3
+                              ]).then((value) {
+                            Timer(const Duration(seconds: 1), () {
+                              navigatePop(context: context);
+                            });
+                          });
+                        } else {
+                          flutterToastWidget(msg: 'Mail must have a title 😄');
+                        }
                       },
                       child: Text(
                         'Done',
@@ -107,6 +128,10 @@ class CustomModalBottomSheet {
                             children: [
                               Expanded(
                                 child: textFormFieldWidget(
+                                  validate: (value) {
+                                    senderController.text = value!;
+                                    return null;
+                                  },
                                   colors: Colors.white,
                                   hintText: 'name',
                                   prefixIcon: Icons.account_circle,
@@ -119,20 +144,22 @@ class CustomModalBottomSheet {
                                       )),
                                   controller: senderController,
                                   type: TextInputType.text,
-                                  validate: (p0) => '',
                                   outlinedBorder: true,
                                 ),
                               ),
                               lineContainer(),
                               Expanded(
                                 child: textFormFieldWidget(
+                                  validate: (value) {
+                                    mobileController.text = value!;
+                                    return null;
+                                  },
                                   outlinedBorder: true,
                                   colors: Colors.white,
                                   hintText: 'Mobile',
                                   prefixIcon: Icons.phone_android_outlined,
                                   controller: mobileController,
                                   type: TextInputType.text,
-                                  validate: (p0) => '',
                                 ),
                               ),
                               lineContainer(),
@@ -179,24 +206,29 @@ class CustomModalBottomSheet {
                         Column(
                           children: [
                             Expanded(
-                              child: textFormFieldWidget(
-                                outlinedBorder: true,
-                                colors: Colors.white,
-                                hintText: 'Title of Mail',
-                                controller: titleController,
-                                type: TextInputType.text,
-                                validate: (p0) => '',
+                              child: Form(
+                                key: formKey,
+                                child: textFormFieldWidget(
+                                  outlinedBorder: true,
+                                  colors: Colors.white,
+                                  hintText: 'Title of Mail',
+                                  controller: titleController,
+                                  type: TextInputType.text,
+                                ),
                               ),
                             ),
                             lineContainer(),
                             Expanded(
                               child: textFormFieldWidget(
+                                validate: (value) {
+                                  descriptionController.text = value!;
+                                  return null;
+                                },
                                 outlinedBorder: true,
                                 colors: Colors.white,
                                 hintText: 'Describtion',
-                                controller: titleController,
+                                controller: descriptionController,
                                 type: TextInputType.text,
-                                validate: (p0) => '',
                               ),
                             )
                           ],

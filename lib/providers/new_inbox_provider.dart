@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:pal_mail_app/controller/new_inbox_controller.dart';
 
@@ -12,8 +14,8 @@ class NewInboxProvider extends ChangeNotifier {
       String? decision,
       required String statusId,
       String? finalDescision,
-      String? tags,
-      String? activities}) async {
+      List? tags,
+      List? activities}) async {
     try {
       await _helper.addMail({
         'subject': subject,
@@ -24,8 +26,8 @@ class NewInboxProvider extends ChangeNotifier {
         'decision': decision,
         'status_id': statusId,
         'final_decision': finalDescision,
-        'tags': tags,
-        'activities': activities
+        'tags': json.encode(tags),
+        'activities': json.encode(activities),
       });
     } catch (e) {
       print(e.toString());
