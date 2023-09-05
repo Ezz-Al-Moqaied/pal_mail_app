@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(
                 backgroundColor: colorWhite,
                 padding:
-                EdgeInsets.symmetric(vertical: 18.h, horizontal: 20.w)),
+                    EdgeInsets.symmetric(vertical: 18.h, horizontal: 20.w)),
             onPressed: () {
               CustomModalBottomSheet(context: context).show();
             },
@@ -68,16 +68,16 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   homeProvider.isdraweropen
                       ? IconButton(
-                      onPressed: (){
-                         homeProvider.drawerOpen();
-                      },
-                      icon: const Icon(Icons.arrow_back_ios))
+                          onPressed: () {
+                            homeProvider.drawerOpen();
+                          },
+                          icon: const Icon(Icons.arrow_back_ios))
                       : IconButton(
-                    icon: const Icon(Icons.notes_sharp),
-                    onPressed: (){
-                       homeProvider.drawerClose();
-                    },
-                  ),
+                          icon: const Icon(Icons.notes_sharp),
+                          onPressed: () {
+                            homeProvider.drawerClose();
+                          },
+                        ),
                   const Spacer(),
                   Image.asset(
                     Images.personIcon,
@@ -85,6 +85,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               textFormFieldWidget(
+                  outlinedBorder: false,
                   controller: searchController,
                   type: TextInputType.text,
                   validate: (value) {
@@ -142,7 +143,7 @@ class HomeScreen extends StatelessWidget {
                   "Tags",
                   textAlign: TextAlign.start,
                   style:
-                  TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                      TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
                 ),
               ),
               // Tags start
