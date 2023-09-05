@@ -8,7 +8,7 @@ Widget textFormFieldWidget(
         String? label,
         IconData? prefixIcon,
         IconButton? suffixIcon,
-        required String? Function(String?)? validate,
+        String? Function(String?)? validate,
         Function? onSubmit,
         Function? onChange,
         bool obscureText = false,
@@ -36,7 +36,9 @@ Widget textFormFieldWidget(
               ? OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.r)),
                   borderSide: BorderSide.none)
+
               :  const UnderlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(15))
           ),
+
         ));

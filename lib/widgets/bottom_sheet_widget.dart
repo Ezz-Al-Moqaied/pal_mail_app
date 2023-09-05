@@ -1,7 +1,17 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
+
 import 'package:pal_mail_app/widgets/tags_widget.dart';
+
+import 'package:pal_mail_app/controller/new_inbox_controller.dart';
+import 'package:pal_mail_app/providers/new_inbox_provider.dart';
+import 'package:pal_mail_app/screens/home_screen.dart';
+import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
+import 'package:pal_mail_app/widgets/navigate_widget.dart';
+
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 
 import '../constants/images.dart';
@@ -12,20 +22,25 @@ class CustomModalBottomSheet {
   TextEditingController senderController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   TextEditingController decisionController = TextEditingController();
+
   TextEditingController tagsController = TextEditingController();
+
+
+  final formKey = GlobalKey<FormState>();
 
 
   DateTime _dateTime = DateTime.now();
 
   Widget basicContainer(double height, Widget widget) {
     return Container(
-        padding: EdgeInsets.all(5),
+        padding: EdgeInsets.all(5.w.h),
         height: height,
         width: double.infinity,
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(30))),
+            borderRadius: BorderRadius.all(Radius.circular(30.r))),
         child: widget);
   }
 
@@ -37,12 +52,12 @@ class CustomModalBottomSheet {
       backgroundColor: Colors.grey[100],
       isScrollControlled: true,
       useSafeArea: true,
-      shape: const RoundedRectangleBorder(
+      shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15), topLeft: Radius.circular(15))),
+              topRight: Radius.circular(15.r), topLeft: Radius.circular(15.r))),
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: MediaQuery.of(context).size.height - 50,
           child: SingleChildScrollView(
             child: Column(
@@ -57,28 +72,54 @@ class CustomModalBottomSheet {
                       child: Text(
                         'Cancle',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 18.sp,
                         ),
                       ),
                     ),
                     Text(
                       'New inbox',
-                      style:
-                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 19.sp, fontWeight: FontWeight.bold),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (titleController.text.isNotEmpty) {
+                          NewInboxProvider prov = NewInboxProvider();
+                          await prov.addMailProv(
+                              decision: decisionController.text,
+                              description: descriptionController.text,
+                              subject: titleController.text,
+                              senderId: '16',
+                              archiveNumber: "2000",
+                              archiveDate: "2023-10-20",
+                              statusId: '40',
+                              finalDescision: '',
+                              activities: [
+                                {"body": "any text", "user_id": 6},
+                                {"body": "any text2", "user_id": 5}
+                              ],
+                              tags: [
+                                3
+                              ]).then((value) {
+                            Timer(const Duration(seconds: 1), () {
+                              navigatePop(context: context);
+                            });
+                          });
+                        } else {
+                          flutterToastWidget(msg: 'Mail must have a title 😄');
+                        }
+                      },
                       child: Text(
                         'Done',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18.sp, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
                 ),
                 smallSpacer,
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: EdgeInsets.symmetric(horizontal: 15.0.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -87,58 +128,76 @@ class CustomModalBottomSheet {
                           183.h,
                           Column(
                             children: [
-                              textFormFieldWidget(
-                                colors: Colors.white,
-                                hintText: 'name',
-                                prefixIcon: Icons.account_circle,
-                                suffixIcon: IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Icons.circle_outlined,
-                                      color: Colors.blue,
-                                    )),
-                                controller: senderController,
-                                type: TextInputType.text,
-                                validate: (p0) => '',
-                                outlinedBorder: false,
+                              Expanded(
+                                child: textFormFieldWidget(
+                                  validate: (value) {
+                                    senderController.text = value!;
+                                    return null;
+                                  },
+                                  colors: Colors.white,
+                                  hintText: 'name',
+                                  prefixIcon: Icons.account_circle,
+                                  suffixIcon: IconButton(
+                                      splashColor: Colors.transparent,
+                                      onPressed: () {},
+                                      icon: const Icon(
+                                        Icons.info_outline,
+                                        color: Colors.blue,
+                                      )),
+                                  controller: senderController,
+                                  type: TextInputType.text,
+                                  outlinedBorder: true,
+                                ),
                               ),
-                              textFormFieldWidget(
-                                outlinedBorder: false,
-                                colors: Colors.white,
-                                hintText: 'Mobile',
-                                prefixIcon: Icons.phone_android_outlined,
-                                controller: mobileController,
-                                type: TextInputType.text,
-                                validate: (p0) => '',
+
+                              lineContainer(),
+                              Expanded(
+                                child: textFormFieldWidget(
+                                  validate: (value) {
+                                    mobileController.text = value!;
+                                    return null;
+                                  },
+                                  outlinedBorder: true,
+                                  colors: Colors.white,
+                                  hintText: 'Mobile',
+                                  prefixIcon: Icons.phone_android_outlined,
+                                  controller: mobileController,
+                                  type: TextInputType.text,
+                                ),
                               ),
-                              InkWell(
-                                onTap: () {},
-                                child: const Padding(
-                                  padding: EdgeInsets.only(
-                                      right: 11.0, left: 11.0, top: 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Categories',
-                                        style: TextStyle(
-                                          fontSize: 16,
+                              lineContainer(),
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        right: 11.0.w, left: 11.0.w, top: 10.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Categories',
+                                          style: TextStyle(
+                                            fontSize: 16.sp,
+                                          ),
+
                                         ),
-                                      ),
-                                      Spacer(),
-                                      Text(
-                                        'Other',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: textFieldHintColor,
+                                        Spacer(),
+                                        Text(
+                                          'Other',
+                                          style: TextStyle(
+                                            fontSize: 16.sp,
+                                            color: textFieldHintColor,
+                                          ),
                                         ),
-                                      ),
-                                      Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.grey,
-                                        size: 15,
-                                      )
-                                    ],
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Colors.grey,
+                                          size: 15.sp,
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               )
@@ -150,21 +209,33 @@ class CustomModalBottomSheet {
                         145.h,
                         Column(
                           children: [
-                            textFormFieldWidget(
-                              outlinedBorder: false,
-                              colors: Colors.white,
-                              hintText: 'Title of Mail',
-                              controller: titleController,
-                              type: TextInputType.text,
-                              validate: (p0) => '',
+                            Expanded(
+                              child: Form(
+                                key: formKey,
+                                child: textFormFieldWidget(
+                                  outlinedBorder: true,
+                                  colors: Colors.white,
+                                  hintText: 'Title of Mail',
+                                  controller: titleController,
+                                  type: TextInputType.text,
+                                ),
+                              ),
                             ),
-                            textFormFieldWidget(
-                              outlinedBorder: true,
-                              colors: Colors.white,
-                              hintText: 'Describtion',
-                              controller: titleController,
-                              type: TextInputType.text,
-                              validate: (p0) => '',
+
+                            lineContainer(),
+                            Expanded(
+                              child: textFormFieldWidget(
+                                validate: (value) {
+                                  descriptionController.text = value!;
+                                  return null;
+                                },
+                                outlinedBorder: true,
+                                colors: Colors.white,
+                                hintText: 'Describtion',
+                                controller: descriptionController,
+                                type: TextInputType.text,
+                              ),
+
                             )
                           ],
                         ),
@@ -176,27 +247,78 @@ class CustomModalBottomSheet {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2025),
-                                    ).then((value) {
-                                      _dateTime = value!;
-                                    }).catchError((error) {
-                                      print(error.toString());
-                                    });
-                                  },
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2000),
+                                        lastDate: DateTime(2025),
+                                      ).then((value) {
+                                        _dateTime = value!;
+                                      }).catchError((error) {
+                                        print(error.toString());
+                                      });
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.date_range,
+                                          color: Colors.red,
+                                          size: 25.sp,
+                                        ),
+                                        SizedBox(
+                                          width: 11.w,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'Date',
+                                                style: TextStyle(
+                                                  fontSize: 15.sp,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 4.h,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                _dateTime.toString(),
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Spacer(),
+                                        Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: Colors.grey,
+                                          size: 20.sp,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              lineContainer(),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0.w.h),
                                   child: Row(
                                     children: [
-                                      const Icon(
-                                        Icons.date_range,
-                                        color: Colors.red,
-                                        size: 25,
+                                      Icon(
+                                        Icons.archive_outlined,
+                                        color: textFieldHintColor,
+                                        size: 25.sp,
                                       ),
                                       SizedBox(
                                         width: 11.w,
@@ -205,33 +327,28 @@ class CustomModalBottomSheet {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          const Text(
-                                            'Date',
+                                          Text(
+                                            'Archive Number',
                                             style: TextStyle(
-                                              fontSize: 15,
+                                              fontSize: 15.sp,
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 4.h,
+                                            height: 8.h,
                                           ),
                                           Text(
-                                            _dateTime.toString(),
+                                            'like: 10/2/2023',
                                             style: TextStyle(
-                                              fontSize: 12,
+                                              fontSize: 12.sp,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      Spacer(),
-                                      const Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.grey,
-                                        size: 20,
-                                      )
                                     ],
                                   ),
                                 ),
                               ),
+
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
@@ -268,6 +385,7 @@ class CustomModalBottomSheet {
                                   ],
                                 ),
                               ),
+
                             ],
                           )),
                       smallSpacer,
@@ -275,6 +393,7 @@ class CustomModalBottomSheet {
                       basicContainer(
                           55.h,
                           Padding(
+
                             padding: const EdgeInsets.all(10.0),
                             child: InkWell(
                               onTap: (){
@@ -386,6 +505,7 @@ class CustomModalBottomSheet {
                                   )
                                 ],
                               ),
+
                             ),
                           )),
                       smallSpacer,
@@ -393,10 +513,10 @@ class CustomModalBottomSheet {
                       basicContainer(
                           60.h,
                           Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: EdgeInsets.all(10.0.w.h),
                             child: Row(
                               children: [
-                                Icon(Icons.local_offer_outlined),
+                                const Icon(Icons.local_offer_outlined),
                                 SizedBox(
                                   width: 14.w,
                                 ),
@@ -405,19 +525,20 @@ class CustomModalBottomSheet {
                                   height: 50.h,
                                   decoration: BoxDecoration(
                                       color: Colors.red,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Center(
+                                      borderRadius:
+                                          BorderRadius.circular(15.r)),
+                                  child: const Center(
                                     child: Text(
                                       'inbox',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Icon(
                                   Icons.arrow_forward_ios,
                                   color: Colors.grey,
-                                  size: 20,
+                                  size: 20.sp,
                                 )
                               ],
                             ),
@@ -427,21 +548,25 @@ class CustomModalBottomSheet {
                       basicContainer(
                         120.h,
                         Padding(
-                          padding: const EdgeInsets.only(left: 12.0, top: 12),
+                          padding: EdgeInsets.only(left: 12.0.w, top: 12.h),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Decision',
-                                style: TextStyle(fontSize: 18),
+                              Expanded(
+                                child: Text(
+                                  'Decision',
+                                  style: TextStyle(fontSize: 18.sp),
+                                ),
                               ),
-                              textFormFieldWidget(
-                                outlinedBorder: false,
-                                colors: Colors.white,
-                                hintText: 'Add Decision..',
-                                controller: decisionController,
-                                type: TextInputType.text,
-                                validate: (p0) => '',
+                              Expanded(
+                                child: textFormFieldWidget(
+                                  outlinedBorder: true,
+                                  colors: Colors.white,
+                                  hintText: 'Add Decision..',
+                                  controller: decisionController,
+                                  type: TextInputType.text,
+                                  validate: (p0) => '',
+                                ),
                               )
                             ],
                           ),
@@ -450,75 +575,75 @@ class CustomModalBottomSheet {
                       smallSpacer,
                       //part number seven
                       basicContainer(
-                          55,
+                          55.h,
                           Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: EdgeInsets.all(10.0.w.h),
                             child: InkWell(
                               onTap: () {},
                               child: Row(
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.image,
                                     color: tagTextColor,
                                   ),
                                   SizedBox(
                                     width: 14.w,
                                   ),
-                                  const Text(
+                                  Text(
                                     'Add image',
                                     style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: 17.sp,
                                       color: splashColorDegree1,
                                     ),
                                   ),
-                                  Spacer(),
-                                  const Icon(
+                                  const Spacer(),
+                                  Icon(
                                     Icons.arrow_forward_ios,
                                     color: Colors.grey,
-                                    size: 20,
+                                    size: 20.sp,
                                   )
                                 ],
                               ),
                             ),
                           )),
                       smallSpacer,
-                      const Text(
+                      Text(
                         'Activity',
                         style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 22.sp,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
                       smallSpacer,
                       basicContainer(
-                          55,
+                          55.h,
                           Padding(
-                            padding: const EdgeInsets.all(10.0),
+                            padding: EdgeInsets.all(10.0.w.h),
                             child: InkWell(
                               onTap: () {},
                               child: Row(
                                 children: [
                                   Image.asset(
                                     Images.personIcon,
-                                    width: 25,
-                                    height: 25,
+                                    width: 25.w,
+                                    height: 25.h,
                                   ),
                                   SizedBox(
-                                    width: 4,
+                                    width: 4.w,
                                   ),
                                   Text(
                                     'Add new Activity ..',
                                     style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: 17.sp,
                                       color: splashColorDegree1,
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Icon(
                                     Icons.send,
                                     color: Colors.grey,
-                                    size: 20,
+                                    size: 20.sp,
                                   )
                                 ],
                               ),

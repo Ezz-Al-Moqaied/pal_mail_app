@@ -28,7 +28,7 @@ class HomeHelper {
     await response.then((value) {
       data = value;
     });
-    // print(Mail.fromJson(data!).subject);
+
     return MailsModel.fromJson(data!);
   }
 }

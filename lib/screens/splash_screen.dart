@@ -13,10 +13,9 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
-    if(SharedPreferencesHelper.isLogged) {
+    if (SharedPreferencesHelper.isLogged) {
       homeProvider.getAllMails();
     }
-
     return Container(
       width: double.infinity,
       height: double.infinity,
