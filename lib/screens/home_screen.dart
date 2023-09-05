@@ -85,7 +85,6 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               textFormFieldWidget(
-                  outlinedBorder: false,
                   controller: searchController,
                   type: TextInputType.text,
                   validate: (value) {
@@ -93,7 +92,8 @@ class HomeScreen extends StatelessWidget {
                   },
                   hintText: "search",
                   prefixIcon: Icons.search,
-                  colors: Colors.white, outlinedBorder:true ),
+                  colors: Colors.white,
+                  outlinedBorder: true),
               mediumSpacer,
               Row(
                 children: [
@@ -147,9 +147,9 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               // Tags start
-               TagsWidget(tag: [
-
-               ],),
+              TagsWidget(
+                tag: [],
+              ),
               // Tags End
             ],
           ),

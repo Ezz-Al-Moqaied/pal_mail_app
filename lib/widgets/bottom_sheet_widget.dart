@@ -27,9 +27,7 @@ class CustomModalBottomSheet {
 
   TextEditingController tagsController = TextEditingController();
 
-
   final formKey = GlobalKey<FormState>();
-
 
   DateTime _dateTime = DateTime.now();
 
@@ -43,7 +41,6 @@ class CustomModalBottomSheet {
             borderRadius: BorderRadius.all(Radius.circular(30.r))),
         child: widget);
   }
-
 
   CustomModalBottomSheet({required this.context});
 
@@ -149,8 +146,6 @@ class CustomModalBottomSheet {
                                   outlinedBorder: true,
                                 ),
                               ),
-
-                              lineContainer(),
                               Expanded(
                                 child: textFormFieldWidget(
                                   validate: (value) {
@@ -165,7 +160,6 @@ class CustomModalBottomSheet {
                                   type: TextInputType.text,
                                 ),
                               ),
-                              lineContainer(),
                               Expanded(
                                 child: InkWell(
                                   onTap: () {},
@@ -181,7 +175,6 @@ class CustomModalBottomSheet {
                                           style: TextStyle(
                                             fontSize: 16.sp,
                                           ),
-
                                         ),
                                         Spacer(),
                                         Text(
@@ -221,8 +214,6 @@ class CustomModalBottomSheet {
                                 ),
                               ),
                             ),
-
-                            lineContainer(),
                             Expanded(
                               child: textFormFieldWidget(
                                 validate: (value) {
@@ -235,7 +226,6 @@ class CustomModalBottomSheet {
                                 controller: descriptionController,
                                 type: TextInputType.text,
                               ),
-
                             )
                           ],
                         ),
@@ -309,7 +299,6 @@ class CustomModalBottomSheet {
                                   ),
                                 ),
                               ),
-                              lineContainer(),
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsets.all(8.0.w.h),
@@ -327,19 +316,23 @@ class CustomModalBottomSheet {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            'Archive Number',
-                                            style: TextStyle(
-                                              fontSize: 15.sp,
+                                          Expanded(
+                                            child: Text(
+                                              'Archive Number',
+                                              style: TextStyle(
+                                                fontSize: 15.sp,
+                                              ),
                                             ),
                                           ),
                                           SizedBox(
                                             height: 8.h,
                                           ),
-                                          Text(
-                                            'like: 10/2/2023',
-                                            style: TextStyle(
-                                              fontSize: 12.sp,
+                                          Expanded(
+                                            child: Text(
+                                              'like: 10/2/2023',
+                                              style: TextStyle(
+                                                fontSize: 12.sp,
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -348,109 +341,84 @@ class CustomModalBottomSheet {
                                   ),
                                 ),
                               ),
-
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.archive_outlined,
-                                      color: textFieldHintColor,
-                                      size: 25,
-                                    ),
-                                    SizedBox(
-                                      width: 11.w,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          'Archive Number',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 8.h,
-                                        ),
-                                        const Text(
-                                          'like: 10/2/2023',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-
                             ],
                           )),
                       smallSpacer,
                       //part number four
                       basicContainer(
-                          55.h,
+                          65.h,
                           Padding(
-
                             padding: const EdgeInsets.all(10.0),
                             child: InkWell(
-                              onTap: (){
+                              onTap: () {
                                 showModalBottomSheet(
                                   backgroundColor: Colors.grey[100],
                                   isScrollControlled: true,
                                   useSafeArea: true,
                                   shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(15), topLeft: Radius.circular(15))),
-                                    context: context,
-                                    builder: (BuildContext context){
-                                      return Container(
-                                        height: MediaQuery.of(context).size.height - 50,
-                                        child:Column(
-                                          children: <Widget>[
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text(
-                                                    'Cancle',
-                                                    style: TextStyle(
+                                          topRight: Radius.circular(15),
+                                          topLeft: Radius.circular(15))),
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      height:
+                                          MediaQuery.of(context).size.height -
+                                              50,
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  'Cancle',
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                'Tags',
+                                                style: TextStyle(
+                                                    fontSize: 19,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {},
+                                                child: Text(
+                                                  'Done',
+                                                  style: TextStyle(
                                                       fontSize: 18,
-                                                    ),
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
-                                                Text(
-                                                  'Tags',
-                                                  style:
-                                                  TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {},
-                                                  child: Text(
-                                                    'Done',
-                                                    style: TextStyle(
-                                                        fontSize: 18, fontWeight: FontWeight.bold),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            smallSpacer,
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                              ),
+                                            ],
+                                          ),
+                                          smallSpacer,
+                                          Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10.0),
                                               child: Column(
                                                 children: [
                                                   Container(
                                                     padding: EdgeInsets.all(5),
                                                     width: double.infinity,
-                                                    decoration: const BoxDecoration(
+                                                    decoration:
+                                                        const BoxDecoration(
                                                       color: Colors.white,
-                                                      borderRadius: BorderRadius.all(Radius.circular(30))
-                                                      ,),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  30)),
+                                                    ),
                                                     child: TagsWidget(tag: [
                                                       'medo',
                                                       'medo',
@@ -460,23 +428,25 @@ class CustomModalBottomSheet {
                                                       'medo',
                                                     ]),
                                                   ),
-                                                  SizedBox(height: 22,),
+                                                  SizedBox(
+                                                    height: 22,
+                                                  ),
                                                   textFormFieldWidget(
                                                     colors: Colors.grey,
-                                                      hintText: 'add New tags..',
-                                                      maxLines: 1,
-                                                      label: 'Tags',
-                                                      outlinedBorder: true,
-                                                      controller: tagsController,
-                                                      type: TextInputType.text,
-                                                      validate: (p0) => '',)
+                                                    hintText: 'add New tags..',
+                                                    maxLines: 1,
+                                                    label: 'Tags',
+                                                    outlinedBorder: true,
+                                                    controller: tagsController,
+                                                    type: TextInputType.text,
+                                                    validate: (p0) => '',
+                                                  )
                                                 ],
-                                              )
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
+                                              )),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 );
                               },
                               child: Row(
@@ -505,7 +475,6 @@ class CustomModalBottomSheet {
                                   )
                                 ],
                               ),
-
                             ),
                           )),
                       smallSpacer,

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
 import '../constants/colors.dart';
-import '../providers/home_provider.dart';
 
 class TagsWidget extends StatelessWidget {
   List<String> tag;
@@ -26,16 +24,18 @@ class TagsWidget extends StatelessWidget {
           crossAxisSpacing: 4.w),
       itemBuilder: (context, index) {
         return Container(
-          padding: const EdgeInsets.all(4),
+            padding: const EdgeInsets.all(4),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.r),
-              color: tagButtonColor
-            ),
-            child: Text("#${tag[index]}" , style: TextStyle(
-              color: tagTextColor ,
-              fontSize: 16.sp ,
-            ),));
+                borderRadius: BorderRadius.circular(30.r),
+                color: tagButtonColor),
+            child: Text(
+              "#${tag[index]}",
+              style: TextStyle(
+                color: tagTextColor,
+                fontSize: 16.sp,
+              ),
+            ));
       },
     );
   }
