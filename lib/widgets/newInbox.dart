@@ -7,6 +7,7 @@ import '../constants/widget.dart';
 
 class NewInbox extends StatelessWidget {
   NewInbox({super.key});
+  
   Widget basicContainer(Widget widget) {
     return Container(
         padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
@@ -19,6 +20,7 @@ class NewInbox extends StatelessWidget {
   TextEditingController senderController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController titleController = TextEditingController();
+  TextEditingController describtionController = TextEditingController();
   TextEditingController DecisionController = TextEditingController();
 
   @override
@@ -128,18 +130,17 @@ class NewInbox extends StatelessWidget {
                     children: [
                       textFormFieldWidget(
                         colors: colorWhite,
-                        outlinedBorder: false,
+                        outlinedBorder: true,
                         hintText: 'Title of Mail',
                         controller: titleController,
                         type: TextInputType.text,
                         validate: (p0) => '',
                       ),
-                      smallSpacer,
                       textFormFieldWidget(
                         colors: colorWhite,
-                        outlinedBorder: false,
+                        outlinedBorder: true,
                         hintText: 'Describtion',
-                        controller: titleController,
+                        controller: describtionController,
                         type: TextInputType.text,
                         validate: (p0) => '',
                       )

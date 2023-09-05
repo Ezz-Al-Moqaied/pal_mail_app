@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
+import 'package:pal_mail_app/widgets/tags_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 
 import '../constants/images.dart';
@@ -12,6 +13,8 @@ class CustomModalBottomSheet {
   TextEditingController mobileController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController decisionController = TextEditingController();
+  TextEditingController tagsController = TextEditingController();
+
 
   DateTime _dateTime = DateTime.now();
 
@@ -26,13 +29,6 @@ class CustomModalBottomSheet {
         child: widget);
   }
 
-  Widget lineContainer() {
-    return Container(
-      height: 1,
-      width: 400,
-      color: Colors.grey[200],
-    );
-  }
 
   CustomModalBottomSheet({required this.context});
 
@@ -88,7 +84,7 @@ class CustomModalBottomSheet {
                     children: [
                       //part number one
                       basicContainer(
-                          180.h,
+                          183.h,
                           Column(
                             children: [
                               textFormFieldWidget(
@@ -106,7 +102,6 @@ class CustomModalBottomSheet {
                                 validate: (p0) => '',
                                 outlinedBorder: false,
                               ),
-                              lineContainer(),
                               textFormFieldWidget(
                                 outlinedBorder: false,
                                 colors: Colors.white,
@@ -116,7 +111,6 @@ class CustomModalBottomSheet {
                                 type: TextInputType.text,
                                 validate: (p0) => '',
                               ),
-                              lineContainer(),
                               InkWell(
                                 onTap: () {},
                                 child: const Padding(
@@ -153,7 +147,7 @@ class CustomModalBottomSheet {
                       smallSpacer,
                       //part number two
                       basicContainer(
-                        143.h,
+                        145.h,
                         Column(
                           children: [
                             textFormFieldWidget(
@@ -164,9 +158,8 @@ class CustomModalBottomSheet {
                               type: TextInputType.text,
                               validate: (p0) => '',
                             ),
-                            lineContainer(),
                             textFormFieldWidget(
-                              outlinedBorder: false,
+                              outlinedBorder: true,
                               colors: Colors.white,
                               hintText: 'Describtion',
                               controller: titleController,
@@ -239,7 +232,6 @@ class CustomModalBottomSheet {
                                   ),
                                 ),
                               ),
-                              lineContainer(),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
@@ -284,31 +276,116 @@ class CustomModalBottomSheet {
                           55.h,
                           Padding(
                             padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              children: [
-                                const Text(
-                                  '#',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: border,
+                            child: InkWell(
+                              onTap: (){
+                                showModalBottomSheet(
+                                  backgroundColor: Colors.grey[100],
+                                  isScrollControlled: true,
+                                  useSafeArea: true,
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(15), topLeft: Radius.circular(15))),
+                                    context: context,
+                                    builder: (BuildContext context){
+                                      return Container(
+                                        height: MediaQuery.of(context).size.height - 50,
+                                        child:Column(
+                                          children: <Widget>[
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              children: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text(
+                                                    'Cancle',
+                                                    style: TextStyle(
+                                                      fontSize: 18,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Tags',
+                                                  style:
+                                                  TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () {},
+                                                  child: Text(
+                                                    'Done',
+                                                    style: TextStyle(
+                                                        fontSize: 18, fontWeight: FontWeight.bold),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            smallSpacer,
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    padding: EdgeInsets.all(5),
+                                                    width: double.infinity,
+                                                    decoration: const BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius: BorderRadius.all(Radius.circular(30))
+                                                      ,),
+                                                    child: TagsWidget(tag: [
+                                                      'medo',
+                                                      'medo',
+                                                      'medo',
+                                                      'medo',
+                                                      'medo',
+                                                      'medo',
+                                                    ]),
+                                                  ),
+                                                  SizedBox(height: 22,),
+                                                  textFormFieldWidget(
+                                                    colors: Colors.grey,
+                                                      hintText: 'add New tags..',
+                                                      maxLines: 1,
+                                                      label: 'Tags',
+                                                      outlinedBorder: true,
+                                                      controller: tagsController,
+                                                      type: TextInputType.text,
+                                                      validate: (p0) => '',)
+                                                ],
+                                              )
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  const Text(
+                                    '#',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: border,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 14.w,
-                                ),
-                                const Text(
-                                  'Tags',
-                                  style: TextStyle(
-                                    fontSize: 17,
+                                  SizedBox(
+                                    width: 14.w,
                                   ),
-                                ),
-                                Spacer(),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.grey,
-                                  size: 20,
-                                )
-                              ],
+                                  const Text(
+                                    'Tags',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Colors.grey,
+                                    size: 20,
+                                  )
+                                ],
+                              ),
                             ),
                           )),
                       smallSpacer,
