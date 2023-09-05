@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                   },
                   hintText: "search",
                   prefixIcon: Icons.search,
-                  colors: Colors.white),
+                  colors: Colors.white, outlinedBorder:true ),
               mediumSpacer,
               Row(
                 children: [
@@ -147,7 +147,9 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               // Tags start
-              const TagsWidget(),
+               TagsWidget(tag: [
+
+               ],),
               // Tags End
             ],
           ),
