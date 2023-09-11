@@ -149,8 +149,6 @@ class CustomModalBottomSheet {
                                   outlinedBorder: true,
                                 ),
                               ),
-
-                              lineContainer(),
                               Expanded(
                                 child: textFormFieldWidget(
                                   validate: (value) {
@@ -165,7 +163,6 @@ class CustomModalBottomSheet {
                                   type: TextInputType.text,
                                 ),
                               ),
-                              lineContainer(),
                               Expanded(
                                 child: InkWell(
                                   onTap: () {},
@@ -221,8 +218,6 @@ class CustomModalBottomSheet {
                                 ),
                               ),
                             ),
-
-                            lineContainer(),
                             Expanded(
                               child: textFormFieldWidget(
                                 validate: (value) {
@@ -309,7 +304,6 @@ class CustomModalBottomSheet {
                                   ),
                                 ),
                               ),
-                              lineContainer(),
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsets.all(8.0.w.h),

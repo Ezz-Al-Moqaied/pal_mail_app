@@ -93,7 +93,7 @@ class HomeScreen extends StatelessWidget {
                   },
                   hintText: "search",
                   prefixIcon: Icons.search,
-                  colors: Colors.white, outlinedBorder:true ),
+                  colors: Colors.white,),
               mediumSpacer,
               Row(
                 children: [
