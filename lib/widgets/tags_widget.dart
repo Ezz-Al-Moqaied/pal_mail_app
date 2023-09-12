@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-
 import '../constants/colors.dart';
-import '../providers/home_provider.dart';
 
 class TagsWidget extends StatelessWidget {
   List<String> tag;

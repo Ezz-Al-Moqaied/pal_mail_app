@@ -7,8 +7,6 @@ import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import '../screens/home_screen.dart';
 
-import '../screens/home_screen.dart';
-
 class AuthHelper {
   AuthHelper._();
 

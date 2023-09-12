@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
+import 'package:pal_mail_app/screens/categories_screen.dart';
 
 import 'package:pal_mail_app/widgets/tags_widget.dart';
 
@@ -146,7 +147,7 @@ class CustomModalBottomSheet {
                                       )),
                                   controller: senderController,
                                   type: TextInputType.text,
-                                  outlinedBorder: true,
+                                  outlinedBorder: false,
                                 ),
                               ),
                               Expanded(
@@ -155,7 +156,7 @@ class CustomModalBottomSheet {
                                     mobileController.text = value!;
                                     return null;
                                   },
-                                  outlinedBorder: true,
+                                  outlinedBorder: false,
                                   colors: Colors.white,
                                   hintText: 'Mobile',
                                   prefixIcon: Icons.phone_android_outlined,
@@ -165,7 +166,9 @@ class CustomModalBottomSheet {
                               ),
                               Expanded(
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    CategoriesBottomSheet(context: context).showCategoriesBottomSheet();
+                                  },
                                   child: Padding(
                                     padding: EdgeInsets.only(
                                         right: 11.0.w, left: 11.0.w, top: 10.h),
@@ -210,7 +213,7 @@ class CustomModalBottomSheet {
                               child: Form(
                                 key: formKey,
                                 child: textFormFieldWidget(
-                                  outlinedBorder: true,
+                                  outlinedBorder: false,
                                   colors: Colors.white,
                                   hintText: 'Title of Mail',
                                   controller: titleController,
@@ -342,44 +345,42 @@ class CustomModalBottomSheet {
                                   ),
                                 ),
                               ),
-
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.archive_outlined,
-                                      color: textFieldHintColor,
-                                      size: 25,
-                                    ),
-                                    SizedBox(
-                                      width: 11.w,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          'Archive Number',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 8.h,
-                                        ),
-                                        const Text(
-                                          'like: 10/2/2023',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: Row(
+                              //     children: [
+                              //       const Icon(
+                              //         Icons.archive_outlined,
+                              //         color: textFieldHintColor,
+                              //         size: 25,
+                              //       ),
+                              //       SizedBox(
+                              //         width: 11.w,
+                              //       ),
+                              //       Column(
+                              //         crossAxisAlignment:
+                              //             CrossAxisAlignment.start,
+                              //         children: [
+                              //           const Text(
+                              //             'Archive Number',
+                              //             style: TextStyle(
+                              //               fontSize: 15,
+                              //             ),
+                              //           ),
+                              //           SizedBox(
+                              //             height: 8.h,
+                              //           ),
+                              //           const Text(
+                              //             'like: 10/2/2023',
+                              //             style: TextStyle(
+                              //               fontSize: 12,
+                              //             ),
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           )),
                       smallSpacer,
