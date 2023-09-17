@@ -1,22 +1,16 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
-import 'package:pal_mail_app/screens/categories_screen.dart';
-
+import 'package:pal_mail_app/widgets/category_bottomSheet.dart';
 import 'package:pal_mail_app/widgets/tags_widget.dart';
-
-import 'package:pal_mail_app/controller/new_inbox_controller.dart';
 import 'package:pal_mail_app/providers/new_inbox_provider.dart';
-import 'package:pal_mail_app/screens/home_screen.dart';
 import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
-
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
-
 import '../constants/images.dart';
 import '../constants/widget.dart';
+
 
 class CustomModalBottomSheet {
   final BuildContext context;
@@ -167,7 +161,7 @@ class CustomModalBottomSheet {
                               Expanded(
                                 child: InkWell(
                                   onTap: () {
-                                    CategoriesBottomSheet(context: context).showCategoriesBottomSheet();
+                                    CategoriesBottomSheet().showCategoriesBottomSheet(context);
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.only(

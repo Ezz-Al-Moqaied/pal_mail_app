@@ -8,4 +8,5 @@ class Keys {
   static const registerUrl = '$baseUrl/register';
   static const mailsUrl = '$baseUrl/mails';
   static const categoriesUrl = '$baseUrl/categories';
+  static const instance = '$baseUrl/categories';
 }

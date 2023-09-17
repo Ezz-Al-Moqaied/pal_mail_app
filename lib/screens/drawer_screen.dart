@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pal_mail_app/constants/colors.dart';
+import 'package:pal_mail_app/screens/edit_profile_screen.dart';
+import 'package:pal_mail_app/screens/home_screen.dart';
+import 'package:pal_mail_app/screens/profile_screen.dart';
+import 'package:pal_mail_app/screens/setting_screen.dart';
 
 
 class DrawerScreen extends StatefulWidget {
@@ -11,9 +15,45 @@ class DrawerScreen extends StatefulWidget {
 
 class _DrawerScreenState extends State<DrawerScreen> {
 
+  final List<Map<String, dynamic>> drawerItem = [
+    {
+      'title': 'Home',
+      'icon': Icons.home, // You can replace this with your desired icon
+    },
+    {
+      'title': 'Profile personly',
+      'icon': Icons.account_circle_rounded, // You can replace this with your desired icon
+    },
+    {
+      'title': 'senders',
+      'icon': Icons.account_box, // You can replace this with your desired icon
+    },
+    {
+      'title': 'settings',
+      'icon': Icons.settings, // You can replace this with your desired icon
+    },
+    // Add more items as needed
+  ];
+
 
   @override
   Widget build(BuildContext context) {
+
+    List <Function()> function =[
+      (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+      },
+      (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> ProfileScreen()));
+      },
+          (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> UpdateProfileScreen()));
+      },
+          (){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> SettingScreen()));
+      }
+    ];
+
     return Container(
       height: MediaQuery.of(context).size.height,
       width: double.infinity,
@@ -32,6 +72,35 @@ class _DrawerScreenState extends State<DrawerScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.08,
           ),
+          Column(
+              children: drawerItem
+                  .map((e) => InkWell(
+                onTap: function[e.length],
+                    child: Row(
+                children: [
+                    Icon(
+                      e['icon'],
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                    const SizedBox(
+                      height: 50,
+                      width: 10,
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        e['title'],
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+                  ))
+                  .toList()),
           const Spacer(),
           Container(
             margin:
