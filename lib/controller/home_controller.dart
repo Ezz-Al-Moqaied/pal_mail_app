@@ -22,8 +22,7 @@ class HomeHelper {
     //   return MailsModel();
     // }
     ApiBaseHelper _helper = ApiBaseHelper();
-    final response = _helper.get(Keys.mailsUrl,
-        {'Authorization': 'Bearer ${SharedPreferencesHelper.user.token}'});
+    final response = _helper.get(Keys.mailsUrl, Keys.instance.header);
     Map<String, dynamic>? data;
     await response.then((value) {
       data = value;

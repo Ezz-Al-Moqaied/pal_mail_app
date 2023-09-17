@@ -28,7 +28,7 @@ class TagsWidget extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30.r),
-                color: tagButtonColor),
+                color: tagButtonColornotSelected),
             child: Text(
               "#${tag[index]}",
               style: TextStyle(
