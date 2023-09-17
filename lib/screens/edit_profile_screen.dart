@@ -31,7 +31,7 @@ class UpdateProfileScreen extends StatelessWidget {
                     height: 120,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: const Image(image: NetworkImage('https://upload.wikimedia.org/wikipedia/commons/e/ee/Coat_of_arms_of_State_of_Palestine_%28Official%29.png'))),
+                        child: const Image(image: AssetImage('assets/images/1.jpeg'),fit: BoxFit.cover,)),
                   ),
                   Positioned(
                     bottom: 0,
@@ -40,8 +40,8 @@ class UpdateProfileScreen extends StatelessWidget {
                       width: 35,
                       height: 35,
                       decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(100), color: Colors.yellow),
-                      child: const Icon(Icons.camera, color: Colors.black, size: 20),
+                      BoxDecoration(borderRadius: BorderRadius.circular(100), color: Colors.blue),
+                      child: const Icon(Icons.edit, color: Colors.black, size: 20),
                     ),
                   ),
                 ],
