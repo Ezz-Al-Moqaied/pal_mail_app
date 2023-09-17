@@ -46,6 +46,19 @@ class HomeProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateData() async {
+    await getAllMails();
+    notifyListeners();
+  }
+
+  void cleanDate() {
+    mail.clear();
+    countStatusInbox = 0;
+    countStatusInProgress = 0;
+    countStatusPending = 0;
+    countStatusCompleted = 0;
+  }
+
   void drawerClose() {
     xoffset = 320;
     yoffset = 90;

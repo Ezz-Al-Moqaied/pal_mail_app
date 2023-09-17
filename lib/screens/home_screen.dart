@@ -3,21 +3,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/images.dart';
 import 'package:pal_mail_app/constants/widget.dart';
-import 'package:pal_mail_app/widgets/bottom_sheet_widget.dart';
+import 'package:pal_mail_app/screens/newInbox/new_inbox_bottomSheet.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
 import '../providers/home_provider.dart';
 import '../widgets/status_mail_widget.dart';
 import '../widgets/tags_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
       height: MediaQuery.of(context).size.height,
@@ -36,7 +42,9 @@ class HomeScreen extends StatelessWidget {
                 padding:
                     EdgeInsets.symmetric(vertical: 18.h, horizontal: 20.w)),
             onPressed: () {
-              CustomModalBottomSheet(context: context).show();
+              setState(() {
+                CustomModalBottomSheet(context: context).show();
+              });
             },
             child: Row(
               children: [
