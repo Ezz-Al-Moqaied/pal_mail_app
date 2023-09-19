@@ -1,10 +1,34 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
-class UpdateProfileScreen extends StatelessWidget {
+class UpdateProfileScreen extends StatefulWidget {
    UpdateProfileScreen({Key? key}) : super(key: key);
 
+  @override
+  State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
+}
 
+class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
+
+  pickImage(ImageSource source)async{
+    final ImagePicker imagePicker = ImagePicker();
+    XFile? file = await imagePicker.pickImage(source: source);
+
+    if(file != null){
+      return await file.readAsBytes();
+    }
+  }
+  Uint8List? _image;
+
+  void selectImage()async{
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     String tPhoneNo = '0567155819';
@@ -26,13 +50,21 @@ class UpdateProfileScreen extends StatelessWidget {
               // -- IMAGE with ICON
               Stack(
                 children: [
-                  SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: const Image(image: AssetImage('assets/images/1.jpeg'),fit: BoxFit.cover,)),
+                  _image !=null ?
+                  CircleAvatar(
+                    radius: 64,
+                    backgroundImage: MemoryImage(_image!),
+                  ):const CircleAvatar(
+                    radius: 64,
+                    backgroundImage: AssetImage('assets/images/1.jpeg'),
                   ),
+                  //     :SizedBox(
+                  //   width: 120,
+                  //   height: 120,
+                  //   child: ClipRRect(
+                  //       borderRadius: BorderRadius.circular(100),
+                  //       child: const Image(image: AssetImage('assets/images/1.jpeg'),fit: BoxFit.cover,)),
+                  // ),
                   Positioned(
                     bottom: 0,
                     right: 0,
@@ -41,7 +73,9 @@ class UpdateProfileScreen extends StatelessWidget {
                       height: 35,
                       decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(100), color: Colors.blue),
-                      child: const Icon(Icons.edit, color: Colors.black, size: 20),
+                      child: IconButton(onPressed: (){
+                        selectImage();
+                      }, icon: const Icon(Icons.edit, color: Colors.black, size: 20),)
                     ),
                   ),
                 ],

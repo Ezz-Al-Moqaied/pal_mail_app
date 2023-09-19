@@ -75,7 +75,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
           Column(
               children: drawerItem
                   .map((e) => InkWell(
-                onTap: function[e.length],
+                onTap: function[2],
                     child: Row(
                 children: [
                     Icon(
