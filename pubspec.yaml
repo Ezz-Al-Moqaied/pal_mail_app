@@ -45,6 +45,7 @@ dependencies:
   intl: ^0.18.0
   hexcolor: ^3.0.1
   image_picker: ^1.0.4
+  shimmer: ^3.0.0
 
 flutter_launcher_icons:
   android: "launcher_icon"

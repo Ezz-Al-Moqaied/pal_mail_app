@@ -82,8 +82,14 @@ class NewInboxHelper {
 //Get the response from the server
       var responseData = await response.stream.toBytes();
       var responseString = String.fromCharCodes(responseData);
-      flutterToastWidget(
-          msg: "Upload attachment success", colors: Colors.green);
+      if (response.statusCode == 200) {
+        flutterToastWidget(
+            msg: "Upload attachment success", colors: Colors.green);
+      } else {
+        flutterToastWidget(
+            msg: "Erro During Communication : ${response.statusCode}",
+            colors: Colors.green);
+      }
       print(responseString);
     } catch (e) {
       flutterToastWidget(

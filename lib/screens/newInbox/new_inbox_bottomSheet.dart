@@ -33,7 +33,6 @@ class CustomModalBottomSheet {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController decisionController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
-
   TextEditingController tagsController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
@@ -87,7 +86,7 @@ class CustomModalBottomSheet {
           archiveDate:
               "${newInboxProv.dateTime!.year}-${newInboxProv.dateTime!.month}-${newInboxProv.dateTime!.day}",
           statusId: statusProvider.selectedstatusId.toString(),
-          finalDescision: '',
+          finalDescision: decisionController.text,
           activities: newInboxProv.activitiesMap.isEmpty
               ? []
               : newInboxProv.activitiesMap,
@@ -138,718 +137,780 @@ class CustomModalBottomSheet {
               topRight: Radius.circular(15.r), topLeft: Radius.circular(15.r))),
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          height: MediaQuery.of(context).size.height - 50,
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                      onPressed: () async {
-                        newInboxProv.removeData();
-                        tagsProvider.clearData();
-                        tagsProvider.clearTags();
-                        newInboxProv.clearSender();
-                        newInboxProv.clearSender();
-                        tagsProvider.tagsId.clear();
-                        tagsProvider.selected.clear();
-                        newInboxProv.activities.clear();
-                        newInboxProv.activitiesDate.clear();
-                        newInboxProv.activitiesMap.clear();
-                        newInboxProv.files.clear();
-
-                        Navigator.pop(context);
-                      },
-                      child: Text(
-                        'Cancle',
-                        style: TextStyle(
-                          fontSize: 18.sp,
+        return TweenAnimationBuilder(
+          builder: (BuildContext context, double? value, Widget? child) {
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              height: value,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        TextButton(
+                          onPressed: () async {
+                            newInboxProv.removeData();
+                            tagsProvider.clearData();
+                            tagsProvider.clearTags();
+                            newInboxProv.clearSender();
+                            newInboxProv.clearSender();
+                            tagsProvider.tagsId.clear();
+                            tagsProvider.selected.clear();
+                            newInboxProv.activities.clear();
+                            newInboxProv.activitiesDate.clear();
+                            newInboxProv.activitiesMap.clear();
+                            newInboxProv.files.clear();
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Cancle',
+                            style: TextStyle(
+                              fontSize: 18.sp,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    Text(
-                      'New inbox',
-                      style: TextStyle(
-                          fontSize: 19.sp, fontWeight: FontWeight.bold),
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        await addMail();
+                        Text(
+                          'New inbox',
+                          style: TextStyle(
+                              fontSize: 19.sp, fontWeight: FontWeight.bold),
+                        ),
+                        TextButton(
+                          onPressed: () async {
+                            await addMail();
 
-                        // ignore: use_build_context_synchronously
-                      },
-                      child: Text(
-                        'Done',
-                        style: TextStyle(
-                            fontSize: 18.sp, fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  ],
-                ),
-                smallSpacer,
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.0.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //part number one
-                      basicContainer(
-                          183.h,
-                          Column(
-                            children: [
-                              Expanded(
-                                child: Consumer<NewInboxProvider>(
-                                  builder: (context, prov, child) {
-                                    if (prov.senderName != '') {
-                                      senderController.text = prov.senderName;
-                                    }
-                                    return textFormFieldWidget(
-                                      readOnly:
-                                          prov.idSender == 0 ? false : true,
-                                      validate: (value) {
-                                        senderController.text = value!;
-                                        return null;
-                                      },
-                                      colors: Colors.white,
-                                      hintText: 'name',
-                                      prefixIcon: Icons.account_circle,
-                                      suffixIcon: IconButton(
-                                          splashColor: Colors.transparent,
-                                          onPressed: () {
-                                            SenderSearchWidget()
-                                                .showSearchBar(context);
+                            // ignore: use_build_context_synchronously
+                          },
+                          child: Text(
+                            'Done',
+                            style: TextStyle(
+                                fontSize: 18.sp, fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      ],
+                    ),
+                    smallSpacer,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.0.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //part number one
+                          basicContainer(
+                              183.h,
+                              Column(
+                                children: [
+                                  Expanded(
+                                    child: Consumer<NewInboxProvider>(
+                                      builder: (context, prov, child) {
+                                        if (prov.senderName != '') {
+                                          senderController.text =
+                                              prov.senderName;
+                                        }
+                                        return textFormFieldWidget(
+                                          readOnly:
+                                              prov.idSender == 0 ? false : true,
+                                          validate: (value) {
+                                            senderController.text = value!;
+                                            return null;
                                           },
-                                          icon: const Icon(
-                                            Icons.info_outline,
-                                            color: Colors.blue,
-                                          )),
-                                      controller: senderController,
-                                      type: TextInputType.text,
-                                      outlinedBorder: true,
-                                    );
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                child: Consumer<NewInboxProvider>(
-                                  builder: (context, prov, child) {
-                                    if (prov.idSender != 0) {
-                                      mobileController.text = prov.senderMobile;
-                                    }
-                                    return textFormFieldWidget(
-                                      onChange: (p0) {},
-                                      readOnly: prov.senderMobile.isEmpty
-                                          ? false
-                                          : true,
-                                      outlinedBorder: true,
-                                      colors: Colors.white,
-                                      hintText: 'Mobile',
-                                      prefixIcon: Icons.phone_android_outlined,
-                                      controller: mobileController,
-                                      type: TextInputType.text,
-                                    );
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                child: InkWell(
-                                  onTap: () {},
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        right: 15.0.w, left: 15.0.w, top: 10.h),
-                                    child: Consumer2<NewInboxProvider,
-                                        CategoryProvider>(
-                                      builder: (context, prov, catProv, child) {
-                                        return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Categories',
-                                              style: TextStyle(
-                                                fontSize: 16.sp,
-                                              ),
-                                            ),
-                                            const Spacer(),
-                                            Text(
-                                              prov.senderCategID == ''
-                                                  ? catProv.selectedCategoryname
-                                                  : prov.senderCategName,
-                                              style: TextStyle(
-                                                fontSize: 16.sp,
-                                                color: textFieldHintColor,
-                                              ),
-                                            ),
-                                            prov.senderMobile.isEmpty
-                                                ? InkWell(
-                                                    onTap: () {
-                                                      CategoriesBottomSheet()
-                                                          .showCategoriesBottomSheet(
-                                                              context);
-                                                    },
-                                                    child: Icon(
-                                                      Icons.arrow_forward_ios,
-                                                      color: Colors.grey,
-                                                      size: 15.sp,
-                                                    ),
-                                                  )
-                                                : const SizedBox()
-                                          ],
+                                          colors: Colors.white,
+                                          hintText: 'name',
+                                          prefixIcon: Icons.account_circle,
+                                          suffixIcon: IconButton(
+                                              splashColor: Colors.transparent,
+                                              onPressed: () {
+                                                SenderSearchWidget()
+                                                    .showSearchBar(context);
+                                              },
+                                              icon: const Icon(
+                                                Icons.info_outline,
+                                                color: Colors.blue,
+                                              )),
+                                          controller: senderController,
+                                          type: TextInputType.text,
+                                          outlinedBorder: true,
                                         );
                                       },
                                     ),
                                   ),
-                                ),
-                              )
-                            ],
-                          )),
-                      smallSpacer,
-                      //part number two
-                      basicContainer(
-                        145.h,
-                        Column(
-                          children: [
-                            Expanded(
-                              child: Form(
-                                key: formKey,
-                                child: textFormFieldWidget(
-                                  outlinedBorder: true,
-                                  colors: Colors.white,
-                                  hintText: 'Title of Mail',
-                                  controller: titleController,
-                                  type: TextInputType.text,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: textFormFieldWidget(
-                                validate: (value) {
-                                  descriptionController.text = value!;
-                                  return null;
-                                },
-                                outlinedBorder: true,
-                                colors: Colors.white,
-                                hintText: 'Describtion',
-                                controller: descriptionController,
-                                type: TextInputType.text,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      smallSpacer,
-                      //part number three
-                      basicContainer(
-                          180.h,
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Consumer<NewInboxProvider>(
-                                  builder: (context, prov, child) {
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 15.w),
-                                      child: InkWell(
-                                        onTap: () {
-                                          showDatePicker(
-                                            context: context,
-                                            initialDate: DateTime.now(),
-                                            firstDate: DateTime(2000),
-                                            currentDate: prov.dateTime,
-                                            lastDate: DateTime(2025),
-                                          ).then((value) {
-                                            prov.updateDate(value!);
-                                          }).catchError((error) {
-                                            print(error.toString());
-                                          });
-                                          ;
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.date_range,
-                                              color: Colors.red,
-                                              size: 25.sp,
-                                            ),
-                                            SizedBox(
-                                              width: 11.w,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Date',
+                                  Expanded(
+                                    child: Consumer<NewInboxProvider>(
+                                      builder: (context, prov, child) {
+                                        if (prov.idSender != 0) {
+                                          mobileController.text =
+                                              prov.senderMobile;
+                                        }
+                                        return textFormFieldWidget(
+                                          onChange: (p0) {},
+                                          readOnly: prov.senderMobile.isEmpty
+                                              ? false
+                                              : true,
+                                          outlinedBorder: true,
+                                          colors: Colors.white,
+                                          hintText: 'Mobile',
+                                          prefixIcon:
+                                              Icons.phone_android_outlined,
+                                          controller: mobileController,
+                                          type: TextInputType.text,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: InkWell(
+                                      onTap: () {},
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            right: 15.0.w,
+                                            left: 15.0.w,
+                                            top: 10.h),
+                                        child: Consumer2<NewInboxProvider,
+                                            CategoryProvider>(
+                                          builder:
+                                              (context, prov, catProv, child) {
+                                            return InkWell(
+                                              onTap: () {
+                                                CategoriesBottomSheet()
+                                                    .showCategoriesBottomSheet(
+                                                        context);
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'Categories',
                                                     style: TextStyle(
-                                                      fontSize: 15.sp,
+                                                      fontSize: 16.sp,
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  height: 4.h,
-                                                ),
-                                                Expanded(
-                                                  child: Text(
-                                                    prov.dateTime.toString(),
+                                                  const Spacer(),
+                                                  Text(
+                                                    prov.senderCategID == ''
+                                                        ? catProv
+                                                            .selectedCategoryname
+                                                        : prov.senderCategName,
                                                     style: TextStyle(
-                                                      fontSize: 12.sp,
+                                                      fontSize: 16.sp,
+                                                      color: textFieldHintColor,
                                                     ),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                            const Spacer(),
-                                            Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: Colors.grey,
-                                              size: 20.sp,
-                                            )
-                                          ],
+                                                  prov.senderMobile.isEmpty
+                                                      ? Icon(
+                                                          Icons
+                                                              .arrow_forward_ios,
+                                                          color: Colors.grey,
+                                                          size: 15.sp,
+                                                        )
+                                                      : const SizedBox()
+                                                ],
+                                              ),
+                                            );
+                                          },
                                         ),
                                       ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                  child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 15.w, vertical: 4),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                        flex: 1,
-                                        child: Icon(
-                                          Icons.archive_outlined,
-                                          size: 25.sp,
-                                        )),
-                                    Expanded(
-                                      flex: 10,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            child: Text(
-                                              "Archive Number",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16.sp),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: textFormFieldWidget(
-                                                colors: colorWhite,
-                                                outlinedBorder: true,
-                                                hintText: 'like: 10/2/2023',
-                                                controller: archiveController,
-                                                type: TextInputType.text),
-                                          ),
-                                        ],
-                                      ),
                                     ),
-                                  ],
-                                ),
-                              )),
-                            ],
-                          )),
-                      smallSpacer,
-                      //part number four
-                      basicContainer(
-                          65.h,
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15.w),
-                            child: InkWell(
-                              onTap: () async {
-                                // ignore: use_build_context_synchronously
-                                tags.showTagsSheet(context);
-                              },
-                              child: Row(
-                                children: [
-                                  Text(
-                                    '#',
-                                    style: TextStyle(
-                                      fontSize: 18.sp,
-                                      color: border,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 14.w,
-                                  ),
-                                  Text(
-                                    'Tags',
-                                    style: TextStyle(
-                                      fontSize: 17.sp,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: Colors.grey,
-                                    size: 20.sp,
                                   )
                                 ],
-                              ),
-                            ),
-                          )),
-                      smallSpacer,
-                      //part number five
-                      basicContainer(
-                          60.h,
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15.w),
-                            child: Consumer<StatusProvider>(
-                              builder: (context, value, child) {
-                                return Row(
-                                  children: [
-                                    const Icon(Icons.local_offer_outlined),
-                                    SizedBox(
-                                      width: 14.w,
+                              )),
+                          smallSpacer,
+                          //part number two
+                          basicContainer(
+                            145.h,
+                            Column(
+                              children: [
+                                Expanded(
+                                  child: Form(
+                                    key: formKey,
+                                    child: textFormFieldWidget(
+                                      outlinedBorder: true,
+                                      colors: Colors.white,
+                                      hintText: 'Title of Mail',
+                                      controller: titleController,
+                                      type: TextInputType.text,
                                     ),
-                                    Container(
-                                      width: 70.w,
-                                      height: 50.h,
-                                      decoration: BoxDecoration(
-                                          color: value
-                                                  .selectedstatuscolor.isEmpty
-                                              ? null
-                                              : Color(int.parse(
-                                                  value.selectedstatuscolor)),
-                                          borderRadius:
-                                              BorderRadius.circular(15.r)),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: textFormFieldWidget(
+                                    validate: (value) {
+                                      descriptionController.text = value!;
+                                      return null;
+                                    },
+                                    outlinedBorder: true,
+                                    colors: Colors.white,
+                                    hintText: 'Describtion',
+                                    controller: descriptionController,
+                                    type: TextInputType.text,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          smallSpacer,
+                          //part number three
+                          basicContainer(
+                              180.h,
+                              Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Consumer<NewInboxProvider>(
+                                      builder: (context, prov, child) {
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 15.w),
+                                          child: InkWell(
+                                            onTap: () {
+                                              showDatePicker(
+                                                context: context,
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime(2000),
+                                                currentDate: prov.dateTime,
+                                                lastDate: DateTime(2025),
+                                              ).then((value) {
+                                                prov.updateDate(value!);
+                                              }).catchError((error) {
+                                                print(error.toString());
+                                              });
+                                              ;
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.date_range,
+                                                  color: Colors.red,
+                                                  size: 25.sp,
+                                                ),
+                                                SizedBox(
+                                                  width: 11.w,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        'Date',
+                                                        style: TextStyle(
+                                                          fontSize: 15.sp,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 4.h,
+                                                    ),
+                                                    Expanded(
+                                                      child: Text(
+                                                        prov.dateTime
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                          fontSize: 12.sp,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const Spacer(),
+                                                Icon(
+                                                  Icons.arrow_forward_ios,
+                                                  color: Colors.grey,
+                                                  size: 20.sp,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Center(
-                                          child: Text(
-                                            value.selectedstatusname.isEmpty
-                                                ? 'Choose Status'
-                                                : value.selectedstatusname,
-                                            style: TextStyle(
-                                                fontSize: 12.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: value.selectedstatusname
-                                                        .isEmpty
-                                                    ? null
-                                                    : Colors.white),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 15.w, vertical: 4),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                            flex: 1,
+                                            child: Icon(
+                                              Icons.archive_outlined,
+                                              size: 25.sp,
+                                            )),
+                                        Expanded(
+                                          flex: 10,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  "Archive Number",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 16.sp),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: textFormFieldWidget(
+                                                    colors: colorWhite,
+                                                    outlinedBorder: true,
+                                                    hintText: 'like: 10/2/2023',
+                                                    controller:
+                                                        archiveController,
+                                                    type: TextInputType.text),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                    const Spacer(),
-                                    InkWell(
-                                      onTap: () {
-                                        StatusBottomSheet()
-                                            .showStatusBottomSheet(context);
-                                      },
-                                      child: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Colors.grey,
-                                        size: 20.sp,
-                                      ),
-                                    )
-                                  ],
-                                );
-                              },
-                            ),
-                          )),
-                      smallSpacer,
-                      //part number sex
-                      basicContainer(
-                        120.h,
-                        Padding(
-                          padding: EdgeInsets.only(left: 15.0.w, top: 12.h),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'Decision',
-                                  style: TextStyle(fontSize: 18.sp),
-                                ),
-                              ),
-                              Expanded(
-                                child: textFormFieldWidget(
-                                  outlinedBorder: true,
-                                  colors: Colors.white,
-                                  hintText: 'Add Decision..',
-                                  controller: decisionController,
-                                  type: TextInputType.text,
-                                  validate: (p0) => '',
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      smallSpacer,
-                      //part number seven
-                      Consumer<NewInboxProvider>(
-                        builder: (context, prov, child) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: colorWhite,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(30.r))),
-                            padding: EdgeInsets.symmetric(horizontal: 15.w),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  )),
+                                ],
+                              )),
+                          smallSpacer,
+                          //part number four
+                          basicContainer(
+                              65.h,
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                                child: InkWell(
+                                  onTap: () async {
+                                    // ignore: use_build_context_synchronously
+                                    tags.showTagsSheet(context);
+                                  },
                                   child: Row(
                                     children: [
-                                      const Icon(
-                                        Icons.image,
-                                        color: tagTextColor,
+                                      Text(
+                                        '#',
+                                        style: TextStyle(
+                                          fontSize: 18.sp,
+                                          color: border,
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 14.w,
                                       ),
-                                      InkWell(
-                                        onTap: () async {
-                                          await prov.uploadImage(context);
-                                        },
-                                        child: Text(
-                                          'Add image',
-                                          style: TextStyle(
-                                            fontSize: 17.sp,
-                                            color: splashColorDegree1,
-                                          ),
+                                      Text(
+                                        'Tags',
+                                        style: TextStyle(
+                                          fontSize: 17.sp,
                                         ),
                                       ),
-                                      const Spacer(),
+                                      Spacer(),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Colors.grey,
+                                        size: 20.sp,
+                                      )
                                     ],
                                   ),
                                 ),
-                                prov.files.isEmpty
-                                    ? const SizedBox()
-                                    : ListView.separated(
-                                        padding: EdgeInsets.only(bottom: 8.h),
-                                        shrinkWrap: true,
-                                        itemCount: prov.files.length,
-                                        itemBuilder: (context, index) {
-                                          return prov.files
-                                                  .elementAt(index)
-                                                  .path
-                                                  .isEmpty
-                                              ? const SizedBox()
-                                              : Row(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: () {
-                                                        prov.removeImage(index);
-                                                        print(prov.files);
-                                                      },
-                                                      child: Icon(
-                                                        Icons.delete,
-                                                        size: 25.sp,
-                                                        color: Colors.red,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 12,
-                                                    ),
-                                                    Container(
-                                                      width: 40,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                          image:
-                                                              DecorationImage(
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                  image:
-                                                                      FileImage(
-                                                                    prov.files
-                                                                        .elementAt(
-                                                                            index),
-                                                                  )),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15.r)),
-                                                    )
-                                                  ],
-                                                );
-                                        },
-                                        separatorBuilder:
-                                            (BuildContext context, int index) {
-                                          return smallSpacer;
-                                        },
-                                      )
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                      smallSpacer,
-                      ExpansionTile(
-                        tilePadding: EdgeInsets.symmetric(horizontal: 15.w),
-                        // controller: expanController,
-                        trailing: Container(
-                          width: 50.w,
-                          height: 50.h,
-                          child: Consumer<NewInboxProvider>(
-                            builder: (context, prov, child) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                              )),
+                          smallSpacer,
+                          //part number five
+                          basicContainer(
+                              60.h,
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                                child: Consumer<StatusProvider>(
+                                  builder: (context, value, child) {
+                                    return InkWell(
+                                      onTap: () {
+                                        StatusBottomSheet()
+                                            .showStatusBottomSheet(context);
+                                      },
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                              Icons.local_offer_outlined),
+                                          SizedBox(
+                                            width: 14.w,
+                                          ),
+                                          Container(
+                                            width: 70.w,
+                                            height: 50.h,
+                                            decoration: BoxDecoration(
+                                                color: value.selectedstatuscolor
+                                                        .isEmpty
+                                                    ? null
+                                                    : Color(int.parse(value
+                                                        .selectedstatuscolor)),
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        15.r)),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: Center(
+                                                child: Text(
+                                                  value.selectedstatusname
+                                                          .isEmpty
+                                                      ? 'Choose Status'
+                                                      : value
+                                                          .selectedstatusname,
+                                                  style: TextStyle(
+                                                      fontSize: 12.sp,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: value
+                                                              .selectedstatusname
+                                                              .isEmpty
+                                                          ? null
+                                                          : Colors.white),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: Colors.grey,
+                                            size: 20.sp,
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )),
+                          smallSpacer,
+                          //part number sex
+                          basicContainer(
+                            120.h,
+                            Padding(
+                              padding: EdgeInsets.only(left: 15.0.w, top: 12.h),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  prov.activities.isEmpty
-                                      ? const SizedBox()
-                                      : Text(
-                                          "${prov.activities.length}",
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey[400]),
-                                        ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: Colors.grey,
-                                    size: 20.sp,
+                                  Expanded(
+                                    child: Text(
+                                      'Decision',
+                                      style: TextStyle(fontSize: 18.sp),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: textFormFieldWidget(
+                                      outlinedBorder: true,
+                                      colors: Colors.white,
+                                      hintText: 'Add Decision..',
+                                      controller: decisionController,
+                                      type: TextInputType.text,
+                                      validate: (p0) => '',
+                                    ),
                                   )
+                                ],
+                              ),
+                            ),
+                          ),
+                          smallSpacer,
+                          //part number seven
+                          Consumer<NewInboxProvider>(
+                            builder: (context, prov, child) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    color: colorWhite,
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(30.r))),
+                                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0),
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.image,
+                                            color: tagTextColor,
+                                          ),
+                                          SizedBox(
+                                            width: 14.w,
+                                          ),
+                                          InkWell(
+                                            onTap: () async {
+                                              await prov.uploadImage(context);
+                                            },
+                                            child: Text(
+                                              'Add image',
+                                              style: TextStyle(
+                                                fontSize: 17.sp,
+                                                color: splashColorDegree1,
+                                              ),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                        ],
+                                      ),
+                                    ),
+                                    prov.files.isEmpty
+                                        ? const SizedBox()
+                                        : ListView.separated(
+                                            padding:
+                                                EdgeInsets.only(bottom: 8.h),
+                                            shrinkWrap: true,
+                                            itemCount: prov.files.length,
+                                            itemBuilder: (context, index) {
+                                              return prov.files
+                                                      .elementAt(index)
+                                                      .path
+                                                      .isEmpty
+                                                  ? const SizedBox()
+                                                  : Row(
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () {
+                                                            prov.removeImage(
+                                                                index);
+                                                            print(prov.files);
+                                                          },
+                                                          child: Icon(
+                                                            Icons.delete,
+                                                            size: 25.sp,
+                                                            color: Colors.red,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 12,
+                                                        ),
+                                                        Container(
+                                                          width: 40,
+                                                          height: 40,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  image:
+                                                                      DecorationImage(
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                          image:
+                                                                              FileImage(
+                                                                            prov.files.elementAt(index),
+                                                                          )),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              15.r)),
+                                                        )
+                                                      ],
+                                                    );
+                                            },
+                                            separatorBuilder:
+                                                (BuildContext context,
+                                                    int index) {
+                                              return smallSpacer;
+                                            },
+                                          )
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                          smallSpacer,
+                          Consumer<NewInboxProvider>(
+                            builder: (context, prov, child) {
+                              return ExpansionTile(
+                                onExpansionChanged: (value) {
+                                  prov.changeIconState(value);
+                                },
+                                controller: prov.expansionTile,
+                                tilePadding:
+                                    EdgeInsets.symmetric(horizontal: 15.w),
+                                // controller: expanController,
+                                trailing: Container(
+                                  width: 50.w,
+                                  height: 50.h,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      prov.activities.isEmpty
+                                          ? const SizedBox()
+                                          : Text(
+                                              "${prov.activities.length}",
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.grey[400]),
+                                            ),
+                                      TweenAnimationBuilder(
+                                        builder: (BuildContext context,
+                                            double? value, Widget? child) {
+                                          return Transform.rotate(
+                                            angle: value!,
+                                            origin: Offset.zero,
+                                            alignment: Alignment.center,
+                                            child: Icon(
+                                              Icons.arrow_forward_ios,
+                                              color: Colors.grey,
+                                              size: 20.sp,
+                                            ),
+                                          );
+                                        },
+                                        duration:
+                                            const Duration(milliseconds: 200),
+                                        tween: Tween<double>(
+                                            begin: 0, end: prov.angle),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                title: Text(
+                                  'Activity',
+                                  style: TextStyle(
+                                    fontSize: 22.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                children: [
+                                  Consumer<NewInboxProvider>(
+                                      builder: (context, prov, child) {
+                                    return ListView.separated(
+                                      reverse: true,
+                                      physics: const BouncingScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount: prov.activities.length,
+                                      itemBuilder: (context, index) {
+                                        return prov.activities
+                                                .elementAt(index)
+                                                .isEmpty
+                                            ? const SizedBox()
+                                            : basicContainer(
+                                                80.h,
+                                                Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 15.w,
+                                                      vertical: 4),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              30)),
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Icon(
+                                                        Icons.circle,
+                                                        size: 20.sp,
+                                                        color: Colors.blue,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 8,
+                                                      ),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            SharedPreferencesHelper
+                                                                .user
+                                                                .user!
+                                                                .name!,
+                                                          ),
+                                                          Text(
+                                                            prov.activities[
+                                                                index],
+                                                            style: TextStyle(
+                                                                fontSize: 12.sp,
+                                                                color: border),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const Spacer(),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                              prov.activitiesDate[
+                                                                  index]),
+                                                          IconButton(
+                                                              onPressed: () {
+                                                                prov.removeActiviy(
+                                                                    index);
+                                                                print(prov
+                                                                    .activitiesMap);
+                                                              },
+                                                              icon: Icon(
+                                                                Icons.delete,
+                                                                color:
+                                                                    Colors.red,
+                                                                size: 25.sp,
+                                                              ))
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ));
+                                      },
+                                      separatorBuilder:
+                                          (BuildContext context, int index) {
+                                        return smallSpacer;
+                                      },
+                                    );
+                                  })
                                 ],
                               );
                             },
                           ),
-                        ),
-                        title: Text(
-                          'Activity',
-                          style: TextStyle(
-                            fontSize: 22.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        children: [
-                          Consumer<NewInboxProvider>(
+                          smallSpacer,
+
+                          SizedBox(
+                            height: 100.h,
+                            child: Consumer<NewInboxProvider>(
                               builder: (context, prov, child) {
-                            return ListView.separated(
-                              reverse: true,
-                              physics: const BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: prov.activities.length,
-                              itemBuilder: (context, index) {
-                                return prov.activities.elementAt(index).isEmpty
-                                    ? const SizedBox()
-                                    : basicContainer(
-                                        80.h,
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 15.w, vertical: 4),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)),
-                                          child: Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Icon(
-                                                Icons.circle,
-                                                size: 20.sp,
-                                                color: Colors.blue,
-                                              ),
-                                              const SizedBox(
-                                                width: 8,
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    SharedPreferencesHelper
-                                                        .user.user!.name!,
-                                                  ),
-                                                  Text(
-                                                    prov.activities[index],
-                                                    style: TextStyle(
-                                                        fontSize: 12.sp,
-                                                        color: border),
-                                                  ),
-                                                ],
-                                              ),
-                                              const Spacer(),
-                                              Row(
-                                                children: [
-                                                  Text(prov
-                                                      .activitiesDate[index]),
-                                                  IconButton(
-                                                      onPressed: () {
-                                                        prov.removeActiviy(
-                                                            index);
-                                                        print(
-                                                            prov.activitiesMap);
-                                                      },
-                                                      icon: Icon(
-                                                        Icons.delete,
-                                                        color: Colors.red,
-                                                        size: 25.sp,
-                                                      ))
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ));
+                                return textFormFieldWidget(
+                                    suffixIcon: IconButton(
+                                        splashColor: Colors.transparent,
+                                        onPressed: () async {
+                                          if (activityController
+                                              .text.isNotEmpty) {
+                                            prov.activities
+                                                .add(activityController.text);
+                                            prov.activitiesDate.add(
+                                                "${DateTime.now().day}-${DateTime.timestamp().month}-${DateTime.timestamp().year}");
+                                            prov.activitiesMap.add({
+                                              "body": activityController.text,
+                                              'user_id': SharedPreferencesHelper
+                                                  .user.user!.id
+                                            });
+                                            activityController.clear();
+                                            prov.UpdateData();
+                                            print(prov.activitiesMap);
+                                          } else {
+                                            flutterToastWidget(
+                                                msg: "Activity must be filled",
+                                                colors: Colors.red);
+                                          }
+                                        },
+                                        icon: Transform.rotate(
+                                            angle: -45,
+                                            child: const Icon(
+                                                Icons.send_rounded))),
+                                    prefixIcon: Icons.circle,
+                                    radius: 60.r,
+                                    colors: const Color(0xffEEEEF6),
+                                    outlinedBorder: true,
+                                    controller: activityController,
+                                    type: TextInputType.text);
                               },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return smallSpacer;
-                              },
-                            );
-                          })
+                            ),
+                          )
                         ],
                       ),
-                      smallSpacer,
-
-                      SizedBox(
-                        height: 100.h,
-                        child: Consumer<NewInboxProvider>(
-                          builder: (context, prov, child) {
-                            return textFormFieldWidget(
-                                suffixIcon: IconButton(
-                                    splashColor: Colors.transparent,
-                                    onPressed: () async {
-                                      if (activityController.text.isNotEmpty) {
-                                        prov.activities
-                                            .add(activityController.text);
-                                        prov.activitiesDate.add(
-                                            "${DateTime.now().day}-${DateTime.timestamp().month}-${DateTime.timestamp().year}");
-                                        prov.activitiesMap.add({
-                                          "body": activityController.text,
-                                          'user_id': SharedPreferencesHelper
-                                              .user.user!.id
-                                        });
-                                        activityController.clear();
-                                        prov.UpdateData();
-                                        print(prov.activitiesMap);
-                                      } else {
-                                        flutterToastWidget(
-                                            msg: "Activity must be filled",
-                                            colors: Colors.red);
-                                      }
-                                    },
-                                    icon: Transform.rotate(
-                                        angle: -45,
-                                        child: const Icon(Icons.send_rounded))),
-                                prefixIcon: Icons.circle,
-                                radius: 60.r,
-                                colors: const Color(0xffEEEEF6),
-                                outlinedBorder: true,
-                                controller: activityController,
-                                type: TextInputType.text);
-                          },
-                        ),
-                      )
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
+          duration: const Duration(seconds: 1),
+          curve: Curves.bounceOut,
+          tween: Tween<double>(
+              begin: 0, end: MediaQuery.of(context).size.height - 50),
         );
       },
     ).whenComplete(() {});
