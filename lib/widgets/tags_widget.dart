@@ -30,7 +30,7 @@ class TagsWidget extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30.r),
-              color: tagButtonColor
+              color: Colors.blue
             ),
             child: Text("#${tag[index]}" , style: TextStyle(
               color: tagTextColor ,

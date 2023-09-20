@@ -440,7 +440,7 @@ class CustomModalBottomSheet {
                                                       color: Colors.white,
                                                       borderRadius: BorderRadius.all(Radius.circular(30))
                                                       ,),
-                                                    child: TagsWidget(tag: [
+                                                    child: TagsWidget(tag: const [
                                                       'medo',
                                                       'medo',
                                                       'medo',
@@ -454,7 +454,7 @@ class CustomModalBottomSheet {
                                                     colors: Colors.grey,
                                                       hintText: 'add New tags..',
                                                       maxLines: 1,
-                                                      label: 'Tags',
+                                                      label: Text('Tags'),
                                                       outlinedBorder: true,
                                                       controller: tagsController,
                                                       type: TextInputType.text,

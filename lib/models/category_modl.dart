@@ -1,34 +1,40 @@
 import 'dart:convert';
 
-CategoryModel categoriesModelFromJson(String str) => CategoryModel.fromJson(json.decode(str));
+CategoryModel categoryModelFromJson(String str) =>
+    CategoryModel.fromJson(json.decode(str));
 
-String categoriesModelToJson(CategoryModel data) => json.encode(data.toJson());
+String categoryModelToJson(CategoryModel data) => json.encode(data.toJson());
 
 class CategoryModel {
-  List<CategoryElement> categories;
+  List<Category>? categories;
 
   CategoryModel({
-    required this.categories,
+    this.categories,
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
-    categories: List<CategoryElement>.from(json["categories"].map((x) => CategoryElement.fromJson(x))),
+    categories: json["categories"] == null
+        ? []
+        : List<Category>.from(
+        json["categories"]!.map((x) => Category.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
+    "categories": categories == null
+        ? []
+        : List<dynamic>.from(categories!.map((x) => x.toJson())),
   };
 }
 
-class CategoryElement {
-  int id;
-  String name;
-  String createdAt;
-  String updatedAt;
-  String sendersCount;
-  List<Sender> senders;
+class Category {
+  int? id;
+  String? name;
+  String? createdAt;
+  String? updatedAt;
+  String? sendersCount;
+  List<Sender>? senders;
 
-  CategoryElement({
+  Category({
     required this.id,
     required this.name,
     required this.createdAt,
@@ -37,13 +43,16 @@ class CategoryElement {
     required this.senders,
   });
 
-  factory CategoryElement.fromJson(Map<String, dynamic> json) => CategoryElement(
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
     id: json["id"],
     name: json["name"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
     sendersCount: json["senders_count"],
-    senders: List<Sender>.from(json["senders"].map((x) => Sender.fromJson(x))),
+    senders: json["senders"] == null
+        ? []
+        : List<Sender>.from(
+        json["senders"]!.map((x) => Sender.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -52,29 +61,29 @@ class CategoryElement {
     "created_at": createdAt,
     "updated_at": updatedAt,
     "senders_count": sendersCount,
-    "senders": List<dynamic>.from(senders.map((x) => x.toJson())),
+    "senders": senders == null
+        ? []
+        : List<dynamic>.from(senders!.map((x) => x.toJson())),
   };
 }
 
 class Sender {
-  int id;
-  String name;
-  String mobile;
+  int? id;
+  String? name;
+  String? mobile;
   String? address;
-  String categoryId;
-  String createdAt;
-  String updatedAt;
-  SenderCategory category;
+  String? categoryId;
+  String? createdAt;
+  String? updatedAt;
 
   Sender({
-    required this.id,
-    required this.name,
-    required this.mobile,
-    required this.address,
-    required this.categoryId,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.category,
+    this.id,
+    this.name,
+    this.mobile,
+    this.address,
+    this.categoryId,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Sender.fromJson(Map<String, dynamic> json) => Sender(
@@ -85,7 +94,6 @@ class Sender {
     categoryId: json["category_id"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
-    category: SenderCategory.fromJson(json["category"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -94,35 +102,6 @@ class Sender {
     "mobile": mobile,
     "address": address,
     "category_id": categoryId,
-    "created_at": createdAt,
-    "updated_at": updatedAt,
-    "category": category.toJson(),
-  };
-}
-
-class SenderCategory {
-  int id;
-  String name;
-  String createdAt;
-  String updatedAt;
-
-  SenderCategory({
-    required this.id,
-    required this.name,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  factory SenderCategory.fromJson(Map<String, dynamic> json) => SenderCategory(
-    id: json["id"],
-    name: json["name"],
-    createdAt: json["created_at"],
-    updatedAt: json["updated_at"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
     "created_at": createdAt,
     "updated_at": updatedAt,
   };

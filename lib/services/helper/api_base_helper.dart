@@ -41,7 +41,7 @@ class ApiBaseHelper {
     var responseJson;
     try {
       final response =
-          await http.delete(Uri.parse('$url/$id'), headers: header);
+      await http.delete(Uri.parse('$url/$id'), headers: header);
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');

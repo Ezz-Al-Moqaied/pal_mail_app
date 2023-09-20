@@ -12,11 +12,9 @@ import 'package:pal_mail_app/screens/newInbox/status_bottomSheet.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:pal_mail_app/screens/newInbox/sender_search_bottomSheet.dart';
 import 'tags_bottomSheet_widget.dart';
-
 import 'package:pal_mail_app/providers/new_inbox_provider.dart';
 import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
-
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
 
