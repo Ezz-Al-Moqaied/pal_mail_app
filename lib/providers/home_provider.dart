@@ -2,13 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:pal_mail_app/controller/home_controller.dart';
 import 'package:pal_mail_app/models/mails_model.dart';
 
+import '../models/category_model.dart';
+import '../models/status_model.dart';
+import '../models/tage_model.dart';
+
 class HomeProvider with ChangeNotifier {
   List<Mail> mail = [];
+  List<Mail> categoryOfficialOrganizations = [];
+  List<Mail> categoryOther = [];
+  List<Mail> categoryNGOs = [];
+  List<Category> category = [];
+  List<Mail> categoryForeign = [];
+  List<String> tag = ["All Tags"];
+  List<StatusMails> statusMails = [];
   int countStatusInbox = 0;
   int countStatusInProgress = 0;
   int countStatusPending = 0;
   int countStatusCompleted = 0;
-
+  int? statusMailsID;
   double xoffset = 0;
   double yoffset = 0;
   double scalefactor = 1;
@@ -16,38 +27,89 @@ class HomeProvider with ChangeNotifier {
 
   final HomeHelper _homeHelper = HomeHelper.instance;
 
-  Future<void> getAllMails() async {
-    final res = await _homeHelper.getmails().then((value) {
-      mailsModelToJson(value);
-      for (var element in value.mails!) {
-        mail.add(element);
-        countStatus(element);
+  Future<void> getCategory() async {
+    await _homeHelper.getCategory().then((value) {
+      category.clear();
+      categoryModelToJson(value);
+      for (var element in value.categories!) {
+        category.add(element);
       }
     });
   }
 
-  countStatus(Mail element) async {
-    if (element.status?.name == "Inbox") {
+  Future<void> getAllMails() async {
+    await _homeHelper.getMails().then((value) {
+      mail.clear();
+      mailsModelToJson(value);
+      for (var element in value.mails!) {
+        mail.add(element);
+        countStatusMails(element);
+        categoryMails(element);
+      }
+    });
+  }
+
+  Future<void> getStatusMails() async {
+    await _homeHelper.getStatusMails().then((value) {
+      statusMails.clear();
+      statusModelToJson(value);
+      for (var element in value.statuses!) {
+        statusMails.add(element);
+      }
+    });
+  }
+
+  Color countStatusMails(Mail mail) {
+    if (mail.status!.name == "Inbox") {
       countStatusInbox++;
-    } else if (element.status?.name == "In Progress") {
+      return Colors.red;
+    } else if (mail.status!.name == "In Progress" &&
+        mail.status!.name != null) {
       countStatusInProgress++;
-    } else if (element.status?.name == "Pending") {
+      return Colors.yellow;
+    } else if (mail.status!.name == "Pending" && mail.status!.name != null) {
       countStatusPending++;
+      return Colors.blueAccent;
     } else {
       countStatusCompleted++;
+      return Colors.green;
     }
   }
 
-  void drawerOpen() {
-    xoffset = 0;
-    yoffset = 0;
-    scalefactor = 1;
-    isdraweropen = false;
-    notifyListeners();
+  categoryMails(Mail mail) {
+    if (mail.sender!.category!.id == 1) {
+      categoryOther.add(mail);
+    } else if (mail.sender!.category!.id == 2) {
+      categoryOfficialOrganizations.add(mail);
+    } else if (mail.sender!.category!.id == 3) {
+      categoryNGOs.add(mail);
+    } else if (mail.sender!.category!.id == 4) {
+      categoryForeign.add(mail);
+    }
   }
 
-  Future<void> updateData() async {
-    await getAllMails();
+  int countCategoryMails(int id) {
+    int count = 0;
+    for (var element in mail) {
+      if (element.sender!.category!.id == id) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  Future<void> getTage() async {
+    await _homeHelper.getTage().then((value) {
+      tag.clear();
+      tagsModelToJson(value);
+      for (var element in value.tags!) {
+        tag.add(element.name!);
+      }
+    });
+  }
+
+  setStatusMailsID(int id) {
+    statusMailsID = id;
     notifyListeners();
   }
 

@@ -1,48 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget textFormFieldWidget(
-        {required bool outlinedBorder,
-        required TextEditingController controller,
+        {required TextEditingController controller,
         required TextInputType type,
-        double? radius = 15,
-        Widget? label,
-        IconData? prefixIcon,
+        String? label,
+        IconButton? prefixIcon,
         IconButton? suffixIcon,
-        String? Function(String?)? validate,
+        required String? Function(String?)? validate,
         Function? onSubmit,
-        Function(String)? onChange,
-        void Function(String?)? onSaved,
+        Function? onChange,
         bool obscureText = false,
         GestureTapCallback? onTapForm,
         String? hintText,
         bool readOnly = false,
         Color? colors,
-        String lableText = '',
         floatingLabelBehavior = FloatingLabelBehavior.always,
         int maxLines = 1}) =>
     TextFormField(
-        onSaved: onSaved,
-        readOnly: readOnly,
-        onChanged: onChange,
-        controller: controller,
-        keyboardType: type,
-        validator: validate,
-        maxLines: maxLines,
-        obscureText: obscureText,
-        onTap: onTapForm,
-        decoration: InputDecoration(
-          label: label,
+      controller: controller,
+      keyboardType: type,
+      validator: validate,
+      readOnly: readOnly,
+      maxLines: maxLines,
+      obscureText: obscureText,
+      onTap: onTapForm,
+      decoration: InputDecoration(
           filled: true,
           hintText: hintText,
           floatingLabelBehavior: floatingLabelBehavior,
-          fillColor: colors ?? const Color(0xffF7F7FA),
-          prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+          fillColor: colors != null ? Colors.white : const Color(0xffF7F7FA),
+          label: Text(label ?? ''),
+          prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
-          border: outlinedBorder
-              ? OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(radius!.r)),
-                  borderSide: BorderSide.none)
-              : UnderlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.r))),
-        ));
+          border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+              borderSide: BorderSide.none)
+
+      ),
+    );

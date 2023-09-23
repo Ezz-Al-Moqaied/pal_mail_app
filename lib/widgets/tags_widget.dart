@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:provider/provider.dart';
+
+import 'package:pal_mail_app/models/tage_model.dart';
+
 
 import '../constants/colors.dart';
 import '../providers/home_provider.dart';
@@ -29,8 +33,10 @@ class TagsWidget extends StatelessWidget {
           padding: const EdgeInsets.all(4),
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.r),
-              color: Colors.blue
+
+                borderRadius: BorderRadius.circular(30.r),
+                color: tagButtonColor
+
             ),
             child: Text("#${tag[index]}" , style: TextStyle(
               color: tagTextColor ,
@@ -40,24 +46,3 @@ class TagsWidget extends StatelessWidget {
     );
   }
 }
-
-/*
-Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          decoration: BoxDecoration(
-            color: tagButtonColor,
-            borderRadius: BorderRadius.all(Radius.circular(30.r)),
-          ),
-          child: TextButton(
-            child: Text(
-              tag[index].name!,
-              style: TextStyle(color: Colors.black, fontSize: 16.sp),
-            ),
-            onPressed: () {
-
-            },
-
-          ),
-        )
- */

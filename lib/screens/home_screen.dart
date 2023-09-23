@@ -3,21 +3,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/images.dart';
 import 'package:pal_mail_app/constants/widget.dart';
-import 'package:pal_mail_app/widgets/bottom_sheet_widget.dart';
+
+
+import 'package:pal_mail_app/providers/home_provider.dart';
+import 'package:pal_mail_app/screens/newInbox/new_inbox_bottomSheet.dart';
+import 'package:pal_mail_app/screens/search_screen.dart';
+import 'package:pal_mail_app/widgets/mails_widget.dart';
+import 'package:pal_mail_app/widgets/navigate_widget.dart';
+
+import 'package:pal_mail_app/widgets/status_mail_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
-import '../providers/home_provider.dart';
-import '../widgets/status_mail_widget.dart';
+
 import '../widgets/tags_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-
+  const HomeScreen({Key? key}) : super(key: key);
   TextEditingController searchController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
       height: MediaQuery.of(context).size.height,
@@ -61,23 +69,21 @@ class HomeScreen extends StatelessWidget {
             )),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.h),
+
+        child: SingleChildScrollView(
+
           child: Column(
             children: [
               largeSpacer,
               Row(
                 children: [
-                  homeProvider.isdraweropen
-                      ? IconButton(
-                          onPressed: () {
-                            homeProvider.drawerOpen();
-                          },
-                          icon: const Icon(Icons.arrow_back_ios))
-                      : IconButton(
-                          icon: const Icon(Icons.notes_sharp),
-                          onPressed: () {
-                            homeProvider.drawerClose();
-                          },
-                        ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.notes_sharp,
+                      size: 30.sp,
+                    ),
+                    onPressed: () async {},
+                  ),
                   const Spacer(),
                   Image.asset(
                     Images.personIcon,
@@ -92,9 +98,15 @@ class HomeScreen extends StatelessWidget {
                     return null;
                   },
                   hintText: "search",
-                  prefixIcon: Icons.search,
-                  colors: Colors.white ),
-              mediumSpacer,
+
+                  onTapForm: () {
+                    //   showSearch(context: context, delegate: SearchScreen());
+                    navigatePush(context: context, nextScreen: SearchScreen());
+                  },
+                  prefixIcon: IconButton(
+                      onPressed: () {}, icon: Icon(Icons.search_outlined)),
+                  colors: Colors.white),
+              smallSpacer,
               Row(
                 children: [
                   Expanded(
@@ -134,23 +146,122 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              // Expanded Tile widget start
-              // Expanded Tile widget end
+              ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  ExpansionTile(
+                      title: Row(
+                        children: [
+                          Text(
+                            "Official Organization",
+                            style:
+                                TextStyle(fontSize: 20.sp, color: colorBlack),
+                          ),
+                          const Spacer(),
+                          Text(homeProvider.countCategoryMails(2).toString())
+                        ],
+                      ),
+                      children: [
+                        for (var element in homeProvider.mail)
+                          if (element.sender!.category!.id == 2)
+                            mailsWidget(mails: element, context: context),
+                      ]),
+                ],
+              ),
+              ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  ExpansionTile(
+                    title: Row(
+                      children: [
+                        Text(
+                          "NGOs",
+                          style: TextStyle(fontSize: 20.sp, color: colorBlack),
+                        ),
+                        const Spacer(),
+                        Text(homeProvider.countCategoryMails(3).toString())
+                      ],
+                    ),
+                    children: [
+                      for (var element in homeProvider.mail)
+                        if (element.sender!.category!.id == 3)
+                          mailsWidget(mails: element, context: context),
+                    ],
+                  ),
+                ],
+              ),
+              ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  ExpansionTile(
+                    title: Row(
+                      children: [
+                        Text(
+                          "Others",
+                          style: TextStyle(fontSize: 20.sp, color: colorBlack),
+                        ),
+                        const Spacer(),
+                        Text(homeProvider.countCategoryMails(4).toString())
+                      ],
+                    ),
+                    children: [
+                      for (var element in homeProvider.mail)
+                        if (element.sender!.category!.id == 4)
+                          mailsWidget(mails: element, context: context)
+                    ],
+                  ),
+                ],
+              ),
+              smallSpacer,
               Container(
-                padding: EdgeInsets.all(16.w.h),
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Tags",
-                  textAlign: TextAlign.start,
-                  style:
-                      TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20.sp),
                 ),
               ),
-              // Tags start
-               TagsWidget(tag: [
 
-               ],),
-              // Tags End
+              TagsWidget(tag: homeProvider.tag),
+              mediumSpacer,
+              Container(
+                  padding: EdgeInsets.symmetric(vertical: 5.h),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20.r))),
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                      onPressed: () {
+                        CustomModalBottomSheet(context: context).show();
+                      },
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                color: inboxtextColor,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(20.r),
+                                )),
+                            child: Icon(
+                              Icons.add_outlined,
+                              size: 24.sp,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Text("New Inbox",
+                              style: TextStyle(
+                                  fontSize: 20.sp, color: inboxtextColor))
+                        ],
+                      ))),
+
             ],
           ),
         ),

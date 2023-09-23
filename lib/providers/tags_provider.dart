@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pal_mail_app/controller/tags_controller.dart';
-
 import '../models/tage_model.dart';
 
 class TagsProvider extends ChangeNotifier {

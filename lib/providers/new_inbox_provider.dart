@@ -1,15 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pal_mail_app/controller/new_inbox_controller.dart';
-import 'package:pal_mail_app/models/sender_model.dart';
 
-import '../models/category_modl.dart' as cat;
+import 'package:pal_mail_app/controller/sender_model.dart';
+import 'package:pal_mail_app/models/category_model.dart' as cat;
 
 class NewInboxProvider extends ChangeNotifier {
   final NewInboxHelper _helper = NewInboxHelper.instance;
 
+  ExpansionTileController expansionTile = ExpansionTileController();
+
+  double angle = 0;
   //
   int _mailId = 0;
 
@@ -103,6 +107,7 @@ class NewInboxProvider extends ChangeNotifier {
         idSender = value!.id;
       });
     } catch (e) {
+      print('-------------------------');
       print(e.toString());
     }
   }
@@ -159,7 +164,16 @@ class NewInboxProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-// Activity
+
+  void clearSenderSearch() {
+    senderName = searchController;
+    idSender = 0;
+    senderMobile = '';
+    senderCategID = '';
+    senderCategName = '';
+    notifyListeners();
+  }
+
 
   void removeActiviy(int index) {
     _activities.removeAt(index);
@@ -184,6 +198,7 @@ class NewInboxProvider extends ChangeNotifier {
     _activities.clear();
     _activitiesMap.clear();
     _activitiesDate.clear();
+    angle = 0;
     notifyListeners();
   }
 
@@ -219,6 +234,19 @@ class NewInboxProvider extends ChangeNotifier {
 
   void removeImage(int index) {
     _files.remove(_files.elementAt(index));
+    notifyListeners();
+  }
+
+  // Expansigsdfsdafsd
+  changeIconState(bool value) {
+    print('ads');
+    if (value) {
+      angle = 90 * (math.pi / 180);
+      print(angle);
+    } else {
+      angle = 0;
+      print(angle);
+    }
     notifyListeners();
   }
 }

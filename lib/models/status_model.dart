@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-StatusModel statusModelFromJson(String str) =>
-    StatusModel.fromJson(json.decode(str));
+StatusModel statusModelFromJson(String str) => StatusModel.fromJson(json.decode(str));
 
 String statusModelToJson(StatusModel data) => json.encode(data.toJson());
 
@@ -13,17 +12,12 @@ class StatusModel {
   });
 
   factory StatusModel.fromJson(Map<String, dynamic> json) => StatusModel(
-        statuses: json["statuses"] == null
-            ? []
-            : List<StatusMails>.from(
-                json["statuses"]!.map((x) => StatusMails.fromJson(x))),
-      );
+    statuses: json["statuses"] == null ? [] : List<StatusMails>.from(json["statuses"]!.map((x) => StatusMails.fromJson(x))),
+  );
 
   Map<String, dynamic> toJson() => {
-        "statuses": statuses == null
-            ? []
-            : List<dynamic>.from(statuses!.map((x) => x.toJson())),
-      };
+    "statuses": statuses == null ? [] : List<dynamic>.from(statuses!.map((x) => x.toJson())),
+  };
 }
 
 class StatusMails {
@@ -44,20 +38,20 @@ class StatusMails {
   });
 
   factory StatusMails.fromJson(Map<String, dynamic> json) => StatusMails(
-        id: json["id"],
-        name: json["name"],
-        color: json["color"],
-        createdAt: json["created_at"],
-        updatedAt: json["updated_at"],
-        mailsCount: json["mails_count"],
-      );
+    id: json["id"],
+    name: json["name"],
+    color: json["color"],
+    createdAt: json["created_at"],
+    updatedAt: json["updated_at"],
+    mailsCount: json["mails_count"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "color": color,
-        "created_at": createdAt,
-        "updated_at": updatedAt,
-        "mails_count": mailsCount,
-      };
+    "id": id,
+    "name": name,
+    "color": color,
+    "created_at": createdAt,
+    "updated_at": updatedAt,
+    "mails_count": mailsCount,
+  };
 }

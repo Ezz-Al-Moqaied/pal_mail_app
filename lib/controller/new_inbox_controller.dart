@@ -2,10 +2,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pal_mail_app/constants/keys.dart';
+
+
+import 'package:pal_mail_app/controller/sender_model.dart';
+import 'package:pal_mail_app/models/category_model.dart' as cat;
+
 import 'package:pal_mail_app/models/mails_model.dart';
-import 'package:pal_mail_app/models/sender_model.dart';
 import 'package:pal_mail_app/services/helper/api_base_helper.dart';
-import '../models/category_modl.dart'as cat;
 import '../widgets/flutterToastWidget.dart';
 
 class NewInboxHelper {
@@ -15,18 +18,12 @@ class NewInboxHelper {
 
   Future<Mail?> addMail(Map<String, dynamic> body) async {
     try {
-      // final response =
-      //     await http.post(Uri.parse(Keys.mailsUrl), body: body, headers: {
-      //   'Authorization': 'Bearer ${SharedPreferencesHelper.user.token}',
-      //   'Accept': 'application/json'
-      // });
       final response =
       await _helper.post(Keys.mailsUrl, body, Keys.instance.header);
       flutterToastWidget(msg: "Add Mail Success", colors: Colors.green);
       print(Mail.fromJson(response['mail']).id);
       return Mail.fromJson(response['mail']);
     } catch (e) {
-      // ignore: avoid_print
       print(e.toString());
       flutterToastWidget(msg: "Add Mail Failed", colors: Colors.redAccent);
       return null;
@@ -70,16 +67,20 @@ class NewInboxHelper {
       request.fields['mail_id'] = mailId.toString();
       request.fields['title'] = 'image_${DateTime.now()}';
 
-//add multipart to request
       request.files.add(pic);
       request.headers.addAll(Keys.instance.header);
       var response = await request.send();
 
-//Get the response from the server
       var responseData = await response.stream.toBytes();
       var responseString = String.fromCharCodes(responseData);
-      flutterToastWidget(
-          msg: "Upload attachment success", colors: Colors.green);
+      if (response.statusCode == 200) {
+        flutterToastWidget(
+            msg: "Upload attachment success", colors: Colors.green);
+      } else {
+        flutterToastWidget(
+            msg: "Erro During Communication : ${response.statusCode}",
+            colors: Colors.green);
+      }
       print(responseString);
     } catch (e) {
       flutterToastWidget(
