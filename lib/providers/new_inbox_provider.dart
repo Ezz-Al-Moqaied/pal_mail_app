@@ -4,44 +4,61 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pal_mail_app/controller/new_inbox_controller.dart';
+
 import 'package:pal_mail_app/controller/sender_model.dart';
 import 'package:pal_mail_app/models/category_model.dart' as cat;
 
 class NewInboxProvider extends ChangeNotifier {
   final NewInboxHelper _helper = NewInboxHelper.instance;
+
   ExpansionTileController expansionTile = ExpansionTileController();
 
   double angle = 0;
   //
   int _mailId = 0;
+
   int get mailId => _mailId;
+
   // Sender
   List<Datum> _senders = [];
+
   List<Datum> get senders => _senders;
   String senderName = "";
   String senderCategID = "";
   String senderCategName = "";
   String senderMobile = "";
   int idSender = 0;
+
   // Category
   List<cat.Category> _categories = [];
   List<cat.Category> _filters = [];
+
   List<cat.Category> get filters => _filters;
+
   List<cat.Category> get categories => _categories;
   String searchController = "";
+
   // Date Picker
   DateTime? _dateTime = DateTime.now();
+
   DateTime? get dateTime => _dateTime;
+
   // Activityies
   List<String> _activities = [];
   List<String> _activitiesDate = [];
   List<Map<String, dynamic>> _activitiesMap = [];
+
   List<String> get activities => _activities;
+
   List<Map<String, dynamic>> get activitiesMap => _activitiesMap;
+
   List<String> get activitiesDate => _activitiesDate;
+
   // Attachment
   Set<File> _files = {};
+
   Set<File> get files => _files;
+
   Future<void> addMailProv(
       {required String subject,
       String? description,
@@ -147,6 +164,7 @@ class NewInboxProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
   void clearSenderSearch() {
     senderName = searchController;
     idSender = 0;
@@ -155,7 +173,7 @@ class NewInboxProvider extends ChangeNotifier {
     senderCategName = '';
     notifyListeners();
   }
-// Activity
+
 
   void removeActiviy(int index) {
     _activities.removeAt(index);

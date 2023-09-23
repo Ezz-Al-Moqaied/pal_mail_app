@@ -1,57 +1,89 @@
 // To parse this JSON data, do
 //
-//     final userModel = userModelFromJson(jsonString);
+//     final user = userFromJson(jsonString);
 
 import 'dart:convert';
 
-UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
+UserModel userFromJson(String str) => UserModel.fromJson(json.decode(str));
 
-String userModelToJson(UserModel data) => json.encode(data.toJson());
+String userToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
-  User? user;
-  String? token;
+  final UserClass user;
+  final String token;
 
   UserModel({
-    this.user,
-    this.token,
+    required this.user,
+    required this.token,
   });
 
+  UserModel copyWith({
+    UserClass? user,
+    String? token,
+  }) =>
+      UserModel(
+        user: user ?? this.user,
+        token: token ?? this.token,
+      );
+
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-    user: json["user"] == null ? null : User.fromJson(json["user"]),
+    user: UserClass.fromJson(json["user"]),
     token: json["token"],
   );
 
   Map<String, dynamic> toJson() => {
-    "user": user?.toJson(),
+    "user": user.toJson(),
     "token": token,
   };
 }
 
-class User {
-  int? id;
-  String? name;
-  String? email;
-  dynamic image;
-  dynamic emailVerifiedAt;
-  String? roleId;
-  String? createdAt;
-  String? updatedAt;
-  Role? role;
+class UserClass {
+  final int? id;
+  final String? name;
+  final String? email;
+  final String? image; // Updated to be nullable
+  final String? emailVerifiedAt; // Updated to be nullable
+  final String? roleId;
+  final String? createdAt;
+  final String? updatedAt;
+  final Role? role;
 
-  User({
-    this.id,
-    this.name,
-    this.email,
-    this.image,
-    this.emailVerifiedAt,
-    this.roleId,
-    this.createdAt,
-    this.updatedAt,
-    this.role,
+  UserClass({
+    required this.id,
+    required this.name,
+    required this.email,
+    this.image, // Updated to be nullable
+    this.emailVerifiedAt, // Updated to be nullable
+    required this.roleId,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.role,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  UserClass copyWith({
+    int? id,
+    String? name,
+    String? email,
+    String? image,
+    String? emailVerifiedAt,
+    String? roleId,
+    String? createdAt,
+    String? updatedAt,
+    Role? role,
+  }) =>
+      UserClass(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        email: email ?? this.email,
+        image: image ?? this.image,
+        emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
+        roleId: roleId ?? this.roleId,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        role: role ?? this.role,
+      );
+
+  factory UserClass.fromJson(Map<String, dynamic> json) => UserClass(
     id: json["id"],
     name: json["name"],
     email: json["email"],
@@ -60,7 +92,7 @@ class User {
     roleId: json["role_id"],
     createdAt: json["created_at"],
     updatedAt: json["updated_at"],
-    role: json["role"] == null ? null : Role.fromJson(json["role"]),
+    role: Role.fromJson(json["role"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -72,22 +104,35 @@ class User {
     "role_id": roleId,
     "created_at": createdAt,
     "updated_at": updatedAt,
-    "role": role?.toJson(),
+    "role": role!.toJson(),
   };
 }
 
 class Role {
-  int? id;
-  String? name;
-  String? createdAt;
-  String? updatedAt;
+  final int? id;
+  final String? name;
+  final String? createdAt;
+  final String? updatedAt;
 
   Role({
-    this.id,
-    this.name,
-    this.createdAt,
-    this.updatedAt,
+    required this.id,
+    required this.name,
+    required this.createdAt,
+    required this.updatedAt,
   });
+
+  Role copyWith({
+    int? id,
+    String? name,
+    String? createdAt,
+    String? updatedAt,
+  }) =>
+      Role(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
 
   factory Role.fromJson(Map<String, dynamic> json) => Role(
     id: json["id"],

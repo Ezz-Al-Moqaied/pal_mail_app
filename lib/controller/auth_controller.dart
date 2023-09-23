@@ -7,6 +7,7 @@ import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 
+
 class AuthHelper {
   AuthHelper._();
 

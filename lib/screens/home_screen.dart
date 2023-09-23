@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/images.dart';
 import 'package:pal_mail_app/constants/widget.dart';
+
+
 import 'package:pal_mail_app/providers/home_provider.dart';
 import 'package:pal_mail_app/screens/newInbox/new_inbox_bottomSheet.dart';
 import 'package:pal_mail_app/screens/search_screen.dart';
@@ -17,15 +19,59 @@ import '../widgets/tags_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
+  TextEditingController searchController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
-    TextEditingController searchController = TextEditingController();
-    return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
+
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 250),
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      transform: Matrix4.translationValues(
+          homeProvider.xoffset, homeProvider.yoffset, 0)
+        ..scale(homeProvider.scalefactor),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(homeProvider.isdraweropen ? 20 : 0),
+        color: Colors.white,
+      ),
+      child: Scaffold(
+        bottomSheet: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: colorWhite,
+                padding:
+                    EdgeInsets.symmetric(vertical: 18.h, horizontal: 20.w)),
+            onPressed: () {
+              CustomModalBottomSheet(context: context).show();
+            },
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: inboxtextColor,
+                      borderRadius: BorderRadius.circular(30.r)),
+                  child: Icon(
+                    Icons.add_outlined,
+                    size: 24.w.h,
+                    color: colorWhite,
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                const Text(
+                  "New Inbox",
+                  style: TextStyle(fontSize: 20, color: inboxtextColor),
+                )
+              ],
+            )),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.h),
+
         child: SingleChildScrollView(
+
           child: Column(
             children: [
               largeSpacer,
@@ -45,12 +91,14 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
               textFormFieldWidget(
+                  outlinedBorder: false,
                   controller: searchController,
                   type: TextInputType.text,
                   validate: (value) {
                     return null;
                   },
                   hintText: "search",
+
                   onTapForm: () {
                     //   showSearch(context: context, delegate: SearchScreen());
                     navigatePush(context: context, nextScreen: SearchScreen());
@@ -176,6 +224,7 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 20.sp),
                 ),
               ),
+
               TagsWidget(tag: homeProvider.tag),
               mediumSpacer,
               Container(
@@ -212,6 +261,7 @@ class HomeScreen extends StatelessWidget {
                                   fontSize: 20.sp, color: inboxtextColor))
                         ],
                       ))),
+
             ],
           ),
         ),

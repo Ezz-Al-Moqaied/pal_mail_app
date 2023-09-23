@@ -25,3 +25,9 @@ class Keys {
   static const sendersUrl = '$baseUrl/senders';
   static const userUrl = '$baseUrl/user';
 }
+
+
+const String baseUrl = 'https://palmail.gsgtt.tech/api';
+const categoUrl = '$baseUrl/categories';
+const allMailsUrl = '$baseUrl/mails';
+const allTagsUrl = '$baseUrl/tags';
