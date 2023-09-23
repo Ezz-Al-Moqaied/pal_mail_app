@@ -7,6 +7,7 @@ import 'package:pal_mail_app/providers/auth_provider.dart';
 import 'package:pal_mail_app/providers/category_provider.dart';
 import 'package:pal_mail_app/providers/details_mail_provider.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
+import 'package:pal_mail_app/providers/language_provider.dart';
 import 'package:pal_mail_app/providers/new_inbox_provider.dart';
 import 'package:pal_mail_app/providers/search_provider.dart';
 import 'package:pal_mail_app/providers/status_provider.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => HomeProvider()),
           ChangeNotifierProvider(create: (context) => SearchProvider()),
           ChangeNotifierProvider(create: (context) => DetailsMailProvider()),
+          ChangeNotifierProvider(create: (context) => LanguageProvider()),
           ChangeNotifierProvider(
             create: (context) => NewInboxProvider(),
           ),
@@ -58,7 +60,7 @@ class MyApp extends StatelessWidget {
                 Locale('en'), // English
                 Locale('ar'), // Arabic
               ],
-              locale: const Locale('en'),
+              locale: Locale(context.watch<LanguageProvider>().languageKey),
               debugShowCheckedModeBanner: false,
               home: AnimatedSplashScreen(
                   duration: 4000,

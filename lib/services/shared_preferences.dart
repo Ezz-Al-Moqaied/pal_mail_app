@@ -36,4 +36,13 @@ class SharedPreferencesHelper {
     final map = jsonDecode(sharedPreferences.getString("user")!);
     return UserModel.fromJson(map);
   }
+
+  static Future<bool> setLanguage(String language) async {
+    return await sharedPreferences.setString("language", language);
+  }
+
+  static String? get getLanguage {
+    return sharedPreferences.getString('language');
+  }
+
 }

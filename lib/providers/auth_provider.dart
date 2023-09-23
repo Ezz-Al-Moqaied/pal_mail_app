@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pal_mail_app/controller/auth_controller.dart';
+import 'package:pal_mail_app/providers/home_provider.dart';
 import 'package:pal_mail_app/screens/home_screen.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:provider/provider.dart';
@@ -30,9 +33,14 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> registerUser(Map<String, String> data,
       BuildContext context) async {
-    await _authHelper.register(data).then((value) {
+    final homeProvider = Provider.of<HomeProvider>(context , listen: false);
+    await _authHelper.register(data , context).then((value) {
       if (value) {
-        navigatePushReplacement(context: context, nextScreen: HomeScreen());
+        homeProvider.getFetchData();
+        Timer.periodic(const Duration(seconds: 5), (Timer t){
+          navigatePushReplacement(
+              context: context, nextScreen: const HomeScreen());
+        });
       }
     });
   }

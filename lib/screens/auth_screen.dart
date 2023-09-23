@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
@@ -6,9 +7,12 @@ import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/images.dart';
 import 'package:pal_mail_app/constants/widget.dart';
 import 'package:pal_mail_app/providers/auth_provider.dart';
+import 'package:pal_mail_app/providers/home_provider.dart';
+import 'package:pal_mail_app/screens/home_screen.dart';
 import 'package:pal_mail_app/services/localizations_extention.dart';
 import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:pal_mail_app/widgets/login_widget.dart';
+import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:pal_mail_app/widgets/register_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +46,6 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     animationController?.dispose();
     animationController2?.dispose();
     super.dispose();
@@ -197,7 +200,16 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                 authProvider.loginUser({
                                   'email': emailController.text,
                                   'password': passwordController.text,
-                                }, context);
+                                }, context).then((value){
+                                  final homeProvider = Provider.of<HomeProvider>(context , listen: false);
+                                  homeProvider.getFetchData();
+                                  Timer.periodic(Duration(seconds: 6), (Timer t){
+                                    navigatePushReplacement(
+                                        context: context, nextScreen: HomeScreen());
+                                  });
+
+
+                                });
                               }
                             },
                           ),

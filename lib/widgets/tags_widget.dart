@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pal_mail_app/models/tage_model.dart';
-
 import '../constants/colors.dart';
 
 class TagsWidget extends StatelessWidget {
@@ -24,17 +22,23 @@ class TagsWidget extends StatelessWidget {
           mainAxisSpacing: 4.h,
           crossAxisSpacing: 4.w),
       itemBuilder: (context, index) {
-        return Container(
-            padding: const EdgeInsets.all(4),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30.r),
-                color: tagButtonColor
-            ),
-            child: Text("#${tag[index]}" , style: TextStyle(
-              color: tagTextColor ,
-              fontSize: 16.sp ,
-            ),));
+        return GestureDetector(
+          onTap: () {
+          },
+          child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.r),
+                  color: tagButtonColor
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text("#${tag[index]}" , style: TextStyle(
+                  color: tagTextColor ,
+                  fontSize: 16.sp ,
+                ),),
+              )),
+        );
       },
     );
   }

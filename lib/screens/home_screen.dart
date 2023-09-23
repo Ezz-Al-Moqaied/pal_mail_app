@@ -4,6 +4,7 @@ import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/images.dart';
 import 'package:pal_mail_app/constants/widget.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
+import 'package:pal_mail_app/providers/language_provider.dart';
 import 'package:pal_mail_app/screens/newInbox/new_inbox_bottomSheet.dart';
 import 'package:pal_mail_app/screens/search_screen.dart';
 import 'package:pal_mail_app/widgets/mails_widget.dart';
@@ -15,12 +16,18 @@ import 'package:provider/provider.dart';
 
 import '../widgets/tags_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
+    final languageProvider = Provider.of<LanguageProvider>(context);
     TextEditingController searchController = TextEditingController();
     return Scaffold(
       body: Padding(
@@ -37,6 +44,15 @@ class HomeScreen extends StatelessWidget {
                       size: 30.sp,
                     ),
                     onPressed: () async {},
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.language_outlined,
+                      size: 30.sp,
+                    ),
+                    onPressed: () async {
+                      languageProvider.changeLanguage();
+                    },
                   ),
                   const Spacer(),
                   Image.asset(
@@ -152,7 +168,7 @@ class HomeScreen extends StatelessWidget {
                     title: Row(
                       children: [
                         Text(
-                          "Others",
+                          "Foreign",
                           style: TextStyle(fontSize: 20.sp, color: colorBlack),
                         ),
                         const Spacer(),
@@ -162,6 +178,29 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       for (var element in homeProvider.mail)
                         if (element.sender!.category!.id == 4)
+                          mailsWidget(mails: element, context: context)
+                    ],
+                  ),
+                ],
+              ),
+              ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  ExpansionTile(
+                    title: Row(
+                      children: [
+                        Text(
+                          "Others",
+                          style: TextStyle(fontSize: 20.sp, color: colorBlack),
+                        ),
+                        const Spacer(),
+                        Text(homeProvider.countCategoryMails(1).toString())
+                      ],
+                    ),
+                    children: [
+                      for (var element in homeProvider.mail)
+                        if (element.sender!.category!.id == 1)
                           mailsWidget(mails: element, context: context)
                     ],
                   ),

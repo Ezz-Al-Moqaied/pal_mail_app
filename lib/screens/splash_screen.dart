@@ -14,10 +14,7 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
     if(SharedPreferencesHelper.isLogged) {
-      homeProvider.getCategory();
-      homeProvider.getAllMails();
-      homeProvider.getTage();
-      homeProvider.getStatusMails();
+      homeProvider.getFetchData();
     }
 
     return Container(

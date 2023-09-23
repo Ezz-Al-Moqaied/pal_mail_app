@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pal_mail_app/constants/keys.dart';
 import 'package:pal_mail_app/constants/widget.dart';
 import 'package:pal_mail_app/models/mails_model.dart';
 import 'package:pal_mail_app/providers/details_mail_provider.dart';
@@ -84,6 +85,24 @@ Widget mailsWidget({
                 ),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis),
+            smallSpacer,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  for (var element in mails.attachments!)
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8.w),
+                      child: Image.network(
+                          '${Keys.baseUrlStorage}/${element.image!}',
+                          height: 46.h,
+                          width: 46.w,
+                          fit: BoxFit.fill),
+                    ),
+                ],
+              ),
+            ),
+            smallSpacer,
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -98,7 +117,7 @@ Widget mailsWidget({
                     )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
