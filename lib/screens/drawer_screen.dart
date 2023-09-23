@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pal_mail_app/screens/profile_page.dart';
 import 'package:pal_mail_app/screens/profile_screen.dart';
-import 'package:pal_mail_app/screens/senders_screen.dart';
+import 'package:pal_mail_app/screens/sender_screen.dart';
 import 'package:pal_mail_app/screens/setting_screen.dart';
 
 
@@ -60,7 +59,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           case "Home Page": print('home');
                           case "Senders":Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
-                                return const SendersScreen();
+                                return const SenderScreen();
                               },
                             ));
                           case "Profile Page":
