@@ -1,104 +1,279 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pal_mail_app/screens/edit_profile_screen.dart';
-import '../widgets/profile_menu.dart';
+import 'package:provider/provider.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+import '../controller/profile_controller.dart';
+import '../controller/user_controller.dart';
+import '../models/user_model.dart';
+import '../providers/user_provider.dart';
+import '../widgets/alert_widget.dart';
 
+class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  File? pickedFile;
+  String? filePath;
+  bool isEditable = false;
+  TextEditingController nameTextFieldCont = TextEditingController();
+  late Future<UserModel> user;
+  bool isUploading = false;
+  String? name;
+
+  @override
+  void initState() {
+    user = UserController().getLocalUser();
+    user.then((userData) => {
+          nameTextFieldCont.text = userData.user.name!,
+        });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    double deviceWidth = MediaQuery.of(context).size.width;
+    double deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(onPressed: () {
-          Navigator.pop(context);
-        },
-            icon: const Icon(Icons.arrow_back)),
-        title: const Text('Profile Screen', style: TextStyle(fontSize: 18)),
+      floatingActionButton:  Padding(
+        padding: const EdgeInsets.only(right: 40.0,bottom: 80),
+        child: SizedBox(
+          height: 50,
+          width: 300,
+          child: FloatingActionButton(
+            shape: RoundedRectangleBorder(side: BorderSide(color: Colors.white,width: 2,style: BorderStyle.solid)),
+                  onPressed: () async {
+                    setState(() {
+                      isUploading = true;
+                    });
+                    if (pickedFile != null) {
+                      await uploadProfilePic(
+                              pickedFile!, name ?? nameTextFieldCont.text)
+                          .then((value) async {
+                        final newImage = await getNewProfilePic();
+                        updateSharedPreferences(
+                                name ?? nameTextFieldCont.text, newImage!)
+                            .then((value) {
+                          setState(() {
+                            isUploading = false;
+                            user = UserController().getLocalUser();
+
+                            showAlert(context,
+                                message: "User Updated",
+                                color: Colors.blue.withOpacity(0.75),
+                                width: 150);
+                          });
+                        });
+                        if (mounted) {
+                          setState(() {
+                            isEditable = false;
+                          });
+                        }
+                        if (mounted) {
+                          setState(() {
+                            pickedFile = null;
+                          });
+                        }
+                        Provider.of<UserProvider>(context, listen: false)
+                            .getUserData();
+                      }).catchError((err) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(err.toString()),
+                          backgroundColor: Colors.red,
+                        ));
+                      });
+                    } else {
+                      updateName(name ?? nameTextFieldCont.text).then((value) {
+                        updateNameSharedPreferences(name ?? nameTextFieldCont.text)
+                            .then((value) {
+                          setState(() {
+                            isUploading = false;
+                            showAlert(context,
+                                message: "User Updated",
+                                color: Colors.blue.withOpacity(0.75),
+                                width: 150);
+                          });
+
+                          if (mounted) {
+                            setState(() {
+                              isEditable = false;
+                            });
+                          }
+                          if (mounted) {
+                            setState(() {
+                              pickedFile = null;
+                            });
+                          }
+                          Provider.of<UserProvider>(context, listen: false)
+                              .getUserData();
+                        });
+                      }).catchError((err) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(err.toString()),
+                          backgroundColor: Colors.red,
+                        ));
+                      });
+                    }
+                  },
+                  backgroundColor: Colors.blue,
+                  child: Text('Edit profile'),
+                ),
+        ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.only(top: 20.0,left: 12,right: 12),
-            child: Column(
-              children: [
-                /// -- IMAGE
-                SizedBox(
-                  width: 120,
-                  height: 120,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: const Image(image: AssetImage('assets/images/1.jpeg'),fit: BoxFit.cover,)),
-                ),
-                SizedBox(height: 10.h,),
-                const Text('name controller',
-                    style: TextStyle(fontSize: 20)),
-                const Text('mohammedelshawa944@gmail.com',
-                    style: TextStyle(fontSize: 16,color: Colors.grey)),
-                const SizedBox(height: 20),
-
-                /// -- BUTTON
-                SizedBox(
-                  width: 200,
-                  child: ElevatedButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> UpdateProfileScreen())),
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        side: BorderSide.none,
-                        shape: const StadiumBorder()),
-                    child: const Text('Edit Profile',
-                        style: TextStyle(color: Colors.white)),
+      backgroundColor: Colors.blue,
+      body: SingleChildScrollView(
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 38),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(height: 20.h),
-                const Divider(),
-
-                /// -- MENU
-                ProfileMenuWidget(
-                    title: "Settings",
-                    icon: Icons.settings,
-                    onPress: () {}),
-                ProfileMenuWidget(
-                    title: "Billing Details",
-                    icon: Icons.wallet,
-                    onPress: () {}),
-                ProfileMenuWidget(
-                    title: "User Management",
-                    icon: Icons.account_circle_rounded,
-                    onPress: () {}),
-                const Divider(),
-                const SizedBox(height: 10),
-                ProfileMenuWidget(
-                    title: "Information",
-                    icon: Icons.info,
-                    onPress: () {}),
-                ProfileMenuWidget(
-                    title: "Logout",
-                    icon: Icons.login,
-                    textColor: Colors.red,
-                    endIcon: false,
-                    onPress: () {
-                      // Get.defaultDialog(
-                      //   title: "LOGOUT",
-                      //   titleStyle: const TextStyle(fontSize: 20),
-                      //   content: const Padding(
-                      //     padding: EdgeInsets.symmetric(vertical: 15.0),
-                      //     child: Text("Are you sure, you want to Logout?"),
-                      //   ),
-                      //   confirm: Expanded(
-                      //     child: ElevatedButton(
-                      //       onPressed: () {},
-                      //       child: const Text("Yes"),
-                      //     ),
-                      //   ),
-                      //   // cancel: OutlinedButton(
-                      //   //     onPressed: () => Get.back(), child: const Text("No")),
-                      // );
-                    }),
-              ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
             ),
-          ),
+            FutureBuilder(
+                future: user,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  }
+                  if (snapshot.hasData) {
+                    return Center(
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 100, left: 30),
+                              child: CircleAvatar(
+                                radius: 100,
+                                backgroundColor: Colors.blueGrey.shade300,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  radius: 98,
+                                  backgroundImage: pickedFile == null
+                                      ? NetworkImage(
+                                          '${snapshot.data!.user.image}',
+                                        )
+                                      : FileImage(
+                                          File(pickedFile!.path),
+                                        ) as ImageProvider<Object>,
+                                ),
+                              )),
+                          GestureDetector(
+                            onTap: () async {
+                              pickedFile = await pickImageFile();
+
+                              if (pickedFile != null) {
+                                filePath = pickedFile!.path;
+                              }
+                              setState(() {});
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsetsDirectional.only(end: 15.0),
+                              child: Container(
+                                width: 45,
+                                height: 45,
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25)),
+                                child: const Icon(
+                                  Icons.edit,
+                                  color: Colors.blueAccent,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return const SizedBox();
+                }),
+            FutureBuilder(
+                future: user,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  }
+                  if (snapshot.hasData) {
+                    return Container(
+                      margin: const EdgeInsets.only(top: 400, left: 30),
+                      child: Column(children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                leading: Icon(
+                                  Icons.account_circle,
+                                  size: 40,
+                                  color: Colors.white,
+                                ),
+                                title: Text(
+                                  'Name: ${nameTextFieldCont.text}',
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.email,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                          title: Text(
+                            'Email: ${snapshot.data!.user.email} ',
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
+                          ),
+                        ),
+                        ListTile(
+                          leading: Icon(
+                            Icons.book_outlined,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                          title: Text(
+                            'Role: ${snapshot.data!.user.role?.name}',
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                      ]),
+                    );
+                  }
+                  return Column();
+                })
+          ],
         ),
       ),
     );

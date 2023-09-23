@@ -86,7 +86,7 @@ class Roles extends Role {
     this.name,
     this.createdAt,
     this.updatedAt,
-  });
+  }) : super(id: 0, name: '', createdAt: '', updatedAt: '');
 
   factory Roles.fromJson(Map<String, dynamic> json) => Roles(
     id: json["id"],

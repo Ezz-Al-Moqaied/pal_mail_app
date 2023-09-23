@@ -8,6 +8,7 @@ class Keys {
     'Authorization': 'Bearer ${SharedPreferencesHelper.user.token}',
     'Accept': 'application/json'
   };
+  //------------------------URLs------------------------
   static const double screenWidth = 428;
   static const double screenHeight = 926;
   static const baseUrl = 'https://palmail.gsgtt.tech/api';
@@ -21,3 +22,9 @@ class Keys {
   static const statusUrl = '$baseUrl/statuses';
   static const attachmentUrl = '$baseUrl/attachments';
 }
+
+
+const String baseUrl = 'https://palmail.gsgtt.tech/api';
+const categoUrl = '$baseUrl/categories';
+const allMailsUrl = '$baseUrl/mails';
+const allTagsUrl = '$baseUrl/tags';
