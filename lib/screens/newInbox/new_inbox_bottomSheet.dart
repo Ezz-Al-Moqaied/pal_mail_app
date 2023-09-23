@@ -251,57 +251,55 @@ class CustomModalBottomSheet {
                                     ),
                                   ),
                                   Expanded(
-                                    child: InkWell(
-                                      onTap: () {},
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            right: 15.0.w,
-                                            left: 15.0.w,
-                                            top: 10.h),
-                                        child: Consumer2<NewInboxProvider,
-                                            CategoryProvider>(
-                                          builder:
-                                              (context, prov, catProv, child) {
-                                            return InkWell(
-                                              onTap: () {
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          right: 15.0.w,
+                                          left: 15.0.w,
+                                          top: 10.h),
+                                      child: Consumer2<NewInboxProvider,
+                                          CategoryProvider>(
+                                        builder:
+                                            (context, prov, catProv, child) {
+                                          return InkWell(
+                                            onTap: () {
+                                              if (prov.senderMobile.isEmpty) {
                                                 CategoriesBottomSheet()
                                                     .showCategoriesBottomSheet(
                                                         context);
-                                              },
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Categories',
-                                                    style: TextStyle(
-                                                      fontSize: 16.sp,
-                                                    ),
+                                              }
+                                            },
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Categories',
+                                                  style: TextStyle(
+                                                    fontSize: 16.sp,
                                                   ),
-                                                  const Spacer(),
-                                                  Text(
-                                                    prov.senderCategID == ''
-                                                        ? catProv
-                                                            .selectedCategoryname
-                                                        : prov.senderCategName,
-                                                    style: TextStyle(
-                                                      fontSize: 16.sp,
-                                                      color: textFieldHintColor,
-                                                    ),
+                                                ),
+                                                const Spacer(),
+                                                Text(
+                                                  prov.senderCategID == ''
+                                                      ? catProv
+                                                          .selectedCategoryname
+                                                      : prov.senderCategName,
+                                                  style: TextStyle(
+                                                    fontSize: 16.sp,
+                                                    color: textFieldHintColor,
                                                   ),
-                                                  prov.senderMobile.isEmpty
-                                                      ? Icon(
-                                                          Icons
-                                                              .arrow_forward_ios,
-                                                          color: Colors.grey,
-                                                          size: 15.sp,
-                                                        )
-                                                      : const SizedBox()
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        ),
+                                                ),
+                                                prov.senderMobile.isEmpty
+                                                    ? Icon(
+                                                        Icons.arrow_forward_ios,
+                                                        color: Colors.grey,
+                                                        size: 15.sp,
+                                                      )
+                                                    : const SizedBox()
+                                              ],
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   )
