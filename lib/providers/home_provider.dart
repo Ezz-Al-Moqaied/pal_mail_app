@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pal_mail_app/controller/home_controller.dart';
-import 'package:pal_mail_app/models/category_model.dart';
 import 'package:pal_mail_app/models/mails_model.dart';
-import 'package:pal_mail_app/models/status_model.dart';
-import 'package:pal_mail_app/models/tage_model.dart';
 
 class HomeProvider with ChangeNotifier {
   List<Mail> mail = [];
-  List<Mail> categoryOfficialOrganizations = [];
-  List<Mail> categoryOther = [];
-  List<Mail> categoryNGOs = [];
-  List<Category> category = [];
-  List<Mail> categoryForeign = [];
-  List<String> tag = ["All Tags"];
-  List<StatusMails> statusMails = [];
   int countStatusInbox = 0;
   int countStatusInProgress = 0;
   int countStatusPending = 0;

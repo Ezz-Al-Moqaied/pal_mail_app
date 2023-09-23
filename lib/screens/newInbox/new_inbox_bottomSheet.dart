@@ -215,6 +215,10 @@ class CustomModalBottomSheet {
                                           },
                                           colors: Colors.white,
                                           hintText: 'name',
+<<<<<<< HEAD
+=======
+                                          prefixIcon: Icons.account_circle,
+>>>>>>> origin/master
                                           suffixIcon: IconButton(
                                               splashColor: Colors.transparent,
                                               onPressed: () {

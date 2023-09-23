@@ -204,10 +204,19 @@ class TagsBottomSheet {
                                       }
                                     },
                                     icon: const Icon(Icons.send)),
+<<<<<<< HEAD
                                 colors: colorWhite,
                                 hintText: 'add New tags..',
                                 maxLines: 1,
                                 label: "Tags",
+=======
+                                radius: 50.r,
+                                colors: colorWhite,
+                                hintText: 'add New tags..',
+                                maxLines: 1,
+                                label: const Text("Tags"),
+                                outlinedBorder: true,
+>>>>>>> origin/master
                                 controller: tagsController,
                                 type: TextInputType.text,
                                 validate: (p0) => '',

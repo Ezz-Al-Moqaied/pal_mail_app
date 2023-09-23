@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
@@ -17,17 +19,44 @@ class AuthScreen extends StatefulWidget {
   State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
+  AnimationController? animationController;
+  AnimationController? animationController2;
+  Color? color = buttonBackGroundColor1;
+  Color? color2 = buttonBackGroundColor2;
+  Color? textcolor = buttonColor1;
+  Color? textcolor2 = buttonColor2;
+  @override
+  void initState() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    )..forward();
+    animationController2 = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    )..reverse();
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    animationController?.dispose();
+    animationController2?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    final authProvider = Provider.of<AuthProvider>(context);
     TextEditingController emailController = TextEditingController();
     TextEditingController usernameController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController confirmPasswordController = TextEditingController();
-
     final _formKey = GlobalKey<FormState>();
+
+    final authProvider = Provider.of<AuthProvider>(context);
 
     return Scaffold(
         body: Stack(
@@ -86,92 +115,121 @@ class _AuthScreenState extends State<AuthScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              authProvider.isLoginScreen();
-                            },
-                            style: ElevatedButton.styleFrom(
-                                splashFactory: NoSplash.splashFactory,
-                                shadowColor: Colors.transparent,
-                                backgroundColor: authProvider.isLogin
-                                    ? buttonBackGroundColor1
-                                    : buttonBackGroundColor2,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(24.r)),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 16.h, horizontal: 40.w)),
-                            child: Text(
-                              context.localizations!.logIn,
-                              style: TextStyle(
-                                  color: authProvider.isLogin
-                                      ? buttonColor1
-                                      : buttonColor2),
-                            )),
-                        ElevatedButton(
-                            onPressed: () {
-                              authProvider.isSignScreen();
-                            },
-                            style: ElevatedButton.styleFrom(
-                                splashFactory: NoSplash.splashFactory,
-                                shadowColor: Colors.transparent,
-                                backgroundColor: authProvider.isLogin
-                                    ? buttonBackGroundColor2
-                                    : buttonBackGroundColor1,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(24.r)),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 16.h, horizontal: 40.w)),
-                            child: Text(
-                              context.localizations!.signUp,
-                              style: TextStyle(
-                                  color: authProvider.isLogin
-                                      ? buttonColor2
-                                      : buttonColor1),
-                            )),
+                        AnimatedContainer(
+                          decoration: BoxDecoration(
+                              color: color,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(24.r),
+                                  bottomLeft: Radius.circular(24.r))),
+                          duration: Duration(milliseconds: 500),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                authProvider.isLoginScreen();
+                                animationController!.forward();
+                                animationController2!.reverse();
+                                color = buttonBackGroundColor1;
+                                textcolor = buttonColor1;
+                                color2 = buttonBackGroundColor2;
+                                textcolor2 = buttonColor2;
+                                setState(() {});
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.transparent,
+                                  splashFactory: NoSplash.splashFactory,
+                                  shadowColor: Colors.transparent,
+                                  elevation: 0,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 24.h, horizontal: 42.w)),
+                              child: AnimatedDefaultTextStyle(
+                                duration: const Duration(milliseconds: 500),
+                                style: TextStyle(color: color2),
+                                child: Text(
+                                  context.localizations!.logIn,
+                                ),
+                              )),
+                        ),
+                        AnimatedContainer(
+                          duration: const Duration(milliseconds: 500),
+                          decoration: BoxDecoration(
+                              color: color2,
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(24.r),
+                                  bottomRight: Radius.circular(24.r))),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                authProvider.isSignScreen();
+                                animationController2!.forward();
+                                animationController!.reverse();
+                                color = buttonBackGroundColor2;
+                                textcolor = buttonColor2;
+                                color2 = buttonBackGroundColor1;
+                                textcolor2 = buttonColor1;
+                                setState(() {});
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  splashFactory: NoSplash.splashFactory,
+                                  shadowColor: Colors.transparent,
+                                  backgroundColor: Colors.transparent,
+                                  elevation: 0,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 24.h, horizontal: 42.w)),
+                              child: AnimatedDefaultTextStyle(
+                                duration: const Duration(milliseconds: 500),
+                                style: TextStyle(color: textcolor2),
+                                child: Text(
+                                  context.localizations!.signUp,
+                                ),
+                              )),
+                        ),
                       ],
                     ),
                   ),
                   largeSpacer,
                   authProvider.isLogin
-                      ? LoginWidget(
-                          emailController: emailController,
-                          passwordController: passwordController,
-                          formKey: _formKey,
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              authProvider.loginUser({
-                                'email': emailController.text,
-                                'password': passwordController.text,
-                              }, context);
-                            }
-                          },
-                        )
-                      : RegisterWidget(
-                          emailController: emailController,
-                          passwordController: passwordController,
-                          confirmPasswordController: confirmPasswordController,
-                          usernameController: usernameController,
-                          formKey: _formKey,
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              if (passwordController.text ==
-                                  confirmPasswordController.text) {
-                                authProvider.registerUser({
+                      ? FadeTransition(
+                          opacity: animationController!,
+                          child: LoginWidget(
+                            emailController: emailController,
+                            passwordController: passwordController,
+                            formKey: _formKey,
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                authProvider.loginUser({
                                   'email': emailController.text,
                                   'password': passwordController.text,
-                                  'password_confirmation':
-                                      confirmPasswordController.text,
-                                  'name': usernameController.text
                                 }, context);
-                              } else {
-                                flutterToastWidget(
-                                    msg: "Password does not match",
-                                    colors: Colors.greenAccent);
                               }
-                            }
-                          },
+                            },
+                          ),
+                        )
+                      : FadeTransition(
+                          opacity: animationController2!,
+                          child: RegisterWidget(
+                            emailController: emailController,
+                            passwordController: passwordController,
+                            confirmPasswordController:
+                                confirmPasswordController,
+                            usernameController: usernameController,
+                            formKey: _formKey,
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                if (passwordController.text ==
+                                    confirmPasswordController.text) {
+                                  authProvider.registerUser({
+                                    'email': emailController.text,
+                                    'password': passwordController.text,
+                                    'password_confirmation':
+                                        confirmPasswordController.text,
+                                    'name': usernameController.text
+                                  }, context);
+                                } else {
+                                  flutterToastWidget(
+                                      msg: "Password does not match",
+                                      colors: Colors.greenAccent);
+                                }
+                              }
+                            },
+                          ),
                         ),
                 ],
               ),

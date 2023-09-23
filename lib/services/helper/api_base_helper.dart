@@ -28,8 +28,9 @@ class ApiBaseHelper {
         body: body,
         headers: header,
       );
-      statusCode = response.statusCode;
       responseJson = _returnResponse(response);
+      statusCode = response.statusCode;
+      print(statusCode);
     } on SocketException {
       throw FetchDataException('No Internet connection');
     }

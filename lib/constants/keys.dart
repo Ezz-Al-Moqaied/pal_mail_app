@@ -1,5 +1,3 @@
-import 'package:pal_mail_app/services/shared_preferences.dart';
-
 class Keys {
   Keys._();
 
