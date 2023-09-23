@@ -4,9 +4,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/keys.dart';
 import 'package:pal_mail_app/providers/auth_provider.dart';
+import 'package:pal_mail_app/providers/category_provider.dart';
+import 'package:pal_mail_app/providers/details_mail_provider.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
+import 'package:pal_mail_app/providers/new_inbox_provider.dart';
+import 'package:pal_mail_app/providers/search_provider.dart';
+import 'package:pal_mail_app/providers/status_provider.dart';
+import 'package:pal_mail_app/providers/tags_provider.dart';
 import 'package:pal_mail_app/screens/auth_screen.dart';
-import 'package:pal_mail_app/screens/home_screen.dart';
+import 'package:pal_mail_app/screens/main_page.dart';
 import 'package:pal_mail_app/screens/splash_screen.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +35,16 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (context) => AuthProvider()),
           ChangeNotifierProvider(create: (context) => HomeProvider()),
+          ChangeNotifierProvider(create: (context) => SearchProvider()),
+          ChangeNotifierProvider(create: (context) => DetailsMailProvider()),
+          ChangeNotifierProvider(
+            create: (context) => NewInboxProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => TagsProvider(),
+          ),
+          ChangeNotifierProvider(create: (context) => CategoryProvider()),
+          ChangeNotifierProvider(create: (context) => StatusProvider())
         ],
         builder: (context, child) {
           return MaterialApp(
@@ -49,7 +65,7 @@ class MyApp extends StatelessWidget {
                   splashIconSize: double.infinity,
                   splash: const SplashScreen(),
                   nextScreen: SharedPreferencesHelper.isLogged
-                      ? const HomeScreen()
+                      ? const MainPage()
                       : const AuthScreen(),
                   splashTransition: SplashTransition.fadeTransition));
         },
