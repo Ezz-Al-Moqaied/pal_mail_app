@@ -2,8 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pal_mail_app/constants/keys.dart';
+
 import 'package:pal_mail_app/controller/sender_model.dart';
-import 'package:pal_mail_app/models/category_model.dart' as cat;
+import 'package:pal_mail_app/models/category_modl.dart' as cat;
+
 import 'package:pal_mail_app/models/mails_model.dart';
 import 'package:pal_mail_app/services/helper/api_base_helper.dart';
 import '../widgets/flutterToastWidget.dart';
@@ -59,6 +61,7 @@ class NewInboxHelper {
     try {
       var request =
           http.MultipartRequest("POST", Uri.parse(Keys.attachmentUrl));
+//create multipart using filepath, string or bytes
       var pic = await http.MultipartFile.fromPath('image', file.path);
       request.fields['mail_id'] = mailId.toString();
       request.fields['title'] = 'image_${DateTime.now()}';

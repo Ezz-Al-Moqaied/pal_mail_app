@@ -247,6 +247,7 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
                       type: TextInputType.text,
                       maxLines: 2,
                       validate: (p0) {},
+                      outlinedBorder: true,
                     ),
                   ],
                 ),
@@ -388,8 +389,7 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
                   controller: controllerActivity,
                   type: TextInputType.text,
                   hintText: "Add new Activity … ",
-                  prefixIcon: IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.person)),
+                  prefixIcon: Icons.person,
                   suffixIcon: IconButton(
                       onPressed: () {
                         detailsMailProvider.addActivity(Activity(
@@ -414,6 +414,7 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
                       },
                       icon: const Icon(Icons.near_me_rounded)),
                   validate: (p0) {},
+                  outlinedBorder: true,
                 ),
               )
             ],

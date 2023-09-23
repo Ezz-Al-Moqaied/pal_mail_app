@@ -17,12 +17,12 @@ class RegisterWidget extends StatelessWidget {
 
   RegisterWidget(
       {Key? key,
-        required this.usernameController,
-        required this.emailController,
-        required this.passwordController,
-        required this.confirmPasswordController,
-        required this.onPressed,
-        required this.formKey})
+      required this.usernameController,
+      required this.emailController,
+      required this.passwordController,
+      required this.confirmPasswordController,
+      required this.onPressed,
+      required this.formKey})
       : super(key: key);
 
   @override
@@ -32,6 +32,7 @@ class RegisterWidget extends StatelessWidget {
       child: Column(
         children: [
           textFormFieldWidget(
+            outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the username';
@@ -44,6 +45,7 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
+            outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the email';
@@ -56,6 +58,7 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
+            outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the password';
@@ -69,6 +72,7 @@ class RegisterWidget extends StatelessWidget {
           ),
           smallSpacer,
           textFormFieldWidget(
+            outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the confirm password';
@@ -88,7 +92,7 @@ class RegisterWidget extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24.r)),
                   padding:
-                  EdgeInsets.symmetric(vertical: 16.h, horizontal: 40.w)),
+                      EdgeInsets.symmetric(vertical: 16.h, horizontal: 40.w)),
               child: SizedBox(
                   width: double.infinity,
                   child: Center(child: Text(context.localizations!.signUp)))),

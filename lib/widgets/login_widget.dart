@@ -12,10 +12,10 @@ class LoginWidget extends StatelessWidget {
 
   LoginWidget(
       {Key? key,
-        required this.emailController,
-        required this.passwordController,
-        required this.onPressed,
-        required this.formKey})
+      required this.emailController,
+      required this.passwordController,
+      required this.onPressed,
+      required this.formKey})
       : super(key: key);
 
   @override
@@ -34,9 +34,11 @@ class LoginWidget extends StatelessWidget {
             type: TextInputType.emailAddress,
             controller: emailController,
             hintText: context.localizations!.emailField,
+            outlinedBorder: false,
           ),
           smallSpacer,
           textFormFieldWidget(
+            outlinedBorder: false,
             validate: (value) {
               if (value == null || value.isEmpty) {
                 return 'please enter the password';
@@ -56,7 +58,7 @@ class LoginWidget extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24.r)),
                   padding:
-                  EdgeInsets.symmetric(vertical: 16.h, horizontal: 40.w)),
+                      EdgeInsets.symmetric(vertical: 16.h, horizontal: 40.w)),
               child: SizedBox(
                   width: double.infinity,
                   child: Center(child: Text(context.localizations!.logIn)))),

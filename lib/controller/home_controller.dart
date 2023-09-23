@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pal_mail_app/constants/keys.dart';
-import 'package:pal_mail_app/models/category_model.dart';
+
 import 'package:pal_mail_app/models/mails_model.dart';
 import 'package:pal_mail_app/models/status_model.dart';
 import 'package:pal_mail_app/models/tage_model.dart';
 import 'package:pal_mail_app/services/helper/api_base_helper.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
-import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:http/http.dart' as http;
+
+import '../models/category_modl.dart';
+import '../widgets/flutterToastWidget.dart';
 
 class HomeHelper {
   HomeHelper._();

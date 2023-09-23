@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+
+
+import 'package:flutter/cupertino.dart';
 
 import '../controller/new_inbox_controller.dart';
-import '../models/tage_model.dart';
 
 class CategoryProvider extends ChangeNotifier {
   final NewInboxHelper _helper = NewInboxHelper.instance;
@@ -17,6 +18,7 @@ class CategoryProvider extends ChangeNotifier {
   int get selectedCategoryId => _selectedCategoryId;
   Set<String> get catName => _catName;
   List<bool> get selected => _selected;
+
 
   Future<void> getCategories() async {
     await _helper.getCategory().then((value) {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pal_mail_app/models/tage_model.dart';
+
 import '../constants/colors.dart';
 
 class TagsWidget extends StatelessWidget {
