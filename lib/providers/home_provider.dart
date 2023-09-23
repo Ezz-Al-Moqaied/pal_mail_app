@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pal_mail_app/controller/home_controller.dart';
 import 'package:pal_mail_app/models/mails_model.dart';
 
-import '../models/category_model.dart';
+import '../models/category_modl.dart';
 import '../models/status_model.dart';
 import '../models/tage_model.dart';
 

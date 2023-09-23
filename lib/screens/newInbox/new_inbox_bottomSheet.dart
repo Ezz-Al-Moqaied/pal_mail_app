@@ -12,9 +12,11 @@ import 'package:pal_mail_app/screens/newInbox/status_bottomSheet.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:pal_mail_app/screens/newInbox/sender_search_bottomSheet.dart';
 import 'tags_bottomSheet_widget.dart';
+
 import 'package:pal_mail_app/providers/new_inbox_provider.dart';
 import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
+
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -69,6 +71,8 @@ class CustomModalBottomSheet {
           mobileController.text.isNotEmpty &&
           archiveController.text.isNotEmpty &&
           statusProvider.statusId.isNotEmpty) {
+        // ignore: use_build_context_synchronously
+
         if (newInboxProv.idSender == 0) {
           await createSender();
         }
@@ -212,6 +216,7 @@ class CustomModalBottomSheet {
                                           },
                                           colors: Colors.white,
                                           hintText: 'name',
+                                          prefixIcon: Icons.account_circle,
                                           suffixIcon: IconButton(
                                               splashColor: Colors.transparent,
                                               onPressed: () {
@@ -224,6 +229,7 @@ class CustomModalBottomSheet {
                                               )),
                                           controller: senderController,
                                           type: TextInputType.text,
+                                          outlinedBorder: true,
                                         );
                                       },
                                     ),
@@ -236,12 +242,15 @@ class CustomModalBottomSheet {
                                               prov.senderMobile;
                                         }
                                         return textFormFieldWidget(
-                                          validate: (p0) {},
+                                          onChange: (p0) {},
                                           readOnly: prov.senderMobile.isEmpty
                                               ? false
                                               : true,
+                                          outlinedBorder: true,
                                           colors: Colors.white,
                                           hintText: 'Mobile',
+                                          prefixIcon:
+                                              Icons.phone_android_outlined,
                                           controller: mobileController,
                                           type: TextInputType.text,
                                         );
@@ -313,7 +322,7 @@ class CustomModalBottomSheet {
                                   child: Form(
                                     key: formKey,
                                     child: textFormFieldWidget(
-                                      validate: (p0) {},
+                                      outlinedBorder: true,
                                       colors: Colors.white,
                                       hintText: 'Title of Mail',
                                       controller: titleController,
@@ -327,6 +336,7 @@ class CustomModalBottomSheet {
                                       descriptionController.text = value!;
                                       return null;
                                     },
+                                    outlinedBorder: true,
                                     colors: Colors.white,
                                     hintText: 'Describtion',
                                     controller: descriptionController,
@@ -445,8 +455,8 @@ class CustomModalBottomSheet {
                                               ),
                                               Expanded(
                                                 child: textFormFieldWidget(
-                                                    validate: (p0) {},
                                                     colors: colorWhite,
+                                                    outlinedBorder: true,
                                                     hintText: 'like: 10/2/2023',
                                                     controller:
                                                         archiveController,
@@ -583,6 +593,7 @@ class CustomModalBottomSheet {
                                   ),
                                   Expanded(
                                     child: textFormFieldWidget(
+                                      outlinedBorder: true,
                                       colors: Colors.white,
                                       hintText: 'Add Decision..',
                                       controller: decisionController,
@@ -850,7 +861,6 @@ class CustomModalBottomSheet {
                             child: Consumer<NewInboxProvider>(
                               builder: (context, prov, child) {
                                 return textFormFieldWidget(
-                                    validate: (p0) {},
                                     suffixIcon: IconButton(
                                         splashColor: Colors.transparent,
                                         onPressed: () async {
@@ -878,7 +888,10 @@ class CustomModalBottomSheet {
                                             angle: -45,
                                             child: const Icon(
                                                 Icons.send_rounded))),
+                                    prefixIcon: Icons.circle,
+                                    radius: 60.r,
                                     colors: const Color(0xffEEEEF6),
+                                    outlinedBorder: true,
                                     controller: activityController,
                                     type: TextInputType.text);
                               },

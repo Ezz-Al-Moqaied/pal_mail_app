@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:pal_mail_app/controller/new_inbox_controller.dart';
 
 import 'package:pal_mail_app/controller/sender_model.dart';
-import 'package:pal_mail_app/models/category_model.dart' as cat;
+import 'package:pal_mail_app/models/category_modl.dart' as cat;
 
 class NewInboxProvider extends ChangeNotifier {
   final NewInboxHelper _helper = NewInboxHelper.instance;
@@ -164,7 +164,6 @@ class NewInboxProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void clearSenderSearch() {
     senderName = searchController;
     idSender = 0;
@@ -173,7 +172,6 @@ class NewInboxProvider extends ChangeNotifier {
     senderCategName = '';
     notifyListeners();
   }
-
 
   void removeActiviy(int index) {
     _activities.removeAt(index);

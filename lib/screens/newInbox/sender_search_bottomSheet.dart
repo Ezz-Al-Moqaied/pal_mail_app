@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/widget.dart';
@@ -9,7 +11,6 @@ import 'package:shimmer/shimmer.dart';
 
 class SenderSearchWidget {
   SenderSearchWidget();
-
   void showSearchBar(BuildContext context) async {
     Provider.of<NewInboxProvider>(context, listen: false).getData();
     TextEditingController searchController = TextEditingController();
@@ -73,8 +74,10 @@ class SenderSearchWidget {
                         child: Container(
                           padding: EdgeInsets.symmetric(horizontal: 20.w),
                           child: textFormFieldWidget(
-                              validate: (p0) {},
+                              radius: 60,
+                              onSaved: (p0) {},
                               hintText: "Enter sender name",
+                              prefixIcon: Icons.search,
                               suffixIcon: IconButton(
                                   splashColor: Colors.transparent,
                                   onPressed: () {
@@ -82,6 +85,7 @@ class SenderSearchWidget {
                                   },
                                   icon: const Icon(Icons.cancel)),
                               colors: const Color(0xffE6E6E6),
+                              outlinedBorder: true,
                               controller: searchController,
                               onChange: (value) {
                                 newInboxProv.searchController =

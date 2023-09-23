@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pal_mail_app/constants/keys.dart';
 
-
 import 'package:pal_mail_app/controller/sender_model.dart';
-import 'package:pal_mail_app/models/category_model.dart' as cat;
+import 'package:pal_mail_app/models/category_modl.dart' as cat;
 
 import 'package:pal_mail_app/models/mails_model.dart';
 import 'package:pal_mail_app/services/helper/api_base_helper.dart';
@@ -19,7 +18,7 @@ class NewInboxHelper {
   Future<Mail?> addMail(Map<String, dynamic> body) async {
     try {
       final response =
-      await _helper.post(Keys.mailsUrl, body, Keys.instance.header);
+          await _helper.post(Keys.mailsUrl, body, Keys.instance.header);
       flutterToastWidget(msg: "Add Mail Success", colors: Colors.green);
       print(Mail.fromJson(response['mail']).id);
       return Mail.fromJson(response['mail']);
@@ -33,7 +32,7 @@ class NewInboxHelper {
   // Get sender
   Future<cat.CategoryModel> getCategory() async {
     final response =
-    await _helper.get(Keys.categoriesUrl, Keys.instance.header);
+        await _helper.get(Keys.categoriesUrl, Keys.instance.header);
     return cat.CategoryModel.fromJson(response);
   }
 
@@ -46,7 +45,7 @@ class NewInboxHelper {
   Future<Datum?> createSender(Map<String, dynamic> body) async {
     try {
       final response =
-      await _helper.post(Keys.sendersUrl, body, Keys.instance.header);
+          await _helper.post(Keys.sendersUrl, body, Keys.instance.header);
       flutterToastWidget(msg: "Create Sender Success", colors: Colors.green);
 
       print(Datum.fromJson(response!['sender'][0]).id);
@@ -61,7 +60,7 @@ class NewInboxHelper {
   Future<void> uploadImageHttp(File file, mailId) async {
     try {
       var request =
-      http.MultipartRequest("POST", Uri.parse(Keys.attachmentUrl));
+          http.MultipartRequest("POST", Uri.parse(Keys.attachmentUrl));
 //create multipart using filepath, string or bytes
       var pic = await http.MultipartFile.fromPath('image', file.path);
       request.fields['mail_id'] = mailId.toString();

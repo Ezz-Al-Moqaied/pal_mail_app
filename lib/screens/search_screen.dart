@@ -43,14 +43,10 @@ class SearchScreen extends StatelessWidget {
                                 controller.text, homeProvider);
                           },
                           icon: const Icon(Icons.search_outlined)),
-                      prefixIcon: IconButton(
-                          onPressed: () {
-                            controller.clear();
-                            searchProvider.clearMail();
-                          },
-                          icon: const Icon(Icons.clear)),
+                      prefixIcon: Icons.clear,
                       controller: controller,
                       hintText: 'search',
+                      outlinedBorder: true,
                     ),
                   ),
                   Expanded(

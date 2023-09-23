@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pal_mail_app/controller/tags_controller.dart';
+import 'package:pal_mail_app/providers/new_inbox_provider.dart';
 import 'package:pal_mail_app/providers/tags_provider.dart';
 import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
+import 'package:pal_mail_app/widgets/tags_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -204,10 +207,12 @@ class TagsBottomSheet {
                                       }
                                     },
                                     icon: const Icon(Icons.send)),
+                                radius: 50.r,
                                 colors: colorWhite,
                                 hintText: 'add New tags..',
                                 maxLines: 1,
-                                label: "Tags",
+                                label: const Text("Tags"),
+                                outlinedBorder: true,
                                 controller: tagsController,
                                 type: TextInputType.text,
                                 validate: (p0) => '',
