@@ -39,17 +39,17 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
         elevation: 0,
         title: const Text("Home"),
         titleTextStyle: TextStyle(
-            color: inboxTextColor,
+            color: inboxtextColor,
             fontSize: 22.sp,
             fontWeight: FontWeight.bold),
-        iconTheme: IconThemeData(color: inboxTextColor, size: 30.sp),
+        iconTheme: IconThemeData(color: inboxtextColor, size: 30.sp),
         actions: [
           detailsMailProvider.isScreenChange
               ? IconButton(
                   onPressed: () {
                     detailsMailProvider.updateMail(widget.mail.id!, {
-                      'decision' : controller.text ,
-                      'status_id' : detailsMailProvider.statusMailsID.toString(),
+                      'decision': controller.text,
+                      'status_id': detailsMailProvider.statusMailsID.toString(),
                     });
                   },
                   icon: const Icon(Icons.save))

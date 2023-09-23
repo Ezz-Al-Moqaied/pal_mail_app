@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/widget.dart';
 import 'package:pal_mail_app/providers/details_mail_provider.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
-import 'package:pal_mail_app/providers/search_provider.dart';
+
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +15,6 @@ class ChangeStatusMailWidget extends StatefulWidget {
 }
 
 class _ChangeStatusMailWidgetState extends State<ChangeStatusMailWidget> {
-
-
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
@@ -84,12 +82,12 @@ class _ChangeStatusMailWidgetState extends State<ChangeStatusMailWidget> {
                         ),
                       ),
                       trailing: homeProvider.statusMails[index].id ==
-                          detailsMailProvider.statusMailsID
+                              detailsMailProvider.statusMailsID
                           ? const Icon(Icons.check)
                           : const SizedBox(
-                        width: 1,
-                        height: 1,
-                      ),
+                              width: 1,
+                              height: 1,
+                            ),
                       title: Text(homeProvider.statusMails[index].name!),
                     );
                   },

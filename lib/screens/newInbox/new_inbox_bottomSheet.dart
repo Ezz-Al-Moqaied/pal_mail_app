@@ -71,7 +71,6 @@ class CustomModalBottomSheet {
           mobileController.text.isNotEmpty &&
           archiveController.text.isNotEmpty &&
           statusProvider.statusId.isNotEmpty) {
-
         if (newInboxProv.idSender == 0) {
           await createSender();
         }
@@ -215,10 +214,6 @@ class CustomModalBottomSheet {
                                           },
                                           colors: Colors.white,
                                           hintText: 'name',
-<<<<<<< HEAD
-=======
-                                          prefixIcon: Icons.account_circle,
->>>>>>> origin/master
                                           suffixIcon: IconButton(
                                               splashColor: Colors.transparent,
                                               onPressed: () {
@@ -243,9 +238,7 @@ class CustomModalBottomSheet {
                                               prov.senderMobile;
                                         }
                                         return textFormFieldWidget(
-                                          validate: (p0) {
-
-                                          },
+                                          validate: (p0) {},
                                           readOnly: prov.senderMobile.isEmpty
                                               ? false
                                               : true,
@@ -324,9 +317,7 @@ class CustomModalBottomSheet {
                                   child: Form(
                                     key: formKey,
                                     child: textFormFieldWidget(
-                                      validate: (p0) {
-
-                                      },
+                                      validate: (p0) {},
                                       colors: Colors.white,
                                       hintText: 'Title of Mail',
                                       controller: titleController,
@@ -458,9 +449,7 @@ class CustomModalBottomSheet {
                                               ),
                                               Expanded(
                                                 child: textFormFieldWidget(
-                                                  validate: (p0) {
-
-                                                  },
+                                                    validate: (p0) {},
                                                     colors: colorWhite,
                                                     hintText: 'like: 10/2/2023',
                                                     controller:
@@ -865,9 +854,7 @@ class CustomModalBottomSheet {
                             child: Consumer<NewInboxProvider>(
                               builder: (context, prov, child) {
                                 return textFormFieldWidget(
-                                  validate: (p0) {
-
-                                  },
+                                    validate: (p0) {},
                                     suffixIcon: IconButton(
                                         splashColor: Colors.transparent,
                                         onPressed: () async {

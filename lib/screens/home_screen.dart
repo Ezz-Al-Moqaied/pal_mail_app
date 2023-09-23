@@ -52,10 +52,11 @@ class HomeScreen extends StatelessWidget {
                   },
                   hintText: "search",
                   onTapForm: () {
-                 //   showSearch(context: context, delegate: SearchScreen());
+                    //   showSearch(context: context, delegate: SearchScreen());
                     navigatePush(context: context, nextScreen: SearchScreen());
                   },
-                  prefixIcon: IconButton(onPressed: (){}, icon: Icon(Icons.search_outlined)),
+                  prefixIcon: IconButton(
+                      onPressed: () {}, icon: Icon(Icons.search_outlined)),
                   colors: Colors.white),
               smallSpacer,
               Row(
@@ -106,7 +107,8 @@ class HomeScreen extends StatelessWidget {
                         children: [
                           Text(
                             "Official Organization",
-                            style: TextStyle(fontSize: 20.sp, color: colorBlack),
+                            style:
+                                TextStyle(fontSize: 20.sp, color: colorBlack),
                           ),
                           const Spacer(),
                           Text(homeProvider.countCategoryMails(2).toString())
@@ -137,7 +139,7 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       for (var element in homeProvider.mail)
                         if (element.sender!.category!.id == 3)
-                          mailsWidget(mails: element, context: context ),
+                          mailsWidget(mails: element, context: context),
                     ],
                   ),
                 ],
@@ -181,7 +183,7 @@ class HomeScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(20.r))),
+                          BorderRadius.vertical(top: Radius.circular(20.r))),
                   alignment: Alignment.centerLeft,
                   child: TextButton(
                       onPressed: () {
@@ -192,7 +194,7 @@ class HomeScreen extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(5),
                             decoration: BoxDecoration(
-                                color: inboxTextColor,
+                                color: inboxtextColor,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(20.r),
                                 )),
@@ -207,7 +209,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           Text("New Inbox",
                               style: TextStyle(
-                                  fontSize: 20.sp, color: inboxTextColor))
+                                  fontSize: 20.sp, color: inboxtextColor))
                         ],
                       ))),
             ],
