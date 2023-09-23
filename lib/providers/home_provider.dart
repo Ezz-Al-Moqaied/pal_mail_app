@@ -146,5 +146,13 @@ class HomeProvider with ChangeNotifier {
     scalefactor = 0.8;
     isdraweropen = true;
     notifyListeners();
+
+  }
+  void drawerOpen(){
+    xoffset = 0;
+    yoffset = 0;
+    scalefactor = 1;
+    isdraweropen = false;
+    notifyListeners();
   }
 }

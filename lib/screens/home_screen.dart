@@ -4,6 +4,8 @@ import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/images.dart';
 import 'package:pal_mail_app/constants/widget.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
+import 'package:pal_mail_app/providers/language_provider.dart';
+
 import 'package:pal_mail_app/screens/newInbox/new_inbox_bottomSheet.dart';
 import 'package:pal_mail_app/screens/search_screen.dart';
 import 'package:pal_mail_app/widgets/mails_widget.dart';
@@ -28,7 +30,17 @@ class _HomeScreenState extends State<HomeScreen> {
     final homeProvider = Provider.of<HomeProvider>(context);
     final languageProvider = Provider.of<LanguageProvider>(context);
     TextEditingController searchController = TextEditingController();
-    return Scaffold(
+    return AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
+    height: MediaQuery.of(context).size.height,
+    width: MediaQuery.of(context).size.width,
+    transform: Matrix4.translationValues(homeProvider.xoffset, homeProvider.yoffset, 0)
+    ..scale(homeProvider.scalefactor),
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(homeProvider.isdraweropen ? 20 : 0),
+    color: Colors.white,
+    ),
+    child: Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SingleChildScrollView(
@@ -37,13 +49,13 @@ class _HomeScreenState extends State<HomeScreen> {
               largeSpacer,
               Row(
                 children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.notes_sharp,
-                      size: 30.sp,
-                    ),
-                    onPressed: () async {},
-                  ),
+                  homeProvider.isdraweropen
+                      ?IconButton(onPressed: (){
+                    homeProvider.drawerClose();
+                  }, icon: const Icon(Icons.arrow_back_ios))
+                      :IconButton(onPressed: (){
+                    homeProvider.drawerClose();
+                  }, icon: const Icon(Icons.notes_sharp)),
                   IconButton(
                     icon: Icon(
                       Icons.language_outlined,
@@ -67,12 +79,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   hintText: "search",
                   onTapForm: () {
-                    //   showSearch(context: context, delegate: SearchScreen());
+//   showSearch(context: context, delegate: SearchScreen());
                     navigatePush(context: context, nextScreen: SearchScreen());
                   },
-                  prefixIcon: IconButton(
-                      onPressed: () {}, icon: Icon(Icons.search_outlined)),
-                  colors: Colors.white),
+                  prefixIcon: Icons.connected_tv_sharp,
+                  colors: Colors.white, outlinedBorder: false),
               smallSpacer,
               Row(
                 children: [
@@ -123,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             "Official Organization",
                             style:
-                                TextStyle(fontSize: 20.sp, color: colorBlack),
+                            TextStyle(fontSize: 20.sp, color: colorBlack),
                           ),
                           const Spacer(),
                           Text(homeProvider.countCategoryMails(2).toString())
@@ -221,7 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(20.r))),
+                      BorderRadius.vertical(top: Radius.circular(20.r))),
                   alignment: Alignment.centerLeft,
                   child: TextButton(
                       onPressed: () {
@@ -254,6 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    ),
     );
   }
 }

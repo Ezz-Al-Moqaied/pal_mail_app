@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pal_mail_app/screens/profile_page.dart';
 import 'package:pal_mail_app/screens/profile_screen.dart';
 import 'package:pal_mail_app/screens/senders_screen.dart';
 import 'package:pal_mail_app/screens/setting_screen.dart';
