@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pal_mail_app/screens/profile_screen.dart';
 import 'package:pal_mail_app/screens/senders_screen.dart';
+import 'package:pal_mail_app/screens/setting_screen.dart';
 
 
 class DrawerScreen extends StatefulWidget {
@@ -68,6 +69,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                               },
                             ));
                           case "User Management":
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) {
+                                return const SettingScreen();
+                              },
+                            ));
                             break;
                         }
                       },
@@ -93,21 +99,21 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     child: const Text(
                       'Terms Of Service',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 179, 178, 178),
+                          color: Colors.white,
                           fontSize: 12),
                     ),
                   ),
                   Container(
                     width: 1.2,
                     height: 15,
-                    color: const Color.fromARGB(255, 179, 178, 178),
+                    color: Colors.white,
                   ),
                   TextButton(
                     onPressed: () {},
                     child: const Text(
                       'Usage Policy',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 179, 178, 178),
+                          color: Colors.white,
                           fontSize: 12),
                     ),
                   ),

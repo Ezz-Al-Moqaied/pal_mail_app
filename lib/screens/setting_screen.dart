@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:pal_mail_app/services/helper/api_response.dart';
 import 'package:provider/provider.dart';
 import '../constants/colors.dart';
 import '../providers/user_1_provider.dart';
 import '../providers/user_provider.dart';
 
-class UserManagementScreen extends StatefulWidget {
-  const UserManagementScreen({super.key});
+class SettingScreen extends StatefulWidget {
+  const SettingScreen({super.key});
 
   @override
-  State<UserManagementScreen> createState() => _UserManagementScreenState();
+  State<SettingScreen> createState() => _UserManagementScreenState();
 }
 
-class _UserManagementScreenState extends State<UserManagementScreen> {
+class _UserManagementScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +29,6 @@ class _UserManagementScreenState extends State<UserManagementScreen> {
           onPressed: () async {
             await Provider.of<UserProvider>(context, listen: false)
                 .getUserData();
-            // ignore: use_build_context_synchronously
             Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios),
