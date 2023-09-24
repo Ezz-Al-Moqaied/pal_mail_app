@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     homeProvider.isdraweropen
                         ? IconButton(
                             onPressed: () {
-                              homeProvider.drawerClose();
+                              homeProvider.drawerOpen();
                             },
                             icon: const Icon(Icons.arrow_back_ios))
                         : IconButton(
