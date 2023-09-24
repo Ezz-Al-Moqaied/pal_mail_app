@@ -38,10 +38,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 40.0, bottom: 80),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(right: 0, bottom: 0),
         child: SizedBox(
-          height: 50,
+          height: 40,
           width: 300,
           child: FloatingActionButton(
             shape: RoundedRectangleBorder(
@@ -150,9 +150,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
                 ],
               ),
             ),
@@ -178,7 +175,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   radius: 98,
                                   backgroundImage: pickedFile == null
                                       ? NetworkImage(
-                                          '${snapshot.data!.user.image}',
+                                          'https://palmail.gsgtt.tech/storage/${snapshot.data!.user.image}',
                                         )
                                       : FileImage(
                                           File(pickedFile!.path),

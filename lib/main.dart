@@ -12,6 +12,7 @@ import 'package:pal_mail_app/providers/new_inbox_provider.dart';
 import 'package:pal_mail_app/providers/search_provider.dart';
 import 'package:pal_mail_app/providers/status_provider.dart';
 import 'package:pal_mail_app/providers/tags_provider.dart';
+import 'package:pal_mail_app/providers/user_provider.dart';
 import 'package:pal_mail_app/screens/auth_screen.dart';
 import 'package:pal_mail_app/screens/main_page.dart';
 import 'package:pal_mail_app/screens/splash_screen.dart';
@@ -46,7 +47,8 @@ class MyApp extends StatelessWidget {
             create: (context) => TagsProvider(),
           ),
           ChangeNotifierProvider(create: (context) => CategoryProvider()),
-          ChangeNotifierProvider(create: (context) => StatusProvider())
+          ChangeNotifierProvider(create: (context) => StatusProvider()),
+          ChangeNotifierProvider(create: (context) => UserProvider())
         ],
         builder: (context, child) {
           return MaterialApp(
