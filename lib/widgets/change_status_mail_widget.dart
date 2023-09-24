@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/widget.dart';
 import 'package:pal_mail_app/providers/details_mail_provider.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
+import 'package:pal_mail_app/services/localizations_extention.dart';
 
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +37,7 @@ class _ChangeStatusMailWidgetState extends State<ChangeStatusMailWidget> {
                       navigatePop(context: context);
                     },
                     child: Text(
-                      "Cancel",
+                      context.localizations!.cancel,
                       style: TextStyle(
                         fontSize: 18.sp,
                       ),
@@ -51,7 +52,7 @@ class _ChangeStatusMailWidgetState extends State<ChangeStatusMailWidget> {
                       navigatePop(context: context);
                     },
                     child: Text(
-                      "Done",
+                      context.localizations!.done,
                       style: TextStyle(fontSize: 18.sp),
                     )),
               ],
@@ -88,7 +89,18 @@ class _ChangeStatusMailWidgetState extends State<ChangeStatusMailWidget> {
                               width: 1,
                               height: 1,
                             ),
-                      title: Text(homeProvider.statusMails[index].name!),
+                      title: Text(homeProvider.statusMails[index].name ==
+                              "Inbox"
+                          ? context.localizations!.inbox
+                          : homeProvider.statusMails[index].name == "Pending"
+                              ? context.localizations!.pending
+                              : homeProvider.statusMails[index].name ==
+                                      'In Progress'
+                                  ? context.localizations!.inprogress
+                                  : homeProvider.statusMails[index].name ==
+                                          "Completed"
+                                      ? context.localizations!.completed
+                                      : ''),
                     );
                   },
                 )),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/widget.dart';
 import 'package:pal_mail_app/providers/new_inbox_provider.dart';
+import 'package:pal_mail_app/services/localizations_extention.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
@@ -45,21 +46,21 @@ class SenderSearchWidget {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'Cancle',
+                                context.localizations!.cancel,
                                 style: TextStyle(
                                   fontSize: 18.sp,
                                 ),
                               ),
                             ),
                             Text(
-                              'Sender',
+                              context.localizations!.newInbox,
                               style: TextStyle(
                                   fontSize: 19.sp, fontWeight: FontWeight.bold),
                             ),
                             TextButton(
                               onPressed: () async {},
                               child: Text(
-                                'Done',
+                                context.localizations!.done,
                                 style: TextStyle(
                                     fontSize: 18.sp,
                                     fontWeight: FontWeight.bold),
@@ -76,7 +77,7 @@ class SenderSearchWidget {
                           child: textFormFieldWidget(
                               radius: 60,
                               onSaved: (p0) {},
-                              hintText: "Enter sender name",
+                              hintText: context.localizations!.sendersearch,
                               prefixIcon: Icons.search,
                               suffixIcon: IconButton(
                                   splashColor: Colors.transparent,

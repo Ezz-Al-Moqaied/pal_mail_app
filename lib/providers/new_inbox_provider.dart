@@ -7,6 +7,8 @@ import 'package:pal_mail_app/controller/new_inbox_controller.dart';
 
 import 'package:pal_mail_app/controller/sender_model.dart';
 import 'package:pal_mail_app/models/category_modl.dart' as cat;
+import 'package:pal_mail_app/providers/language_provider.dart';
+import 'package:provider/provider.dart';
 
 class NewInboxProvider extends ChangeNotifier {
   final NewInboxHelper _helper = NewInboxHelper.instance;
@@ -236,10 +238,16 @@ class NewInboxProvider extends ChangeNotifier {
   }
 
   // Expansigsdfsdafsd
-  changeIconState(bool value) {
+  changeIconState(bool value, context) {
+    final language = Provider.of<LanguageProvider>(context, listen: false);
     print('ads');
     if (value) {
-      angle = 90 * (math.pi / 180);
+      if (language.isEnglishLanguage) {
+        angle = 90 * (math.pi / 180);
+      } else {
+        angle = -90 * (math.pi / 180);
+      }
+
       print(angle);
     } else {
       angle = 0;

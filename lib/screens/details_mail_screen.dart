@@ -8,6 +8,7 @@ import 'package:pal_mail_app/constants/keys.dart';
 import 'package:pal_mail_app/models/mails_model.dart';
 import 'package:pal_mail_app/providers/details_mail_provider.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
+import 'package:pal_mail_app/services/localizations_extention.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:pal_mail_app/widgets/change_status_mail_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
@@ -37,7 +38,7 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
         toolbarHeight: 60.h,
         backgroundColor: Colors.white,
         elevation: 0,
-        title: const Text("Home"),
+        title: Text(context.localizations!.home),
         titleTextStyle: TextStyle(
             color: inboxtextColor,
             fontSize: 22.sp,
@@ -116,7 +117,7 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
                               height: 8.h,
                             ),
                             Text(
-                              'ArchiveNumber : ${widget.mail.archiveNumber!}',
+                              '${context.localizations!.archivenumber} : ${widget.mail.archiveNumber!}',
                               style: TextStyle(
                                 fontSize: 14.sp,
                               ),
@@ -234,7 +235,7 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Decision",
+                      context.localizations!.decision,
                       style: TextStyle(
                         fontSize: 20.sp,
                       ),
@@ -266,7 +267,7 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Add Image",
+                      context.localizations!.addimage,
                       style: TextStyle(fontSize: 18.sp),
                     ),
                     SizedBox(
@@ -329,7 +330,7 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
                     .copyWith(dividerColor: Colors.transparent),
                 child: ExpansionTile(
                     title: Text(
-                      "Activity",
+                      context.localizations!.activity,
                       style: TextStyle(fontSize: 20.sp, color: colorBlack),
                     ),
                     children: [

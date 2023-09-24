@@ -16,6 +16,8 @@ import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:pal_mail_app/widgets/register_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/language_provider.dart';
+
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
 
@@ -57,6 +59,7 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
     TextEditingController usernameController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     TextEditingController confirmPasswordController = TextEditingController();
+    final languageProvider = Provider.of<LanguageProvider>(context);
     final _formKey = GlobalKey<FormState>();
 
     final authProvider = Provider.of<AuthProvider>(context);
@@ -118,71 +121,83 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        AnimatedContainer(
-                          decoration: BoxDecoration(
-                              color: color,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(24.r),
-                                  bottomLeft: Radius.circular(24.r))),
-                          duration: Duration(milliseconds: 500),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                authProvider.isLoginScreen();
-                                animationController!.forward();
-                                animationController2!.reverse();
-                                color = buttonBackGroundColor1;
-                                textcolor = buttonColor1;
-                                color2 = buttonBackGroundColor2;
-                                textcolor2 = buttonColor2;
-                                setState(() {});
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.transparent,
-                                  splashFactory: NoSplash.splashFactory,
-                                  shadowColor: Colors.transparent,
-                                  elevation: 0,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 24.h, horizontal: 42.w)),
-                              child: AnimatedDefaultTextStyle(
-                                duration: const Duration(milliseconds: 500),
-                                style: TextStyle(color: color2),
-                                child: Text(
-                                  context.localizations!.logIn,
-                                ),
-                              )),
+                        Expanded(
+                          child: AnimatedContainer(
+                            decoration: BoxDecoration(
+                                color: color,
+                                borderRadius: languageProvider.isEnglishLanguage
+                                    ? BorderRadius.only(
+                                        topLeft: Radius.circular(24.r),
+                                        bottomLeft: Radius.circular(24.r))
+                                    : BorderRadius.only(
+                                        topRight: Radius.circular(24.r),
+                                        bottomRight: Radius.circular(24.r))),
+                            duration: Duration(milliseconds: 500),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  authProvider.isLoginScreen();
+                                  animationController!.forward();
+                                  animationController2!.reverse();
+                                  color = buttonBackGroundColor1;
+                                  textcolor = buttonColor1;
+                                  color2 = buttonBackGroundColor2;
+                                  textcolor2 = buttonColor2;
+                                  setState(() {});
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.transparent,
+                                    splashFactory: NoSplash.splashFactory,
+                                    shadowColor: Colors.transparent,
+                                    elevation: 0,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 24.h, horizontal: 42.w)),
+                                child: AnimatedDefaultTextStyle(
+                                  duration: const Duration(milliseconds: 500),
+                                  style: TextStyle(color: color2),
+                                  child: Text(
+                                    context.localizations!.logIn,
+                                  ),
+                                )),
+                          ),
                         ),
-                        AnimatedContainer(
-                          duration: const Duration(milliseconds: 500),
-                          decoration: BoxDecoration(
-                              color: color2,
-                              borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(24.r),
-                                  bottomRight: Radius.circular(24.r))),
-                          child: ElevatedButton(
-                              onPressed: () {
-                                authProvider.isSignScreen();
-                                animationController2!.forward();
-                                animationController!.reverse();
-                                color = buttonBackGroundColor2;
-                                textcolor = buttonColor2;
-                                color2 = buttonBackGroundColor1;
-                                textcolor2 = buttonColor1;
-                                setState(() {});
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  splashFactory: NoSplash.splashFactory,
-                                  shadowColor: Colors.transparent,
-                                  backgroundColor: Colors.transparent,
-                                  elevation: 0,
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 24.h, horizontal: 42.w)),
-                              child: AnimatedDefaultTextStyle(
-                                duration: const Duration(milliseconds: 500),
-                                style: TextStyle(color: textcolor2),
-                                child: Text(
-                                  context.localizations!.signUp,
-                                ),
-                              )),
+                        Expanded(
+                          child: AnimatedContainer(
+                            duration: const Duration(milliseconds: 500),
+                            decoration: BoxDecoration(
+                                color: color2,
+                                borderRadius: languageProvider.isEnglishLanguage
+                                    ? BorderRadius.only(
+                                        topRight: Radius.circular(24.r),
+                                        bottomRight: Radius.circular(24.r))
+                                    : BorderRadius.only(
+                                        topLeft: Radius.circular(24.r),
+                                        bottomLeft: Radius.circular(24.r))),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  authProvider.isSignScreen();
+                                  animationController2!.forward();
+                                  animationController!.reverse();
+                                  color = buttonBackGroundColor2;
+                                  textcolor = buttonColor2;
+                                  color2 = buttonBackGroundColor1;
+                                  textcolor2 = buttonColor1;
+                                  setState(() {});
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    splashFactory: NoSplash.splashFactory,
+                                    shadowColor: Colors.transparent,
+                                    backgroundColor: Colors.transparent,
+                                    elevation: 0,
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 24.h, horizontal: 42.w)),
+                                child: AnimatedDefaultTextStyle(
+                                  duration: const Duration(milliseconds: 500),
+                                  style: TextStyle(color: textcolor2),
+                                  child: Text(
+                                    context.localizations!.signUp,
+                                  ),
+                                )),
+                          ),
                         ),
                       ],
                     ),
@@ -200,15 +215,17 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                                 authProvider.loginUser({
                                   'email': emailController.text,
                                   'password': passwordController.text,
-                                }, context).then((value){
-                                  final homeProvider = Provider.of<HomeProvider>(context , listen: false);
+                                }, context).then((value) {
+                                  final homeProvider =
+                                      Provider.of<HomeProvider>(context,
+                                          listen: false);
                                   homeProvider.getFetchData();
-                                  Timer.periodic(Duration(seconds: 6), (Timer t){
+                                  Timer.periodic(Duration(seconds: 6),
+                                      (Timer t) {
                                     navigatePushReplacement(
-                                        context: context, nextScreen: HomeScreen());
+                                        context: context,
+                                        nextScreen: HomeScreen());
                                   });
-
-
                                 });
                               }
                             },
@@ -243,6 +260,15 @@ class _AuthScreenState extends State<AuthScreen> with TickerProviderStateMixin {
                             },
                           ),
                         ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.language_outlined,
+                      size: 30.sp,
+                    ),
+                    onPressed: () async {
+                      languageProvider.changeLanguage();
+                    },
+                  ),
                 ],
               ),
             ),

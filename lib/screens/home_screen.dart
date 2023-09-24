@@ -1,13 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/images.dart';
 import 'package:pal_mail_app/constants/widget.dart';
+import 'package:pal_mail_app/main.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
 import 'package:pal_mail_app/providers/language_provider.dart';
+import 'package:pal_mail_app/screens/main_page.dart';
 
 import 'package:pal_mail_app/screens/newInbox/new_inbox_bottomSheet.dart';
 import 'package:pal_mail_app/screens/search_screen.dart';
+import 'package:pal_mail_app/screens/splash_screen.dart';
+import 'package:pal_mail_app/services/localizations_extention.dart';
 import 'package:pal_mail_app/widgets/mails_widget.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 
@@ -31,241 +37,251 @@ class _HomeScreenState extends State<HomeScreen> {
     final languageProvider = Provider.of<LanguageProvider>(context);
     TextEditingController searchController = TextEditingController();
     return AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-    height: MediaQuery.of(context).size.height,
-    width: MediaQuery.of(context).size.width,
-    transform: Matrix4.translationValues(homeProvider.xoffset, homeProvider.yoffset, 0)
-    ..scale(homeProvider.scalefactor),
-    decoration: BoxDecoration(
-    borderRadius: BorderRadius.circular(homeProvider.isdraweropen ? 20 : 0),
-    color: Colors.white,
-    ),
-    child: Scaffold(
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              largeSpacer,
-              Row(
-                children: [
-                  homeProvider.isdraweropen
-                      ?IconButton(onPressed: (){
-                    homeProvider.drawerClose();
-                  }, icon: const Icon(Icons.arrow_back_ios))
-                      :IconButton(onPressed: (){
-                    homeProvider.drawerClose();
-                  }, icon: const Icon(Icons.notes_sharp)),
-                  IconButton(
-                    icon: Icon(
-                      Icons.language_outlined,
-                      size: 30.sp,
+      duration: const Duration(milliseconds: 250),
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      transform: Matrix4.translationValues(
+          homeProvider.xoffset, homeProvider.yoffset, 0)
+        ..scale(homeProvider.scalefactor),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(homeProvider.isdraweropen ? 20 : 0),
+        color: Colors.white,
+      ),
+      child: Scaffold(
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                largeSpacer,
+                Row(
+                  children: [
+                    homeProvider.isdraweropen
+                        ? IconButton(
+                            onPressed: () {
+                              homeProvider.drawerClose();
+                            },
+                            icon: const Icon(Icons.arrow_back_ios))
+                        : IconButton(
+                            onPressed: () {
+                              homeProvider.drawerClose();
+                            },
+                            icon: const Icon(Icons.notes_sharp)),
+                    IconButton(
+                      icon: Icon(
+                        Icons.language_outlined,
+                        size: 30.sp,
+                      ),
+                      onPressed: () async {
+                        languageProvider.changeLanguage();
+                      },
                     ),
-                    onPressed: () async {
-                      languageProvider.changeLanguage();
+                    const Spacer(),
+                    Image.asset(
+                      Images.personIcon,
+                    ),
+                  ],
+                ),
+                textFormFieldWidget(
+                    controller: searchController,
+                    type: TextInputType.text,
+                    validate: (value) {
+                      return null;
                     },
-                  ),
-                  const Spacer(),
-                  Image.asset(
-                    Images.personIcon,
-                  ),
-                ],
-              ),
-              textFormFieldWidget(
-                  controller: searchController,
-                  type: TextInputType.text,
-                  validate: (value) {
-                    return null;
-                  },
-                  hintText: "search",
-                  onTapForm: () {
+                    hintText: context.localizations!.search,
+                    onTapForm: () {
 //   showSearch(context: context, delegate: SearchScreen());
-                    navigatePush(context: context, nextScreen: SearchScreen());
-                  },
-                  prefixIcon: Icons.connected_tv_sharp,
-                  colors: Colors.white, outlinedBorder: false),
-              smallSpacer,
-              Row(
-                children: [
-                  Expanded(
-                    child: statusMailWidget(
-                        colors: Colors.red,
-                        countMail: homeProvider.countStatusInbox,
-                        status: "Inbox"),
-                  ),
-                  SizedBox(
-                    width: 12.w,
-                  ),
-                  Expanded(
-                    child: statusMailWidget(
-                        colors: Colors.yellow,
-                        countMail: homeProvider.countStatusPending,
-                        status: "Pending"),
-                  ),
-                ],
-              ),
-              smallSpacer,
-              Row(
-                children: [
-                  Expanded(
-                    child: statusMailWidget(
-                        colors: Colors.blueAccent,
-                        countMail: homeProvider.countStatusInProgress,
-                        status: "In progress"),
-                  ),
-                  SizedBox(
-                    width: 12.w,
-                  ),
-                  Expanded(
-                    child: statusMailWidget(
-                        colors: Colors.green,
-                        countMail: homeProvider.countStatusCompleted,
-                        status: "Completed"),
-                  ),
-                ],
-              ),
-              ListView(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  ExpansionTile(
+                      navigatePush(
+                          context: context, nextScreen: SearchScreen());
+                    },
+                    prefixIcon: Icons.connected_tv_sharp,
+                    colors: Colors.white,
+                    outlinedBorder: false),
+                smallSpacer,
+                Row(
+                  children: [
+                    Expanded(
+                      child: statusMailWidget(
+                          colors: Colors.red,
+                          countMail: homeProvider.countStatusInbox,
+                          status: context.localizations!.inbox),
+                    ),
+                    SizedBox(
+                      width: 12.w,
+                    ),
+                    Expanded(
+                      child: statusMailWidget(
+                          colors: Colors.yellow,
+                          countMail: homeProvider.countStatusPending,
+                          status: context.localizations!.pending),
+                    ),
+                  ],
+                ),
+                smallSpacer,
+                Row(
+                  children: [
+                    Expanded(
+                      child: statusMailWidget(
+                          colors: Colors.blueAccent,
+                          countMail: homeProvider.countStatusInProgress,
+                          status: context.localizations!.inprogress),
+                    ),
+                    SizedBox(
+                      width: 12.w,
+                    ),
+                    Expanded(
+                      child: statusMailWidget(
+                          colors: Colors.green,
+                          countMail: homeProvider.countStatusCompleted,
+                          status: "Completed"),
+                    ),
+                  ],
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    ExpansionTile(
+                        title: Row(
+                          children: [
+                            Text(
+                              context.localizations!.offecialOrg,
+                              style:
+                                  TextStyle(fontSize: 20.sp, color: colorBlack),
+                            ),
+                            const Spacer(),
+                            Text(homeProvider.countCategoryMails(2).toString())
+                          ],
+                        ),
+                        children: [
+                          for (var element in homeProvider.mail)
+                            if (element.sender!.category!.id == 2)
+                              mailsWidget(mails: element, context: context),
+                        ]),
+                  ],
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    ExpansionTile(
                       title: Row(
                         children: [
                           Text(
-                            "Official Organization",
+                            context.localizations!.ngos,
                             style:
-                            TextStyle(fontSize: 20.sp, color: colorBlack),
+                                TextStyle(fontSize: 20.sp, color: colorBlack),
                           ),
                           const Spacer(),
-                          Text(homeProvider.countCategoryMails(2).toString())
+                          Text(homeProvider.countCategoryMails(3).toString())
                         ],
                       ),
                       children: [
                         for (var element in homeProvider.mail)
-                          if (element.sender!.category!.id == 2)
+                          if (element.sender!.category!.id == 3)
                             mailsWidget(mails: element, context: context),
-                      ]),
-                ],
-              ),
-              ListView(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  ExpansionTile(
-                    title: Row(
-                      children: [
-                        Text(
-                          "NGOs",
-                          style: TextStyle(fontSize: 20.sp, color: colorBlack),
-                        ),
-                        const Spacer(),
-                        Text(homeProvider.countCategoryMails(3).toString())
                       ],
                     ),
-                    children: [
-                      for (var element in homeProvider.mail)
-                        if (element.sender!.category!.id == 3)
-                          mailsWidget(mails: element, context: context),
-                    ],
-                  ),
-                ],
-              ),
-              ListView(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  ExpansionTile(
-                    title: Row(
-                      children: [
-                        Text(
-                          "Foreign",
-                          style: TextStyle(fontSize: 20.sp, color: colorBlack),
-                        ),
-                        const Spacer(),
-                        Text(homeProvider.countCategoryMails(4).toString())
-                      ],
-                    ),
-                    children: [
-                      for (var element in homeProvider.mail)
-                        if (element.sender!.category!.id == 4)
-                          mailsWidget(mails: element, context: context)
-                    ],
-                  ),
-                ],
-              ),
-              ListView(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  ExpansionTile(
-                    title: Row(
-                      children: [
-                        Text(
-                          "Others",
-                          style: TextStyle(fontSize: 20.sp, color: colorBlack),
-                        ),
-                        const Spacer(),
-                        Text(homeProvider.countCategoryMails(1).toString())
-                      ],
-                    ),
-                    children: [
-                      for (var element in homeProvider.mail)
-                        if (element.sender!.category!.id == 1)
-                          mailsWidget(mails: element, context: context)
-                    ],
-                  ),
-                ],
-              ),
-              smallSpacer,
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Tags",
-                  style: TextStyle(fontSize: 20.sp),
+                  ],
                 ),
-              ),
-              TagsWidget(tag: homeProvider.tag),
-              mediumSpacer,
-              Container(
-                  padding: EdgeInsets.symmetric(vertical: 5.h),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(20.r))),
-                  alignment: Alignment.centerLeft,
-                  child: TextButton(
-                      onPressed: () {
-                        CustomModalBottomSheet(context: context).show();
-                      },
-                      child: Row(
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    ExpansionTile(
+                      title: Row(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                                color: inboxtextColor,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20.r),
-                                )),
-                            child: Icon(
-                              Icons.add_outlined,
-                              size: 24.sp,
-                              color: Colors.white,
-                            ),
+                          Text(
+                            context.localizations!.foreign,
+                            style:
+                                TextStyle(fontSize: 20.sp, color: colorBlack),
                           ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Text("New Inbox",
-                              style: TextStyle(
-                                  fontSize: 20.sp, color: inboxtextColor))
+                          const Spacer(),
+                          Text(homeProvider.countCategoryMails(4).toString())
                         ],
-                      ))),
-            ],
+                      ),
+                      children: [
+                        for (var element in homeProvider.mail)
+                          if (element.sender!.category!.id == 4)
+                            mailsWidget(mails: element, context: context)
+                      ],
+                    ),
+                  ],
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    ExpansionTile(
+                      title: Row(
+                        children: [
+                          Text(
+                            context.localizations!.other,
+                            style:
+                                TextStyle(fontSize: 20.sp, color: colorBlack),
+                          ),
+                          const Spacer(),
+                          Text(homeProvider.countCategoryMails(1).toString())
+                        ],
+                      ),
+                      children: [
+                        for (var element in homeProvider.mail)
+                          if (element.sender!.category!.id == 1)
+                            mailsWidget(mails: element, context: context)
+                      ],
+                    ),
+                  ],
+                ),
+                smallSpacer,
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    context.localizations!.tags,
+                    style: TextStyle(fontSize: 20.sp),
+                  ),
+                ),
+                TagsWidget(tag: homeProvider.tag),
+                mediumSpacer,
+                Container(
+                    padding: EdgeInsets.symmetric(vertical: 5.h),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(20.r))),
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                        onPressed: () {
+                          CustomModalBottomSheet(context: context).show();
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                  color: inboxtextColor,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(20.r),
+                                  )),
+                              child: Icon(
+                                Icons.add_outlined,
+                                size: 24.sp,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Text(context.localizations!.newInbox,
+                                style: TextStyle(
+                                    fontSize: 20.sp, color: inboxtextColor))
+                          ],
+                        ))),
+              ],
+            ),
           ),
         ),
       ),
-    ),
     );
   }
 }

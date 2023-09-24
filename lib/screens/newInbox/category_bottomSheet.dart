@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/providers/category_provider.dart';
+import 'package:pal_mail_app/services/localizations_extention.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -40,14 +41,14 @@ class CategoriesBottomSheet {
                           Navigator.pop(context);
                         },
                         child: Text(
-                          'Cancle',
+                          context.localizations!.cancel,
                           style: TextStyle(
                             fontSize: 18.sp,
                           ),
                         ),
                       ),
                       Text(
-                        'New inbox',
+                        context.localizations!.newInbox,
                         style: TextStyle(
                             fontSize: 19.sp, fontWeight: FontWeight.bold),
                       ),
@@ -56,7 +57,7 @@ class CategoriesBottomSheet {
                           navigatePop(context: context);
                         },
                         child: Text(
-                          'Done',
+                          context.localizations!.done,
                           style: TextStyle(
                               fontSize: 18.sp, fontWeight: FontWeight.bold),
                         ),
@@ -138,6 +139,27 @@ class CategoriesBottomSheet {
                                   child: ListView.separated(
                                       shrinkWrap: true,
                                       itemBuilder: (context, index) {
+                                        if (value.catName.elementAt(index) ==
+                                            'Other') {
+                                          value.catName.elementAt(index) ==
+                                              context.localizations!.other;
+                                        } else if (value.catName
+                                                .elementAt(index) ==
+                                            'Official Organizations') {
+                                          value.catName.elementAt(index) ==
+                                              context
+                                                  .localizations!.offecialOrg;
+                                        } else if (value.catName
+                                                .elementAt(index) ==
+                                            'NGOs') {
+                                          value.catName.elementAt(index) ==
+                                              context.localizations!.ngos;
+                                        } else if (value.catName
+                                                .elementAt(index) ==
+                                            'Foreign') {
+                                          value.catName.elementAt(index) ==
+                                              context.localizations!.foreign;
+                                        }
                                         return InkWell(
                                           onTap: () {},
                                           child: Padding(
@@ -150,8 +172,34 @@ class CategoriesBottomSheet {
                                               child: Row(
                                                 children: [
                                                   Text(
-                                                    value.catName
-                                                        .elementAt(index),
+                                                    value
+                                                                .catName
+                                                                .elementAt(
+                                                                    index) ==
+                                                            "Other"
+                                                        ? context.localizations!
+                                                            .other
+                                                        : value
+                                                                    .catName
+                                                                    .elementAt(
+                                                                        index) ==
+                                                                "Official Organizations"
+                                                            ? context
+                                                                .localizations!
+                                                                .offecialOrg
+                                                            : value.catName.elementAt(
+                                                                        index) ==
+                                                                    'NGOs'
+                                                                ? context
+                                                                    .localizations!
+                                                                    .ngos
+                                                                : value.catName.elementAt(
+                                                                            index) ==
+                                                                        "Foreign"
+                                                                    ? context
+                                                                        .localizations!
+                                                                        .foreign
+                                                                    : '',
                                                     style: TextStyle(
                                                       fontSize: 22.sp,
                                                     ),

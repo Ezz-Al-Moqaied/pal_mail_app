@@ -4,11 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/providers/category_provider.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
+import 'package:pal_mail_app/providers/language_provider.dart';
 import 'package:pal_mail_app/providers/status_provider.dart';
 import 'package:pal_mail_app/providers/tags_provider.dart';
 import 'package:pal_mail_app/screens/home_screen.dart';
 import 'package:pal_mail_app/screens/newInbox/category_bottomSheet.dart';
 import 'package:pal_mail_app/screens/newInbox/status_bottomSheet.dart';
+import 'package:pal_mail_app/services/localizations_extention.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:pal_mail_app/screens/newInbox/sender_search_bottomSheet.dart';
 import 'tags_bottomSheet_widget.dart';
@@ -164,14 +166,14 @@ class CustomModalBottomSheet {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            'Cancle',
+                            context.localizations!.cancel,
                             style: TextStyle(
                               fontSize: 18.sp,
                             ),
                           ),
                         ),
                         Text(
-                          'New inbox',
+                          context.localizations!.newInbox,
                           style: TextStyle(
                               fontSize: 19.sp, fontWeight: FontWeight.bold),
                         ),
@@ -182,7 +184,7 @@ class CustomModalBottomSheet {
                             // ignore: use_build_context_synchronously
                           },
                           child: Text(
-                            'Done',
+                            context.localizations!.done,
                             style: TextStyle(
                                 fontSize: 18.sp, fontWeight: FontWeight.bold),
                           ),
@@ -218,7 +220,7 @@ class CustomModalBottomSheet {
                                             return null;
                                           },
                                           colors: Colors.white,
-                                          hintText: 'name',
+                                          hintText: context.localizations!.name,
                                           prefixIcon: Icons.account_circle,
                                           suffixIcon: IconButton(
                                               splashColor: Colors.transparent,
@@ -251,7 +253,8 @@ class CustomModalBottomSheet {
                                               : true,
                                           outlinedBorder: true,
                                           colors: Colors.white,
-                                          hintText: 'Mobile',
+                                          hintText:
+                                              context.localizations!.mobile,
                                           prefixIcon:
                                               Icons.phone_android_outlined,
                                           controller: mobileController,
@@ -283,7 +286,8 @@ class CustomModalBottomSheet {
                                                   MainAxisAlignment.center,
                                               children: [
                                                 Text(
-                                                  'Categories',
+                                                  context.localizations!
+                                                      .categories,
                                                   style: TextStyle(
                                                     fontSize: 16.sp,
                                                   ),
@@ -327,7 +331,8 @@ class CustomModalBottomSheet {
                                     child: textFormFieldWidget(
                                       outlinedBorder: true,
                                       colors: Colors.white,
-                                      hintText: 'Title of Mail',
+                                      hintText:
+                                          context.localizations!.titleofmail,
                                       controller: titleController,
                                       type: TextInputType.text,
                                     ),
@@ -341,7 +346,8 @@ class CustomModalBottomSheet {
                                     },
                                     outlinedBorder: true,
                                     colors: Colors.white,
-                                    hintText: 'Describtion',
+                                    hintText:
+                                        context.localizations!.description,
                                     controller: descriptionController,
                                     type: TextInputType.text,
                                   ),
@@ -394,7 +400,8 @@ class CustomModalBottomSheet {
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        'Date',
+                                                        context.localizations!
+                                                            .date,
                                                         style: TextStyle(
                                                           fontSize: 15.sp,
                                                         ),
@@ -449,7 +456,8 @@ class CustomModalBottomSheet {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  "Archive Number",
+                                                  context.localizations!
+                                                      .archivenumber,
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -497,7 +505,7 @@ class CustomModalBottomSheet {
                                         width: 14.w,
                                       ),
                                       Text(
-                                        'Tags',
+                                        context.localizations!.tags,
                                         style: TextStyle(
                                           fontSize: 17.sp,
                                         ),
@@ -551,7 +559,8 @@ class CustomModalBottomSheet {
                                                 child: Text(
                                                   value.selectedstatusname
                                                           .isEmpty
-                                                      ? 'Choose Status'
+                                                      ? context.localizations!
+                                                          .choosestatus
                                                       : value
                                                           .selectedstatusname,
                                                   style: TextStyle(
@@ -590,7 +599,7 @@ class CustomModalBottomSheet {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      'Decision',
+                                      context.localizations!.decision,
                                       style: TextStyle(fontSize: 18.sp),
                                     ),
                                   ),
@@ -598,7 +607,8 @@ class CustomModalBottomSheet {
                                     child: textFormFieldWidget(
                                       outlinedBorder: true,
                                       colors: Colors.white,
-                                      hintText: 'Add Decision..',
+                                      hintText:
+                                          context.localizations!.adddecision,
                                       controller: decisionController,
                                       type: TextInputType.text,
                                       validate: (p0) => '',
@@ -639,7 +649,7 @@ class CustomModalBottomSheet {
                                               await prov.uploadImage(context);
                                             },
                                             child: Text(
-                                              'Add image',
+                                              context.localizations!.addimage,
                                               style: TextStyle(
                                                 fontSize: 17.sp,
                                                 color: splashColorDegree1,
@@ -717,7 +727,7 @@ class CustomModalBottomSheet {
                             builder: (context, prov, child) {
                               return ExpansionTile(
                                 onExpansionChanged: (value) {
-                                  prov.changeIconState(value);
+                                  prov.changeIconState(value, context);
                                 },
                                 controller: prov.expansionTile,
                                 tilePadding:
@@ -760,7 +770,7 @@ class CustomModalBottomSheet {
                                   ),
                                 ),
                                 title: Text(
-                                  'Activity',
+                                  context.localizations!.activity,
                                   style: TextStyle(
                                     fontSize: 22.sp,
                                     fontWeight: FontWeight.bold,
@@ -810,7 +820,7 @@ class CustomModalBottomSheet {
                                                           Text(
                                                             SharedPreferencesHelper
                                                                 .user
-                                                                .user!
+                                                                .user
                                                                 .name!,
                                                           ),
                                                           Text(
@@ -876,7 +886,7 @@ class CustomModalBottomSheet {
                                             prov.activitiesMap.add({
                                               "body": activityController.text,
                                               'user_id': SharedPreferencesHelper
-                                                  .user.user!.id
+                                                  .user.user.id
                                             });
                                             activityController.clear();
                                             prov.UpdateData();
@@ -888,7 +898,12 @@ class CustomModalBottomSheet {
                                           }
                                         },
                                         icon: Transform.rotate(
-                                            angle: -45,
+                                            angle:
+                                                Provider.of<LanguageProvider>(
+                                                            context)
+                                                        .isEnglishLanguage
+                                                    ? -45
+                                                    : 45,
                                             child: const Icon(
                                                 Icons.send_rounded))),
                                     prefixIcon: Icons.circle,
@@ -908,7 +923,7 @@ class CustomModalBottomSheet {
               ),
             );
           },
-          duration: const Duration(seconds: 1),
+          duration: const Duration(milliseconds: 1),
           curve: Curves.linear,
           tween: Tween<double>(
               begin: 0, end: MediaQuery.of(context).size.height - 50),

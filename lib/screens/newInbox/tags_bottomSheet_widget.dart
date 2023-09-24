@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/controller/tags_controller.dart';
 import 'package:pal_mail_app/providers/new_inbox_provider.dart';
 import 'package:pal_mail_app/providers/tags_provider.dart';
+import 'package:pal_mail_app/services/localizations_extention.dart';
 import 'package:pal_mail_app/widgets/flutterToastWidget.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:pal_mail_app/widgets/tags_widget.dart';
@@ -49,16 +50,16 @@ class TagsBottomSheet {
                               tagsController.clear();
                               Navigator.pop(context);
                             },
-                            child: const Text(
-                              'Cancle',
-                              style: TextStyle(
+                            child: Text(
+                              context.localizations!.cancel,
+                              style: const TextStyle(
                                 fontSize: 18,
                               ),
                             ),
                           ),
-                          const Text(
-                            'Tags',
-                            style: TextStyle(
+                          Text(
+                            context.localizations!.tags,
+                            style: const TextStyle(
                                 fontSize: 19, fontWeight: FontWeight.bold),
                           ),
                           TextButton(
@@ -66,9 +67,9 @@ class TagsBottomSheet {
                               tagsProvider.clearData();
                               navigatePop(context: context);
                             },
-                            child: const Text(
-                              'Done',
-                              style: TextStyle(
+                            child: Text(
+                              context.localizations!.done,
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -209,9 +210,9 @@ class TagsBottomSheet {
                                     icon: const Icon(Icons.send)),
                                 radius: 50.r,
                                 colors: colorWhite,
-                                hintText: 'add New tags..',
+                                hintText: context.localizations!.tagsadd,
                                 maxLines: 1,
-                                label: const Text("Tags"),
+                                label: Text(context.localizations!.tags),
                                 outlinedBorder: true,
                                 controller: tagsController,
                                 type: TextInputType.text,

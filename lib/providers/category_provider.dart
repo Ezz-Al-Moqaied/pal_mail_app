@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 
 import '../controller/new_inbox_controller.dart';
@@ -19,15 +17,16 @@ class CategoryProvider extends ChangeNotifier {
   Set<String> get catName => _catName;
   List<bool> get selected => _selected;
 
-
   Future<void> getCategories() async {
     await _helper.getCategory().then((value) {
       value.categories!.forEach((element) {
         _catName.add(element.name!);
+
         _selected.add(false);
         categoryId.add(element.id!);
       });
     });
+
     notifyListeners();
   }
 

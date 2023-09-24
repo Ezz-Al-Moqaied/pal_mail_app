@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pal_mail_app/providers/status_provider.dart';
+import 'package:pal_mail_app/services/localizations_extention.dart';
 
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:provider/provider.dart';
@@ -42,14 +43,14 @@ class StatusBottomSheet {
                           Navigator.pop(context);
                         },
                         child: Text(
-                          'Cancle',
+                          context.localizations!.cancel,
                           style: TextStyle(
                             fontSize: 18.sp,
                           ),
                         ),
                       ),
                       Text(
-                        'New inbox',
+                        context.localizations!.newInbox,
                         style: TextStyle(
                             fontSize: 19.sp, fontWeight: FontWeight.bold),
                       ),
@@ -58,7 +59,7 @@ class StatusBottomSheet {
                           navigatePop(context: context);
                         },
                         child: Text(
-                          'Done',
+                          context.localizations!.done,
                           style: TextStyle(
                               fontSize: 18.sp, fontWeight: FontWeight.bold),
                         ),
@@ -166,8 +167,33 @@ class StatusBottomSheet {
                                                     width: 12.w,
                                                   ),
                                                   Text(
-                                                    value.statusName
-                                                        .elementAt(index),
+                                                    value.statusName.elementAt(
+                                                                index) ==
+                                                            "Inbox"
+                                                        ? context
+                                                            .localizations!.inbox
+                                                        : value
+                                                                    .statusName
+                                                                    .elementAt(
+                                                                        index) ==
+                                                                "Pending"
+                                                            ? context
+                                                                .localizations!
+                                                                .pending
+                                                            : value.statusName
+                                                                        .elementAt(
+                                                                            index) ==
+                                                                    'In Progress'
+                                                                ? context
+                                                                    .localizations!
+                                                                    .inprogress
+                                                                : value.statusName.elementAt(
+                                                                            index) ==
+                                                                        "Completed"
+                                                                    ? context
+                                                                        .localizations!
+                                                                        .completed
+                                                                    : '',
                                                     style: TextStyle(
                                                       fontSize: 22.sp,
                                                     ),
