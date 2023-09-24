@@ -7,13 +7,13 @@ import 'package:pal_mail_app/providers/details_mail_provider.dart';
 import 'package:pal_mail_app/screens/details_mail_screen.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:provider/provider.dart';
+
 Widget mailsWidget({
   required Mail mails,
   required BuildContext context,
 }) =>
     GestureDetector(
-      onTap:() {
-      },
+      onTap: () {},
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
         margin: EdgeInsets.symmetric(vertical: 8.h),
@@ -58,7 +58,9 @@ Widget mailsWidget({
                 ),
                 InkWell(
                   onTap: () {
-                    final detailsMailProvider = Provider.of<DetailsMailProvider>(context , listen: false);
+                    final detailsMailProvider =
+                        Provider.of<DetailsMailProvider>(context,
+                            listen: false);
                     detailsMailProvider.setStatusMailsID(mails.status!.id!);
                     detailsMailProvider.setAttachmentList(mails.attachments);
                     detailsMailProvider.setActivityList(mails.activities);
@@ -133,3 +135,4 @@ Color colorsStatusMails(int id) {
     return Colors.green;
   }
 }
+// wqe
