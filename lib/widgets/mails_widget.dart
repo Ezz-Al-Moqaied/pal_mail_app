@@ -7,7 +7,6 @@ import 'package:pal_mail_app/providers/details_mail_provider.dart';
 import 'package:pal_mail_app/screens/details_mail_screen.dart';
 import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:provider/provider.dart';
-
 Widget mailsWidget({
   required Mail mails,
   required BuildContext context,
