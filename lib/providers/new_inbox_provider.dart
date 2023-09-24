@@ -154,6 +154,7 @@ class NewInboxProvider extends ChangeNotifier {
         return element2.name!.contains(searchController);
       });
     }).toList();
+    notifyListeners();
   }
 
   Future<void> getData() async {
