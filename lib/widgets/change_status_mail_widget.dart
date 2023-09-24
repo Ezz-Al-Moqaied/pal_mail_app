@@ -72,6 +72,11 @@ class _ChangeStatusMailWidgetState extends State<ChangeStatusMailWidget> {
                       onTap: () {
                         detailsMailProvider.setStatusMailsID(
                             homeProvider.statusMails[index].id!);
+
+                        detailsMailProvider.setStatusMailName(
+                            homeProvider.statusMails[index].name!);
+                        detailsMailProvider.setStatusMailColor(
+                            homeProvider.statusMails[index].color!);
                       },
                       leading: Container(
                         height: 32.h,

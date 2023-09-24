@@ -3,7 +3,9 @@ import 'package:pal_mail_app/controller/details_mail_controller.dart';
 import 'package:pal_mail_app/models/mails_model.dart';
 
 class DetailsMailProvider with ChangeNotifier {
-  int? statusMailsID;
+  int? statusMailsID = 1;
+  String? statusMailsName = '';
+  String? statusMailsColor = '';
   bool isScreenChange = false;
   List<Attachment>? attachments = [];
   List<Activity>? activity = [];
@@ -47,13 +49,34 @@ class DetailsMailProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  setStatusMailName(String name) {
+    statusMailsName = name;
+    notifyListeners();
+  }
+
+  setStatusMailColor(String color) {
+    statusMailsColor = color;
+    notifyListeners();
+  }
+
   setScreenChange(bool value) {
     isScreenChange = value;
     notifyListeners();
   }
 
-  updateMail(int id, Map<String, dynamic> body) async {
-    DetailsMailController controller = DetailsMailController.instance;
-    controller.updateMail(id, body);
+  // updateMail(int id, Map<String, dynamic> body) async {
+  //   DetailsMailController controller = DetailsMailController.instance;
+  //   controller.updateMail(id, body);
+  // }
+
+  Future<void> updateMail(
+      {required int id, required Map<String, dynamic> body}) async {
+    try {
+      DetailsMailController controller = DetailsMailController.instance;
+      await controller.updateMail(id, body);
+    } catch (e) {
+      print('-------------------------');
+      print(e.toString());
+    }
   }
 }

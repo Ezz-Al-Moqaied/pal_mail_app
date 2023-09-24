@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,9 +8,12 @@ import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/keys.dart';
 import 'package:pal_mail_app/models/mails_model.dart';
 import 'package:pal_mail_app/providers/details_mail_provider.dart';
+import 'package:pal_mail_app/providers/home_provider.dart';
+import 'package:pal_mail_app/screens/home_screen.dart';
 import 'package:pal_mail_app/services/localizations_extention.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:pal_mail_app/widgets/change_status_mail_widget.dart';
+import 'package:pal_mail_app/widgets/navigate_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +33,8 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
   @override
   Widget build(BuildContext context) {
     final detailsMailProvider = Provider.of<DetailsMailProvider>(context);
-
+    int attId = 0;
+    String path = '';
     TextEditingController controller = TextEditingController();
     TextEditingController controllerActivity = TextEditingController();
     controller.text = widget.mail.decision ?? '';
@@ -45,18 +50,25 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
             fontWeight: FontWeight.bold),
         iconTheme: IconThemeData(color: inboxtextColor, size: 30.sp),
         actions: [
-          detailsMailProvider.isScreenChange
-              ? IconButton(
-                  onPressed: () {
-                    detailsMailProvider.updateMail(widget.mail.id!, {
-                      'decision': controller.text,
-                      'status_id': detailsMailProvider.statusMailsID.toString(),
-                    });
-                  },
-                  icon: const Icon(Icons.save))
-              : IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.more_horiz_outlined)),
+          IconButton(
+              onPressed: () async {
+                print(widget.mail.id!);
+                await detailsMailProvider
+                    .updateMail(id: widget.mail.id!, body: {
+                  'status_id': detailsMailProvider.statusMailsID.toString(),
+                  "decision": controller.text,
+                  "final_decision": controller.text,
+                  "idAttachmentsForDelete":
+                      attId == 0 ? json.encode([]) : json.encode([attId]),
+                }).then((value) async {
+                  final prov =
+                      Provider.of<HomeProvider>(context, listen: false);
+
+                  await prov.getFetchDataLoadding();
+                  navigatePush(context: context, nextScreen: HomeScreen());
+                });
+              },
+              icon: const Icon(Icons.save))
         ],
       ),
       body: Container(
@@ -195,11 +207,14 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(30.r)),
-                        color: Color(
-                          int.parse(widget.mail.status!.color!),
-                        ),
+                        color: Color(detailsMailProvider
+                                .statusMailsColor!.isEmpty
+                            ? int.parse(widget.mail.status!.color!)
+                            : int.parse(detailsMailProvider.statusMailsColor!)),
                       ),
-                      child: Text(widget.mail.status!.name!),
+                      child: Text(detailsMailProvider.statusMailsName!.isEmpty
+                          ? widget.mail.status!.name!
+                          : detailsMailProvider.statusMailsName!),
                     ),
                     const Spacer(),
                     IconButton(
@@ -281,8 +296,14 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
+                                    attId = element.id!;
+                                    path = element.image!;
+                                    setState(() {});
                                     detailsMailProvider
                                         .deleteItemAttachments(element);
+
+                                    print(attId);
+                                    print(path);
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(5),
