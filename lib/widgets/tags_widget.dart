@@ -1,6 +1,7 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pal_mail_app/models/tage_model.dart';
 
 import '../constants/colors.dart';
 
@@ -25,20 +26,21 @@ class TagsWidget extends StatelessWidget {
           crossAxisSpacing: 4.w),
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () {
-          },
+          onTap: () {},
           child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.r),
-                  color: tagButtonColor
-              ),
+                  color: tagButtonColor),
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: Text("#${tag[index]}" , style: TextStyle(
-                  color: tagTextColor ,
-                  fontSize: 16.sp ,
-                ),),
+                child: Text(
+                  "#${tag[index]}",
+                  style: TextStyle(
+                    color: tagTextColor,
+                    fontSize: 16.sp,
+                  ),
+                ),
               )),
         );
       },

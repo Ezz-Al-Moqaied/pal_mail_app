@@ -7,13 +7,13 @@ import 'package:pal_mail_app/constants/colors.dart';
 import 'package:pal_mail_app/constants/keys.dart';
 import 'package:pal_mail_app/models/mails_model.dart';
 import 'package:pal_mail_app/providers/details_mail_provider.dart';
-import 'package:pal_mail_app/providers/home_provider.dart';
 import 'package:pal_mail_app/services/localizations_extention.dart';
 import 'package:pal_mail_app/services/shared_preferences.dart';
 import 'package:pal_mail_app/widgets/change_status_mail_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class DetailsMailScreen extends StatefulWidget {
   Mail mail;
 
@@ -247,7 +247,6 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
                       controller: controller,
                       type: TextInputType.text,
                       maxLines: 2,
-                      validate: (p0) {},
                       outlinedBorder: true,
                     ),
                   ],
@@ -399,22 +398,21 @@ class _DetailsMailScreenState extends State<DetailsMailScreen> {
                           createdAt: DateTime.now().toString(),
                           body: controllerActivity.text,
                           user: User(
-                            id: SharedPreferencesHelper.user.user!.id,
+                            id: SharedPreferencesHelper.user.user.id,
                             updatedAt:
-                                SharedPreferencesHelper.user.user!.updatedAt,
+                                SharedPreferencesHelper.user.user.updatedAt,
                             createdAt:
-                                SharedPreferencesHelper.user.user!.createdAt,
-                            image: SharedPreferencesHelper.user.user!.image,
-                            name: SharedPreferencesHelper.user.user!.name,
-                            email: SharedPreferencesHelper.user.user!.email,
+                                SharedPreferencesHelper.user.user.createdAt,
+                            image: SharedPreferencesHelper.user.user.image,
+                            name: SharedPreferencesHelper.user.user.name,
+                            email: SharedPreferencesHelper.user.user.email,
                             emailVerifiedAt: SharedPreferencesHelper
-                                .user.user!.emailVerifiedAt,
-                            roleId: SharedPreferencesHelper.user.user!.roleId,
+                                .user.user.emailVerifiedAt,
+                            roleId: SharedPreferencesHelper.user.user.roleId,
                           ),
                         ));
                       },
                       icon: const Icon(Icons.near_me_rounded)),
-                  validate: (p0) {},
                   outlinedBorder: true,
                 ),
               )

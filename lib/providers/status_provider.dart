@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pal_mail_app/controller/status_controller.dart';
 
-import '../controller/new_inbox_controller.dart';
-
 class StatusProvider extends ChangeNotifier {
   final StatusHelper _helper = StatusHelper.instance;
   List<bool> _selected = [];

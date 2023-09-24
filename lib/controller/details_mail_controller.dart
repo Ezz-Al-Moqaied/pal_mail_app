@@ -12,6 +12,7 @@ class DetailsMailController {
   updateMail(int id, Map<String, dynamic> body) async {
     ApiBaseHelper helper = ApiBaseHelper();
     try {
+      // ignore: unused_local_variable
       final response = await helper.put(
         "${Keys.mailsUrl}/$id",
         body,

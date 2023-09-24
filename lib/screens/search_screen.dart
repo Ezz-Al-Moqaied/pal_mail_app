@@ -9,6 +9,7 @@ import 'package:pal_mail_app/widgets/mails_widget.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class SearchScreen extends StatelessWidget {
   SearchScreen({Key? key}) : super(key: key);
 

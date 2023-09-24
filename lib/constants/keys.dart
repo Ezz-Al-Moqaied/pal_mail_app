@@ -1,7 +1,5 @@
 import '../services/shared_preferences.dart';
 
-import 'package:pal_mail_app/services/shared_preferences.dart';
-
 class Keys {
   Keys._();
 
@@ -27,7 +25,6 @@ class Keys {
   static const sendersUrl = '$baseUrl/senders';
   static const userUrl = '$baseUrl/user';
 }
-
 
 const String baseUrl = 'https://palmail.gsgtt.tech/api';
 const categoUrl = '$baseUrl/categories';

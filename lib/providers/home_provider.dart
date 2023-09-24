@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pal_mail_app/controller/home_controller.dart';
 import 'package:pal_mail_app/models/mails_model.dart';
-import 'package:pal_mail_app/services/shared_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/category_modl.dart';
 import '../models/status_model.dart';
@@ -29,21 +27,19 @@ class HomeProvider with ChangeNotifier {
 
   final HomeHelper _homeHelper = HomeHelper.instance;
 
-
-  getFetchData () async {
+  getFetchData() async {
     getAllMails();
     getStatusMails();
     getTage();
     getCategory();
   }
 
-  Future<void> getFetchDataLoadding () async {
+  Future<void> getFetchDataLoadding() async {
     await getAllMails();
     await getStatusMails();
     await getTage();
     await getCategory();
   }
-
 
   Future<void> getCategory() async {
     await _homeHelper.getCategory().then((value) {
@@ -146,9 +142,9 @@ class HomeProvider with ChangeNotifier {
     scalefactor = 0.8;
     isdraweropen = true;
     notifyListeners();
-
   }
-  void drawerOpen(){
+
+  void drawerOpen() {
     xoffset = 0;
     yoffset = 0;
     scalefactor = 1;

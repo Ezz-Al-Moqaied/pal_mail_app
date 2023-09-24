@@ -4,6 +4,7 @@ import 'package:pal_mail_app/constants/widget.dart';
 import 'package:pal_mail_app/services/localizations_extention.dart';
 import 'package:pal_mail_app/widgets/text_field_widget.dart';
 
+// ignore: must_be_immutable
 class LoginWidget extends StatelessWidget {
   TextEditingController emailController;
   TextEditingController passwordController;

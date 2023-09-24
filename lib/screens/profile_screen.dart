@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -19,7 +18,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   TextEditingController editNameController = TextEditingController();
   File? pickedFile;
   bool isUpload = false;
@@ -28,106 +26,104 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isEdit = false;
   late Future<UserModel> user;
 
-
   @override
   void initState() {
     user = UserController().getLocalUser();
     user.then((userData) => {
-      editNameController.text = userData.user.name!,
+          editNameController.text = userData.user.name!,
         });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double deviceHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
-      floatingActionButton:  Padding(
-        padding: const EdgeInsets.only(right: 40.0,bottom: 80),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 40.0, bottom: 80),
         child: SizedBox(
           height: 50,
           width: 300,
           child: FloatingActionButton(
-            shape: RoundedRectangleBorder(side: BorderSide(color: Colors.white,width: 2,style: BorderStyle.solid)),
-                  onPressed: () async {
+            shape: RoundedRectangleBorder(
+                side: BorderSide(
+                    color: Colors.white, width: 2, style: BorderStyle.solid)),
+            onPressed: () async {
+              setState(() {
+                isUpload = true;
+              });
+              if (pickedFile != null) {
+                await uploadProfilePic(
+                        pickedFile!, name ?? editNameController.text)
+                    .then((value) async {
+                  final newImage = await getNewProfilePic();
+                  updateSharedPreferences(
+                          name ?? editNameController.text, newImage!)
+                      .then((value) {
                     setState(() {
-                      isUpload = true;
+                      isUpload = false;
+                      user = UserController().getLocalUser();
+
+                      showAlert(context,
+                          message: "the inforamtion update",
+                          color: Colors.blue.withOpacity(0.75),
+                          width: 150);
                     });
-                    if (pickedFile != null) {
-                      await uploadProfilePic(
-                          pickedFile!, name ?? editNameController.text)
-                          .then((value) async {
-                        final newImage = await getNewProfilePic();
-                        updateSharedPreferences(
-                            name ?? editNameController.text, newImage!)
-                            .then((value) {
-                          setState(() {
-                            isUpload = false;
-                            user = UserController().getLocalUser();
+                  });
 
-                            showAlert(context,
-                                message: "the inforamtion update",
-                                color: Colors.blue.withOpacity(0.75),
-                                width: 150);
-                          });
-                        });
+                  if (mounted) {
+                    setState(() {
+                      isEdit = false;
+                    });
+                  }
+                  if (mounted) {
+                    setState(() {
+                      pickedFile = null;
+                    });
+                  }
+                  Provider.of<UserProvider>(context, listen: false)
+                      .getUserData();
+                }).catchError((err) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(err.toString()),
+                    backgroundColor: Colors.red,
+                  ));
+                });
+              } else {
+                updateName(name ?? editNameController.text).then((value) {
+                  updateNameSharedPreferences(name ?? editNameController.text)
+                      .then((value) {
+                    setState(() {
+                      isUpload = false;
+                      showAlert(context,
+                          message: "User Updated",
+                          color: Colors.blue.withOpacity(0.75),
+                          width: 150);
+                    });
 
-                        if (mounted) {
-                          setState(() {
-                            isEdit = false;
-                          });
-                        }
-                        if (mounted) {
-                          setState(() {
-                            pickedFile = null;
-                          });
-                        }
-                        Provider.of<UserProvider>(context, listen: false)
-                            .getUserData();
-                      }).catchError((err) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(err.toString()),
-                          backgroundColor: Colors.red,
-                        ));
-                      });
-                    } else {
-                      updateName(name ?? editNameController.text).then((value) {
-                        updateNameSharedPreferences(name ?? editNameController.text)
-                            .then((value) {
-                          setState(() {
-                            isUpload = false;
-                            showAlert(context,
-                                message: "User Updated",
-                                color: Colors.blue.withOpacity(0.75),
-                                width: 150);
-                          });
-
-                          if (mounted) {
-                            setState(() {
-                              isEdit = false;
-                            });
-                          }
-                          if (mounted) {
-                            setState(() {
-                              pickedFile = null;
-                            });
-                          }
-                          Provider.of<UserProvider>(context, listen: false)
-                              .getUserData();
-                        });
-                      }).catchError((err) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(err.toString()),
-                          backgroundColor: Colors.red,
-                        ));
+                    if (mounted) {
+                      setState(() {
+                        isEdit = false;
                       });
                     }
-                  },
-                  backgroundColor: Colors.blue,
-                  child: Text('Edit profile'),
-                ),
+                    if (mounted) {
+                      setState(() {
+                        pickedFile = null;
+                      });
+                    }
+                    Provider.of<UserProvider>(context, listen: false)
+                        .getUserData();
+                  });
+                }).catchError((err) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(err.toString()),
+                    backgroundColor: Colors.red,
+                  ));
+                });
+              }
+            },
+            backgroundColor: Colors.blue,
+            child: Text('Edit profile'),
+          ),
         ),
       ),
       backgroundColor: Colors.blue,
@@ -241,46 +237,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             Expanded(
                               child: ListTile(
-                                leading: const Icon(Icons.person,color: Colors.white,size: 40,),
-                                title:  const Text(
+                                leading: const Icon(
+                                  Icons.person,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                                title: const Text(
                                   'Name:',
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16),
+                                      color: Colors.white, fontSize: 16),
                                 ),
                                 subtitle: isEdit
                                     ? TextField(
-                                  controller: editNameController,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      name = value;
-                                    });
-                                  },
-                                  enabled: isEdit,
-                                  decoration: InputDecoration(
-                                    contentPadding:
-                                    const EdgeInsets.only(bottom: 20),
-                                    hintText:
-                                    name ?? snapshot.data!.user.name,
-                                    hintStyle: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                    border: InputBorder.none,
-                                  ),
-                                )
+                                        controller: editNameController,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            name = value;
+                                          });
+                                        },
+                                        enabled: isEdit,
+                                        decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.only(bottom: 20),
+                                          hintText:
+                                              name ?? snapshot.data!.user.name,
+                                          hintStyle: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                          ),
+                                          border: InputBorder.none,
+                                        ),
+                                      )
                                     : Text(
-                                  editNameController.text,
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
+                                        editNameController.text,
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
                               ),
                             ),
                             IconButton(
                               padding:
-                              const EdgeInsets.only(right: 45, bottom: 0),
+                                  const EdgeInsets.only(right: 45, bottom: 0),
                               onPressed: () {
                                 setState(() {
                                   isEdit = !isEdit;
@@ -326,18 +325,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           title: Text(
                             'Role: ${snapshot.data!.user.role?.name}',
-                            style: const TextStyle(color: Colors.white, fontSize: 16),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
                           ),
                         ),
                       ]),
                     );
                   }
                   return const Center(
-                      child: SpinKitPulse(
+                    child: SpinKitPulse(
                       duration: Duration(milliseconds: 1000),
-                  color: Colors.grey,
-                  size: 40,
-                  ),
+                      color: Colors.grey,
+                      size: 40,
+                    ),
                   );
                 })
           ],

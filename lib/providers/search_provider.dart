@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pal_mail_app/controller/home_controller.dart';
+
 import 'package:pal_mail_app/models/mails_model.dart';
 import 'package:pal_mail_app/providers/home_provider.dart';
 
@@ -8,8 +8,6 @@ class SearchProvider with ChangeNotifier {
   int? categoryID;
 
   int? statusMailsID;
-
-  final HomeHelper _homeHelper = HomeHelper.instance;
 
   Future<void> getAllMails(String text, HomeProvider homeProvider) async {
     mail.clear();
