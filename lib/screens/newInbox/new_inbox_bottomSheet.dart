@@ -191,7 +191,10 @@ class CustomModalBottomSheet {
                     ),
                     smallSpacer,
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15.0.w),
+                      padding: EdgeInsets.only(
+                          left: 15.w,
+                          right: 15.w,
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -906,7 +909,7 @@ class CustomModalBottomSheet {
             );
           },
           duration: const Duration(seconds: 1),
-          curve: Curves.bounceOut,
+          curve: Curves.linear,
           tween: Tween<double>(
               begin: 0, end: MediaQuery.of(context).size.height - 50),
         );
